@@ -1,0 +1,109 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "close": "Close"
+  },
+  "home": {
+    "title": "Tesla Token Generator",
+    "subtitle": "Generate API tokens for the Tesla Fleet API and Owner API",
+    "fleetButtonTitle": "Fleet API token",
+    "fleetButtonDescription": "Guided process to register your application and obtain Fleet API tokens",
+    "ownerButtonTitle": "Owner API token",
+    "ownerButtonDescription": "Authenticate with your Tesla account to retrieve Owner API tokens",
+    "themeSectionTitle": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeAuto": "Auto",
+    "regionSectionTitle": "Region",
+    "regionIntl": "International",
+    "regionCn": "China",
+    "languageSectionTitle": "Language"
+  },
+  "settings": {
+    "tokens": {
+      "fleetGenerator": {
+        "title": "Fleet API Token Generator",
+        "subtitle": "Guided process to obtain your Fleet API tokens",
+        "step1": {
+          "title": "Configure your application",
+          "instruction": "Create your application on the developer portal and use the following values:",
+          "openDeveloperPortal": "Open Developer Portal",
+          "allowedOriginUrl": "Allowed Origin URL:",
+          "allowedOriginUrlPlaceholder": "https://your-app-domain.com",
+          "allowedRedirectUri": "Allowed Redirect URI:",
+          "backButton": "Back",
+          "nextButton": "Continue to step 2"
+        },
+        "step2": {
+          "title": "Enter your credentials",
+          "clientId": "Client ID *",
+          "clientIdPlaceholder": "Your Client ID",
+          "clientSecret": "Client Secret *",
+          "clientSecretPlaceholder": "Your Client Secret",
+          "backButton": "Back",
+          "nextButton": "Start registration"
+        },
+        "step3": {
+          "title": "Registering your application",
+          "partnerToken": "Obtaining partner token...",
+          "registerNA": "Registering NA region...",
+          "registerEU": "Registering EU region...",
+          "registerCN": "Registering CN region...",
+          "backButton": "Back",
+          "nextButton": "Continue authorization"
+        },
+        "step4": {
+          "title": "Authorization",
+          "instruction": "Click the button below to open the authorization page. Sign in to your account to authorize access.",
+          "backButton": "Back",
+          "authorizeButton": "Authorize",
+          "waitingText": "Waiting for response..."
+        },
+        "step5": {
+          "title": "Tokens generated successfully",
+          "accessToken": "Access Token",
+          "refreshToken": "Refresh Token",
+          "backButton": "Back",
+          "instruction": "Save these tokens securely. You will need them to configure your application."
+        },
+        "closeButton": "Close",
+        "copyValue": "Value to copy",
+        "alerts": {
+          "error": "Error",
+          "copyError": "Unable to copy to clipboard. Please copy the value manually.",
+          "missingAuth": "Missing authentication information",
+          "missingCredentials": "Please fill in Client ID and Client Secret fields",
+          "tokenError": "Error obtaining tokens",
+          "tokensNotReceived": "Tokens not received in response",
+          "unknownError": "Unknown error",
+          "teslaAuthError": "Error",
+          "authorizationError": "Authorization error: {{error}}",
+          "browserError": "Unable to open browser",
+          "success": "Success!",
+          "tokensGenerated": "Your tokens have been successfully generated."
+        }
+      },
+      "ownerGenerator": {
+        "title": "Owner API",
+        "preparing": "Preparing connection…",
+        "retrievingTokens": "Retrieving tokens...",
+        "successTitle": "Owner API tokens generated",
+        "accessToken": "Access Token",
+        "refreshToken": "Refresh Token",
+        "closeButton": "Close",
+        "copyValue": "Value to copy",
+        "useInTeslaMate": "Use these tokens in my TeslaMate",
+        "useModalTitle": "Import into MyTeslaMate",
+        "redirecting": "Redirecting to MyTeslaMate…",
+        "alerts": {
+          "error": "Error",
+          "copyError": "Unable to copy to clipboard. Please copy the value manually.",
+          "missingCode": "Code or PKCE missing",
+          "tokenError": "Error obtaining tokens",
+          "unknownError": "Unknown error"
+        }
+      }
+    }
+  }
+}

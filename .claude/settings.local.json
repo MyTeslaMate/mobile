@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./node_modules/.bin/expo start *)",
+      "Bash(kill 1742)",
+      "Bash(lsof -ti:8081)",
+      "Bash(xargs kill -9)",
+      "Bash(./node_modules/.bin/expo run:ios)"
+    ]
+  }
+}
