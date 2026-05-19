@@ -22,9 +22,18 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: t('tabs.home'),
+          title: t('tabs.fleet'),
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="key" size={size} color={color} />
+            <Ionicons name="cloud" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="owner"
+        options={{
+          title: t('tabs.owner'),
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" size={size} color={color} />
           ),
         }}
       />

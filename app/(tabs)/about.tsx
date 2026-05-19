@@ -1,7 +1,14 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useLocalization } from '@/contexts/LocalizationContext';
-import { useThemeColors } from '@/contexts/ThemeContext';
+import {
+  useLocalization,
+  type SupportedLanguage,
+} from '@/contexts/LocalizationContext';
+import {
+  useTheme,
+  useThemeColors,
+  type ThemeMode,
+} from '@/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import { Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,7 +19,9 @@ const WEBSITE_URL = 'https://app.myteslamate.com';
 
 export default function AboutScreen() {
   const colors = useThemeColors();
-  const { t } = useLocalization();
+  const { t, currentLanguage, changeLanguage, availableLanguages } =
+    useLocalization();
+  const { state: themeState, setThemeMode } = useTheme();
   const styles = createStyles(colors);
 
   const features: { icon: any; label: string }[] = [
@@ -20,6 +29,12 @@ export default function AboutScreen() {
     { icon: 'person', label: t('about.featureOwner') },
     { icon: 'color-palette', label: t('about.featureTheme') },
     { icon: 'language', label: t('about.featureI18n') },
+  ];
+
+  const themeOptions: { mode: ThemeMode; label: string; icon: any }[] = [
+    { mode: 'light', label: t('home.themeLight'), icon: 'sunny' },
+    { mode: 'dark', label: t('home.themeDark'), icon: 'moon' },
+    { mode: 'auto', label: t('home.themeAuto'), icon: 'phone-portrait' },
   ];
 
   return (
@@ -88,6 +103,73 @@ export default function AboutScreen() {
               color={colors.textSecondary}
             />
           </Pressable>
+        </ThemedView>
+
+        <ThemedView style={styles.section}>
+          <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
+            {t('home.themeSectionTitle')}
+          </ThemedText>
+          <View style={styles.optionRow}>
+            {themeOptions.map(option => {
+              const isSelected = themeState.mode === option.mode;
+              return (
+                <Pressable
+                  key={option.mode}
+                  style={[
+                    styles.optionButton,
+                    isSelected && styles.optionButtonSelected,
+                  ]}
+                  onPress={() => setThemeMode(option.mode)}
+                >
+                  <Ionicons
+                    name={option.icon}
+                    size={18}
+                    color={isSelected ? '#fff' : colors.text}
+                  />
+                  <ThemedText
+                    style={[
+                      styles.optionLabel,
+                      isSelected && styles.optionLabelSelected,
+                    ]}
+                  >
+                    {option.label}
+                  </ThemedText>
+                </Pressable>
+              );
+            })}
+          </View>
+        </ThemedView>
+
+        <ThemedView style={styles.section}>
+          <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
+            {t('home.languageSectionTitle')}
+          </ThemedText>
+          <View style={styles.optionRow}>
+            {availableLanguages.map(lang => {
+              const isSelected = currentLanguage === lang.code;
+              return (
+                <Pressable
+                  key={lang.code}
+                  style={[
+                    styles.optionButton,
+                    isSelected && styles.optionButtonSelected,
+                  ]}
+                  onPress={() =>
+                    changeLanguage(lang.code as SupportedLanguage)
+                  }
+                >
+                  <ThemedText
+                    style={[
+                      styles.optionLabel,
+                      isSelected && styles.optionLabelSelected,
+                    ]}
+                  >
+                    {lang.flag} {lang.name}
+                  </ThemedText>
+                </Pressable>
+              );
+            })}
+          </View>
         </ThemedView>
       </ScrollView>
     </SafeAreaView>
@@ -161,5 +243,32 @@ const createStyles = (colors: any) =>
       flex: 1,
       fontSize: 14,
       fontWeight: '500',
+    },
+    optionRow: {
+      flexDirection: 'row',
+      gap: 8,
+      flexWrap: 'wrap',
+    },
+    optionButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+      backgroundColor: colors.background,
+      borderRadius: 10,
+      paddingHorizontal: 14,
+      paddingVertical: 10,
+      borderWidth: 1,
+      borderColor: colors.borderColor,
+    },
+    optionButtonSelected: {
+      backgroundColor: colors.primary,
+      borderColor: colors.primary,
+    },
+    optionLabel: {
+      fontSize: 14,
+      fontWeight: '500',
+    },
+    optionLabelSelected: {
+      color: '#fff',
     },
   });

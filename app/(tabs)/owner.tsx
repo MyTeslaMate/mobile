@@ -1,16 +1,16 @@
 import { RegionSelector } from '@/components/RegionSelector';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import TokenFleetGenerator from '@/components/tokens/TokenFleetGenerator';
+import { TokenOwnerGenerator } from '@/components/tokens/TokenOwnerGenerator';
 import { useLocalization } from '@/contexts/LocalizationContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
 import { useRegion } from '@/hooks/useRegion';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet } from 'react-native';
+import { Pressable, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function FleetScreen() {
+export default function OwnerScreen() {
   const colors = useThemeColors();
   const { t } = useLocalization();
   const { region } = useRegion();
@@ -25,12 +25,12 @@ export default function FleetScreen() {
     >
       <ScrollView contentContainerStyle={styles.container}>
         <ThemedView style={styles.header}>
-          <Ionicons name="cloud" size={48} color={colors.primary} />
+          <Ionicons name="person" size={48} color={colors.primary} />
           <ThemedText type="title" style={styles.title}>
-            {t('home.fleetButtonTitle')}
+            {t('home.ownerButtonTitle')}
           </ThemedText>
           <ThemedText style={styles.subtitle}>
-            {t('home.fleetButtonDescription')}
+            {t('home.ownerButtonDescription')}
           </ThemedText>
         </ThemedView>
 
@@ -47,22 +47,11 @@ export default function FleetScreen() {
         </Pressable>
       </ScrollView>
 
-      <Modal
-        animationType="slide"
-        transparent={false}
+      <TokenOwnerGenerator
         visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(false)}
-        presentationStyle="pageSheet"
-      >
-        <SafeAreaView
-          style={[styles.modalContainer, { backgroundColor: colors.background }]}
-        >
-          <TokenFleetGenerator
-            onClose={() => setIsModalVisible(false)}
-            region={region}
-          />
-        </SafeAreaView>
-      </Modal>
+        onClose={() => setIsModalVisible(false)}
+        region={region}
+      />
     </SafeAreaView>
   );
 }
@@ -103,8 +92,5 @@ const createStyles = (colors: any) =>
       color: '#fff',
       fontWeight: '600',
       fontSize: 16,
-    },
-    modalContainer: {
-      flex: 1,
     },
   });

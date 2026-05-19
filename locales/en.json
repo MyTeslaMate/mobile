@@ -5,7 +5,8 @@
     "close": "Close"
   },
   "tabs": {
-    "home": "Home",
+    "fleet": "Fleet API",
+    "owner": "Owner API",
     "about": "About"
   },
   "about": {
@@ -36,7 +37,8 @@
     "regionSectionTitle": "Region",
     "regionIntl": "International",
     "regionCn": "China",
-    "languageSectionTitle": "Language"
+    "languageSectionTitle": "Language",
+    "generateButton": "Generate tokens"
   },
   "settings": {
     "tokens": {
