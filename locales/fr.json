@@ -4,6 +4,24 @@
     "error": "Erreur",
     "close": "Fermer"
   },
+  "tabs": {
+    "home": "Accueil",
+    "about": "À propos"
+  },
+  "about": {
+    "title": "MyTeslaMate Tokens",
+    "version": "v. {{version}} (build {{build}})",
+    "copyright": "© 2026 MyTeslaMate",
+    "descriptionTitle": "À propos",
+    "description": "MyTeslaMate Tokens est une application minimaliste qui vous aide à générer les tokens d'API Tesla nécessaires pour connecter vos outils tiers, comme TeslaMate, à votre compte Tesla.",
+    "featuresTitle": "Fonctionnalités",
+    "featureFleet": "Génération de tokens Fleet API",
+    "featureOwner": "Génération de tokens Owner API",
+    "featureTheme": "Thèmes clair, sombre et automatique",
+    "featureI18n": "Disponible en français et en anglais",
+    "linksTitle": "Liens",
+    "website": "Site MyTeslaMate"
+  },
   "home": {
     "title": "Générateur de tokens Tesla",
     "subtitle": "Générez vos tokens pour l'API Fleet et l'API Owner Tesla",

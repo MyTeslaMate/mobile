@@ -46,7 +46,7 @@ export default function RootLayout() {
       <LocalizationProvider>
         <NavigationWrapper>
           <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           </Stack>
         </NavigationWrapper>
       </LocalizationProvider>
