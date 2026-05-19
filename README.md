@@ -72,9 +72,29 @@ Le workflow `.github/workflows/eas-build.yml` lance les builds iOS + Android :
 - automatiquement sur un tag `v*` (ex. `git tag v1.0.0 && git push --tags`) ;
 - manuellement via *Run workflow* (choix de la plateforme et du profil).
 
-Il nécessite un secret GitHub **`EXPO_TOKEN`** (jeton d'accès Expo, créé sur expo.dev → Account → Access tokens). Le build s'exécute sur les serveurs EAS ; le runner GitHub ne fait que le déclencher (`--no-wait`).
+Le runner GitHub ne fait que déclencher (`--no-wait`) ; build et envoi aux stores s'exécutent sur les serveurs EAS. Avec le profil `production`, le workflow ajoute `--auto-submit` : dès qu'un build réussit, il est envoyé automatiquement vers App Store Connect (iOS) et la piste *internal* de Google Play (Android).
 
-Pour publier ensuite sur les stores : `eas submit --platform ios` / `--platform android`.
+### Credentials de publication
+
+Tout est stocké côté EAS (rien de sensible dans le dépôt). À configurer **une seule fois** :
+
+1. **`EXPO_TOKEN`** (secret GitHub) — jeton d'accès Expo.
+   - expo.dev → *Account* → *Settings* → *Access tokens* → *Create token*.
+   - GitHub → repo → *Settings* → *Secrets and variables* → *Actions* → *New repository secret*, nommé `EXPO_TOKEN`.
+
+2. **iOS — App Store Connect API Key** (pour l'envoi automatique).
+   - App Store Connect → *Users and Access* → onglet *Integrations* → *App Store Connect API* → *Generate API Key*, rôle *App Manager*.
+   - Récupérer l'**Issuer ID**, le **Key ID**, et télécharger le fichier **`.p8`** (téléchargeable une seule fois).
+   - Enregistrer ces valeurs dans EAS : `eas credentials` → plateforme *iOS* → *App Store Connect API Key*.
+   - L'app doit déjà exister dans App Store Connect avec le Bundle ID `fr.opcode.myteslamatetokens`.
+
+3. **Android — compte de service Google Play** (pour l'envoi automatique).
+   - Google Play Console → *Users and permissions* → *Invite new users*, ou via Google Cloud Console → créer un *service account* puis une **clé JSON**.
+   - Dans la Play Console, accorder à ce compte les droits de publication (*Releases*).
+   - Enregistrer la clé JSON dans EAS : `eas credentials` → plateforme *Android* → *Google Service Account*.
+   - ⚠️ Google exige que **le tout premier AAB soit envoyé manuellement** via la Play Console ; les envois suivants peuvent être automatisés.
+
+Les builds iOS sont déposés sur App Store Connect / TestFlight — la soumission finale à la revue Apple reste manuelle. Les builds Android arrivent sur la piste *internal* (modifiable dans `eas.json` → `submit.production.android.track`).
 
 ## Stack
 
