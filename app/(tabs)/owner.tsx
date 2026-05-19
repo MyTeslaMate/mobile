@@ -1,4 +1,5 @@
 import { RegionSelector } from '@/components/RegionSelector';
+import { StoredTokenCard } from '@/components/StoredTokenCard';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { TokenOwnerGenerator } from '@/components/tokens/TokenOwnerGenerator';
@@ -45,6 +46,8 @@ export default function OwnerScreen() {
             {t('home.generateButton')}
           </ThemedText>
         </Pressable>
+
+        <StoredTokenCard type="owner" />
       </ScrollView>
 
       <TokenOwnerGenerator

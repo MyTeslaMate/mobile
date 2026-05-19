@@ -1,5 +1,6 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useBiometric } from '@/contexts/BiometricContext';
 import {
   useLocalization,
   type SupportedLanguage,
@@ -16,6 +17,7 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
+  Switch,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -33,14 +35,26 @@ export default function AboutScreen() {
   const { t, currentLanguage, changeLanguage, availableLanguages } =
     useLocalization();
   const { state: themeState, setThemeMode } = useTheme();
+  const {
+    isAvailable: biometricAvailable,
+    isEnabled: biometricEnabled,
+    enable: enableBiometric,
+    disable: disableBiometric,
+  } = useBiometric();
   const styles = createStyles(colors);
 
   const features: { icon: any; label: string }[] = [
     { icon: 'cloud', label: t('about.featureFleet') },
     { icon: 'person', label: t('about.featureOwner') },
+    { icon: 'lock-closed', label: t('about.featureSecure') },
     { icon: 'color-palette', label: t('about.featureTheme') },
     { icon: 'language', label: t('about.featureI18n') },
   ];
+
+  const handleBiometricToggle = (value: boolean) => {
+    if (value) enableBiometric();
+    else disableBiometric();
+  };
 
   const themeOptions: { mode: ThemeMode; label: string; icon: any }[] = [
     { mode: 'light', label: t('home.themeLight'), icon: 'sunny' },
@@ -114,6 +128,35 @@ export default function AboutScreen() {
               color={colors.textSecondary}
             />
           </Pressable>
+        </ThemedView>
+
+        <ThemedView style={styles.section}>
+          <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
+            {t('biometric.sectionTitle')}
+          </ThemedText>
+          <View style={styles.settingRow}>
+            <Ionicons
+              name="finger-print"
+              size={22}
+              color={colors.primary}
+            />
+            <View style={styles.settingTextGroup}>
+              <ThemedText style={styles.settingLabel}>
+                {t('biometric.toggleLabel')}
+              </ThemedText>
+              <ThemedText style={styles.settingDescription}>
+                {biometricAvailable
+                  ? t('biometric.toggleDescription')
+                  : t('biometric.unavailable')}
+              </ThemedText>
+            </View>
+            <Switch
+              value={biometricEnabled}
+              onValueChange={handleBiometricToggle}
+              disabled={!biometricAvailable}
+              trackColor={{ false: colors.borderColor, true: colors.primary }}
+            />
+          </View>
         </ThemedView>
 
         <ThemedView style={styles.section}>
@@ -254,6 +297,23 @@ const createStyles = (colors: any) =>
       flex: 1,
       fontSize: 14,
       fontWeight: '500',
+    },
+    settingRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 12,
+    },
+    settingTextGroup: {
+      flex: 1,
+    },
+    settingLabel: {
+      fontSize: 14,
+      fontWeight: '500',
+    },
+    settingDescription: {
+      fontSize: 12,
+      opacity: 0.6,
+      marginTop: 2,
     },
     optionRow: {
       flexDirection: 'row',

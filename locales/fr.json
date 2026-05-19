@@ -2,7 +2,8 @@
   "common": {
     "loading": "Chargement...",
     "error": "Erreur",
-    "close": "Fermer"
+    "close": "Fermer",
+    "cancel": "Annuler"
   },
   "tabs": {
     "fleet": "Fleet API",
@@ -18,10 +19,43 @@
     "featuresTitle": "Fonctionnalités",
     "featureFleet": "Génération de tokens Fleet API",
     "featureOwner": "Génération de tokens Owner API",
+    "featureSecure": "Stockage chiffré et verrouillage biométrique",
     "featureTheme": "Thèmes clair, sombre et automatique",
     "featureI18n": "Disponible en français et en anglais",
     "linksTitle": "Liens",
     "website": "Site MyTeslaMate"
+  },
+  "tokenInfo": {
+    "expired": "Token expiré",
+    "expiresOn": "Expire le {{date}}",
+    "scopes": "Autorisations"
+  },
+  "tokenCard": {
+    "title": "Dernier token",
+    "generatedOn": "Généré le {{date}}",
+    "accessToken": "Access Token",
+    "refreshToken": "Refresh Token",
+    "test": "Tester",
+    "clear": "Effacer",
+    "clearTitle": "Effacer le token",
+    "clearMessage": "Le token enregistré sera supprimé de cet appareil. Cette action est irréversible.",
+    "copied": "Copié",
+    "copyError": "Impossible de copier dans le presse-papiers.",
+    "testResult": {
+      "valid": "Token valide",
+      "invalid": "Token invalide ou expiré",
+      "error": "Vérification impossible"
+    }
+  },
+  "biometric": {
+    "sectionTitle": "Sécurité",
+    "toggleLabel": "Verrouillage biométrique",
+    "toggleDescription": "Exiger Face ID / empreinte à l'ouverture de l'app.",
+    "unavailable": "Aucune biométrie configurée sur cet appareil.",
+    "prompt": "Authentifiez-vous pour accéder à vos tokens",
+    "lockedTitle": "App verrouillée",
+    "lockedSubtitle": "Authentifiez-vous pour accéder à vos tokens.",
+    "unlock": "Déverrouiller"
   },
   "home": {
     "title": "Générateur de tokens Tesla",

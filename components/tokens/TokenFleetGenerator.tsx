@@ -2,6 +2,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useLocalization } from '@/contexts/LocalizationContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
+import { useTokenStore } from '@/contexts/TokenStoreContext';
 import { Region } from '@/hooks/useRegion';
 import { Ionicons } from '@expo/vector-icons';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -80,6 +81,7 @@ export default function TokenFleetGenerator({
 }: TokenFleetGeneratorProps) {
   const colors = useThemeColors();
   const { t } = useLocalization();
+  const { saveTokens } = useTokenStore();
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [originUrl, setOriginUrl] = useState('');
   const [clientId, setClientId] = useState('');
@@ -135,6 +137,12 @@ export default function TokenFleetGenerator({
             access_token: tokenData.access_token,
             refresh_token: tokenData.refresh_token,
           });
+          await saveTokens('fleet', {
+            accessToken: tokenData.access_token,
+            refreshToken: tokenData.refresh_token,
+            region,
+            createdAt: Date.now(),
+          });
           Alert.alert(
             t('settings.tokens.fleetGenerator.alerts.success'),
             t('settings.tokens.fleetGenerator.alerts.tokensGenerated')
@@ -158,7 +166,7 @@ export default function TokenFleetGenerator({
         setIsLoading(false);
       }
     },
-    [clientId, clientSecret, config, t]
+    [clientId, clientSecret, config, region, saveTokens, t]
   );
 
   useEffect(() => {

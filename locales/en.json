@@ -2,7 +2,8 @@
   "common": {
     "loading": "Loading...",
     "error": "Error",
-    "close": "Close"
+    "close": "Close",
+    "cancel": "Cancel"
   },
   "tabs": {
     "fleet": "Fleet API",
@@ -18,10 +19,43 @@
     "featuresTitle": "Features",
     "featureFleet": "Fleet API token generation",
     "featureOwner": "Owner API token generation",
+    "featureSecure": "Encrypted storage and biometric lock",
     "featureTheme": "Light, dark and automatic themes",
     "featureI18n": "Available in French and English",
     "linksTitle": "Links",
     "website": "MyTeslaMate website"
+  },
+  "tokenInfo": {
+    "expired": "Token expired",
+    "expiresOn": "Expires on {{date}}",
+    "scopes": "Scopes"
+  },
+  "tokenCard": {
+    "title": "Latest token",
+    "generatedOn": "Generated on {{date}}",
+    "accessToken": "Access Token",
+    "refreshToken": "Refresh Token",
+    "test": "Test",
+    "clear": "Clear",
+    "clearTitle": "Clear token",
+    "clearMessage": "The saved token will be removed from this device. This action cannot be undone.",
+    "copied": "Copied",
+    "copyError": "Unable to copy to clipboard.",
+    "testResult": {
+      "valid": "Token valid",
+      "invalid": "Token invalid or expired",
+      "error": "Could not verify"
+    }
+  },
+  "biometric": {
+    "sectionTitle": "Security",
+    "toggleLabel": "Biometric lock",
+    "toggleDescription": "Require Face ID / fingerprint when opening the app.",
+    "unavailable": "No biometrics configured on this device.",
+    "prompt": "Authenticate to access your tokens",
+    "lockedTitle": "App locked",
+    "lockedSubtitle": "Authenticate to access your tokens.",
+    "unlock": "Unlock"
   },
   "home": {
     "title": "Tesla Token Generator",

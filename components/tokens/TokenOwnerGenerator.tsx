@@ -2,6 +2,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useLocalization } from '@/contexts/LocalizationContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
+import { useTokenStore } from '@/contexts/TokenStoreContext';
 import { Region } from '@/hooks/useRegion';
 import { Ionicons } from '@expo/vector-icons';
 import { sha256 } from 'js-sha256';
@@ -78,6 +79,7 @@ export function TokenOwnerGenerator({
 }: TokenOwnerGeneratorProps) {
   const colors = useThemeColors();
   const { t } = useLocalization();
+  const { saveTokens } = useTokenStore();
   const webviewRef = useRef(null);
   const config = useMemo(() => REGION_CONFIG[region], [region]);
   const [tokens, setTokens] = useState<{
@@ -183,6 +185,14 @@ export function TokenOwnerGenerator({
         access_token: tokenData.access_token,
         refresh_token: tokenData.refresh_token,
       });
+      if (tokenData.access_token && tokenData.refresh_token) {
+        await saveTokens('owner', {
+          accessToken: tokenData.access_token,
+          refreshToken: tokenData.refresh_token,
+          region,
+          createdAt: Date.now(),
+        });
+      }
     } catch (err) {
       Alert.alert(
         t('settings.tokens.ownerGenerator.alerts.error'),

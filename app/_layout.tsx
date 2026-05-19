@@ -8,11 +8,14 @@ import { StatusBar } from 'expo-status-bar';
 import { ReactNode } from 'react';
 import 'react-native-reanimated';
 
+import { BiometricGate } from '@/components/BiometricGate';
+import { BiometricProvider } from '@/contexts/BiometricContext';
 import { LocalizationProvider } from '@/contexts/LocalizationContext';
 import {
   ThemeProvider as CustomThemeProvider,
   useTheme,
 } from '@/contexts/ThemeContext';
+import { TokenStoreProvider } from '@/contexts/TokenStoreContext';
 import '@/i18n';
 
 function NavigationWrapper({ children }: { children: ReactNode }) {
@@ -44,11 +47,20 @@ export default function RootLayout() {
   return (
     <CustomThemeProvider>
       <LocalizationProvider>
-        <NavigationWrapper>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          </Stack>
-        </NavigationWrapper>
+        <TokenStoreProvider>
+          <BiometricProvider>
+            <NavigationWrapper>
+              <BiometricGate>
+                <Stack>
+                  <Stack.Screen
+                    name="(tabs)"
+                    options={{ headerShown: false }}
+                  />
+                </Stack>
+              </BiometricGate>
+            </NavigationWrapper>
+          </BiometricProvider>
+        </TokenStoreProvider>
       </LocalizationProvider>
     </CustomThemeProvider>
   );

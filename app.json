@@ -54,6 +54,12 @@
           "resizeMode": "contain",
           "backgroundColor": "#111111"
         }
+      ],
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Permet de déverrouiller MyTeslaMate Tokens avec Face ID."
+        }
       ]
     ],
     "experiments": {
