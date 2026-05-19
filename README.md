@@ -9,21 +9,28 @@ L'app est extraite d'un projet plus large (`myteslamate`) en ne gardant que la f
 
 ## Fonctionnalités
 
-- Une page d'accueil avec deux boutons (Fleet / Owner).
+- Une navigation par onglets : **Fleet API**, **Owner API** et **À propos**.
+- Sélection de la région (International / Chine) sur chaque onglet API.
 - Thèmes clair / sombre / auto (persistés).
 - Internationalisation FR / EN.
 
 ## Configuration Fleet API
 
-Les valeurs `originUrl` et `apiDomain` utilisées pour enregistrer votre application Tesla sont actuellement **hardcodées** au début de `components/tokens/TokenFleetGenerator.tsx` :
+Le `redirect_uri` utilisé pour enregistrer votre application Tesla est **hardcodé** au début de `components/tokens/TokenFleetGenerator.tsx` :
 
 ```ts
-const ORIGIN_URL = 'https://app.myteslamate.com';
-const API_DOMAIN = 'example';
 const REDIRECT_URI = 'myteslamate://auth/callback/api';
 ```
 
-Modifiez-les pour correspondre à votre application Tesla Developer.
+L'`Allowed Origin URL` n'est plus une constante : il est saisi par l'utilisateur à l'étape 1 du générateur Fleet API.
+
+Le générateur Owner API peut renvoyer les tokens vers MyTeslaMate via l'URL hardcodée au début de `components/tokens/TokenOwnerGenerator.tsx` :
+
+```ts
+const MTM_OWNER_TOKEN_URL = 'https://app.myteslamate.com/owner-token';
+```
+
+Modifiez ces valeurs pour correspondre à votre application Tesla Developer / votre instance.
 
 ## Démarrage
 

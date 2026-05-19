@@ -258,7 +258,8 @@ export default function TokenFleetGenerator({
 
       if (!tokenResponse.ok || !tokenData.access_token) {
         throw new Error(
-          tokenData.error || "Erreur lors de l'obtention du token"
+          tokenData.error ||
+            t('settings.tokens.fleetGenerator.alerts.tokenError')
         );
       }
 
@@ -299,7 +300,9 @@ export default function TokenFleetGenerator({
     } catch (error) {
       console.error('API request failed:', error);
       const errorMessage =
-        error instanceof Error ? error.message : 'Erreur inconnue';
+        error instanceof Error
+          ? error.message
+          : t('settings.tokens.fleetGenerator.alerts.unknownError');
 
       setProgress(prev =>
         prev.map(p =>
@@ -309,7 +312,10 @@ export default function TokenFleetGenerator({
         )
       );
 
-      Alert.alert('Erreur', errorMessage);
+      Alert.alert(
+        t('settings.tokens.fleetGenerator.alerts.error'),
+        errorMessage
+      );
     } finally {
       setIsLoading(false);
     }
@@ -326,7 +332,7 @@ export default function TokenFleetGenerator({
     try {
       await Linking.openURL(authUrl);
       setCurrentStep(5);
-    } catch (error) {
+    } catch {
       Alert.alert(
         t('settings.tokens.fleetGenerator.alerts.error'),
         t('settings.tokens.fleetGenerator.alerts.browserError')

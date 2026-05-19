@@ -10,11 +10,22 @@ import {
   type ThemeMode,
 } from '@/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
-import { Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Linking,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import appConfig from '@/app.json';
 
-const APP_VERSION = '1.0.0';
-const APP_BUILD = '1';
+const APP_VERSION = appConfig.expo.version;
+const APP_BUILD =
+  Platform.OS === 'ios'
+    ? appConfig.expo.ios.buildNumber
+    : String(appConfig.expo.android.versionCode);
 const WEBSITE_URL = 'https://app.myteslamate.com';
 
 export default function AboutScreen() {
