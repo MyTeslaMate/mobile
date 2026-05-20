@@ -16,6 +16,7 @@ import {
   useTheme,
 } from '@/contexts/ThemeContext';
 import { TokenStoreProvider } from '@/contexts/TokenStoreContext';
+import { RegionProvider } from '@/hooks/useRegion';
 import '@/i18n';
 
 function NavigationWrapper({ children }: { children: ReactNode }) {
@@ -47,20 +48,22 @@ export default function RootLayout() {
   return (
     <CustomThemeProvider>
       <LocalizationProvider>
-        <TokenStoreProvider>
-          <BiometricProvider>
-            <NavigationWrapper>
-              <BiometricGate>
-                <Stack>
-                  <Stack.Screen
-                    name="(tabs)"
-                    options={{ headerShown: false }}
-                  />
-                </Stack>
-              </BiometricGate>
-            </NavigationWrapper>
-          </BiometricProvider>
-        </TokenStoreProvider>
+        <RegionProvider>
+          <TokenStoreProvider>
+            <BiometricProvider>
+              <NavigationWrapper>
+                <BiometricGate>
+                  <Stack>
+                    <Stack.Screen
+                      name="(tabs)"
+                      options={{ headerShown: false }}
+                    />
+                  </Stack>
+                </BiometricGate>
+              </NavigationWrapper>
+            </BiometricProvider>
+          </TokenStoreProvider>
+        </RegionProvider>
       </LocalizationProvider>
     </CustomThemeProvider>
   );

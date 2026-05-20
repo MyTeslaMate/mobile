@@ -1,0 +1,161 @@
+{
+  "common": {
+    "loading": "Laden...",
+    "error": "Fout",
+    "close": "Sluiten",
+    "cancel": "Annuleren"
+  },
+  "tabs": {
+    "fleet": "Fleet API",
+    "owner": "Owner API",
+    "about": "Over"
+  },
+  "about": {
+    "title": "Tesla Tokens Generator",
+    "version": "v. {{version}} (build {{build}})",
+    "descriptionTitle": "Over",
+    "description": "Tesla Tokens Generator is een minimalistische app die je helpt om de Tesla API-tokens te genereren die nodig zijn om externe tools, zoals TeslaMate, met je Tesla-account te verbinden.",
+    "featuresTitle": "Functies",
+    "featureFleet": "Fleet API-tokens genereren",
+    "featureOwner": "Owner API-tokens genereren",
+    "featureSecure": "Versleutelde opslag en biometrische vergrendeling",
+    "featureTheme": "Licht, donker en automatisch thema",
+    "linksTitle": "Links",
+    "website": "MyTeslaMate-website"
+  },
+  "tokenInfo": {
+    "expired": "Token verlopen",
+    "expiresOn": "Verloopt op {{date}}",
+    "scopes": "Scopes"
+  },
+  "tokenCard": {
+    "title": "Laatste token",
+    "generatedOn": "Gegenereerd op {{date}}",
+    "accessToken": "Access Token",
+    "refreshToken": "Refresh Token",
+    "test": "Testen",
+    "clear": "Wissen",
+    "clearTitle": "Token wissen",
+    "clearMessage": "Het opgeslagen token wordt van dit apparaat verwijderd. Deze actie kan niet ongedaan worden gemaakt.",
+    "copied": "Gekopieerd",
+    "copyError": "Kan niet naar klembord kopiëren.",
+    "testResult": {
+      "valid": "Token geldig",
+      "invalid": "Token ongeldig of verlopen",
+      "error": "Kon niet verifiëren"
+    }
+  },
+  "biometric": {
+    "sectionTitle": "Beveiliging",
+    "toggleLabel": "Biometrische vergrendeling",
+    "toggleDescription": "Vereis Face ID / vingerafdruk bij het openen van de app.",
+    "unavailable": "Geen biometrie geconfigureerd op dit apparaat.",
+    "prompt": "Authenticeer om toegang te krijgen tot je tokens",
+    "lockedTitle": "App vergrendeld",
+    "lockedSubtitle": "Authenticeer om toegang te krijgen tot je tokens.",
+    "unlock": "Ontgrendelen"
+  },
+  "home": {
+    "title": "Tesla-tokengenerator",
+    "subtitle": "Genereer API-tokens voor de Tesla Fleet API en Owner API",
+    "fleetButtonTitle": "Fleet API-token",
+    "fleetButtonDescription": "Begeleid proces om je applicatie te registreren en Fleet API-tokens te verkrijgen",
+    "ownerButtonTitle": "Owner API-token",
+    "ownerButtonDescription": "Log in op je Tesla-account om je tokens te genereren en eenvoudig je TeslaMate-instantie in te stellen",
+    "themeSectionTitle": "Thema",
+    "themeLight": "Licht",
+    "themeDark": "Donker",
+    "themeAuto": "Automatisch",
+    "regionSectionTitle": "Regio",
+    "regionIntl": "Worldwide",
+    "regionCn": "China",
+    "languageSectionTitle": "Taal",
+    "generateButton": "Tokens genereren"
+  },
+  "settings": {
+    "tokens": {
+      "fleetGenerator": {
+        "title": "Fleet-tokengenerator",
+        "subtitle": "Begeleid proces om je Fleet API-tokens te verkrijgen",
+        "step1": {
+          "title": "Configureer je applicatie",
+          "instruction": "Maak je applicatie aan in het ontwikkelaarsportaal en gebruik de volgende waarden:",
+          "openDeveloperPortal": "Ontwikkelaarsportaal openen",
+          "allowedOriginUrl": "Allowed Origin URL:",
+          "allowedOriginUrlPlaceholder": "https://jouw-app-domein.com",
+          "allowedRedirectUri": "Allowed Redirect URI:",
+          "backButton": "Terug",
+          "nextButton": "Doorgaan"
+        },
+        "step2": {
+          "title": "Voer je inloggegevens in",
+          "clientId": "Client ID *",
+          "clientIdPlaceholder": "Je Client ID",
+          "clientSecret": "Client Secret *",
+          "clientSecretPlaceholder": "Je Client Secret",
+          "backButton": "Terug",
+          "nextButton": "Registratie starten"
+        },
+        "step3": {
+          "title": "Je applicatie wordt geregistreerd",
+          "partnerToken": "Partner token ophalen...",
+          "registerNA": "Regio NA registreren...",
+          "registerEU": "Regio EU registreren...",
+          "registerCN": "Regio CN registreren...",
+          "backButton": "Terug",
+          "nextButton": "Autorisatie voortzetten"
+        },
+        "step4": {
+          "title": "Fleet-tokens",
+          "instruction": "Klik op de onderstaande knop om de autorisatiepagina te openen. Log in op je account om toegang te autoriseren.",
+          "backButton": "Terug",
+          "authorizeButton": "Tokens genereren",
+          "waitingText": "Wachten op antwoord..."
+        },
+        "step5": {
+          "title": "Tokens succesvol gegenereerd",
+          "accessToken": "Access Token",
+          "refreshToken": "Refresh Token",
+          "backButton": "Terug",
+          "instruction": "Bewaar deze tokens veilig. Je hebt ze nodig om je applicatie te configureren."
+        },
+        "closeButton": "Sluiten",
+        "copyValue": "Te kopiëren waarde",
+        "alerts": {
+          "error": "Fout",
+          "copyError": "Kan niet naar klembord kopiëren. Kopieer de waarde handmatig.",
+          "missingAuth": "Authenticatiegegevens ontbreken",
+          "missingCredentials": "Vul de velden Client ID en Client Secret in",
+          "tokenError": "Fout bij het ophalen van tokens",
+          "tokensNotReceived": "Geen tokens ontvangen in het antwoord",
+          "unknownError": "Onbekende fout",
+          "teslaAuthError": "Fout",
+          "authorizationError": "Autorisatiefout: {{error}}",
+          "browserError": "Kan browser niet openen",
+          "success": "Gelukt!",
+          "tokensGenerated": "Je tokens zijn succesvol gegenereerd."
+        }
+      },
+      "ownerGenerator": {
+        "title": "Owner API",
+        "preparing": "Verbinding voorbereiden…",
+        "retrievingTokens": "Tokens ophalen...",
+        "successTitle": "Owner API-tokens gegenereerd",
+        "accessToken": "Access Token",
+        "refreshToken": "Refresh Token",
+        "closeButton": "Sluiten",
+        "copyValue": "Te kopiëren waarde",
+        "useInTeslaMate": "Deze tokens gebruiken in mijn TeslaMate",
+        "useModalTitle": "Importeren in MyTeslaMate",
+        "redirecting": "Doorverwijzen naar MyTeslaMate…",
+        "alerts": {
+          "error": "Fout",
+          "copyError": "Kan niet naar klembord kopiëren. Kopieer de waarde handmatig.",
+          "missingCode": "Code of PKCE ontbreekt",
+          "tokenError": "Fout bij het ophalen van tokens",
+          "unknownError": "Onbekende fout"
+        }
+      }
+    }
+  }
+}

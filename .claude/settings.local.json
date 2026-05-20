@@ -5,7 +5,10 @@
       "Bash(kill 1742)",
       "Bash(lsof -ti:8081)",
       "Bash(xargs kill -9)",
-      "Bash(./node_modules/.bin/expo run:ios)"
+      "Bash(./node_modules/.bin/expo run:ios)",
+      "Bash(eas build:list --limit 5 --json --non-interactive)",
+      "Bash(eas build:view 2234f8e7-4f62-4f67-ad36-ed522b3b1ffc --json)",
+      "Bash(python3 -c \"import sys, json; d=json.load\\(sys.stdin\\); print\\(d.get\\('logFiles',[]\\)\\)\")"
     ]
   }
 }

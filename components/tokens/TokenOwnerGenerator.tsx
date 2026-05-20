@@ -281,16 +281,23 @@ export function TokenOwnerGenerator({
           </ThemedText>
         )}
         {webviewVisible && authParams && (
-          <WebView
-            ref={webviewRef}
-            source={{ uri: getOwnerAuthUrl() }}
-            originWhitelist={['https://*', 'tesla://*']}
-            onShouldStartLoadWithRequest={handleShouldStartLoad}
-            onNavigationStateChange={handleNavStateChange}
-            onError={handleWebViewError}
-            startInLoadingState
-            style={styles.webview}
-          />
+          <>
+            <WebView
+              ref={webviewRef}
+              source={{ uri: getOwnerAuthUrl() }}
+              originWhitelist={['https://*', 'tesla://*']}
+              onShouldStartLoadWithRequest={handleShouldStartLoad}
+              onNavigationStateChange={handleNavStateChange}
+              onError={handleWebViewError}
+              startInLoadingState
+              style={styles.webview}
+            />
+            <Pressable style={styles.closeButton} onPress={onClose}>
+              <ThemedText style={styles.closeButtonText}>
+                {t('settings.tokens.ownerGenerator.closeButton')}
+              </ThemedText>
+            </Pressable>
+          </>
         )}
         {!webviewVisible && loading && (
           <ThemedText style={{ textAlign: 'center', marginTop: 32 }}>

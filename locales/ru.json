@@ -1,0 +1,161 @@
+{
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "close": "Закрыть",
+    "cancel": "Отмена"
+  },
+  "tabs": {
+    "fleet": "Fleet API",
+    "owner": "Owner API",
+    "about": "О приложении"
+  },
+  "about": {
+    "title": "Tesla Tokens Generator",
+    "version": "v. {{version}} (сборка {{build}})",
+    "descriptionTitle": "О приложении",
+    "description": "Tesla Tokens Generator — минималистичное приложение для генерации токенов API Tesla, необходимых для подключения сторонних инструментов, таких как TeslaMate, к вашей учётной записи Tesla.",
+    "featuresTitle": "Возможности",
+    "featureFleet": "Генерация токенов Fleet API",
+    "featureOwner": "Генерация токенов Owner API",
+    "featureSecure": "Шифрованное хранилище и биометрическая блокировка",
+    "featureTheme": "Светлая, тёмная и автоматическая темы",
+    "linksTitle": "Ссылки",
+    "website": "Сайт MyTeslaMate"
+  },
+  "tokenInfo": {
+    "expired": "Срок действия токена истёк",
+    "expiresOn": "Истекает {{date}}",
+    "scopes": "Разрешения"
+  },
+  "tokenCard": {
+    "title": "Последний токен",
+    "generatedOn": "Создан {{date}}",
+    "accessToken": "Access Token",
+    "refreshToken": "Refresh Token",
+    "test": "Проверить",
+    "clear": "Очистить",
+    "clearTitle": "Удалить токен",
+    "clearMessage": "Сохранённый токен будет удалён с этого устройства. Это действие нельзя отменить.",
+    "copied": "Скопировано",
+    "copyError": "Не удалось скопировать в буфер обмена.",
+    "testResult": {
+      "valid": "Токен действителен",
+      "invalid": "Токен недействителен или истёк",
+      "error": "Не удалось проверить"
+    }
+  },
+  "biometric": {
+    "sectionTitle": "Безопасность",
+    "toggleLabel": "Биометрическая блокировка",
+    "toggleDescription": "Требовать Face ID / отпечаток пальца при открытии приложения.",
+    "unavailable": "На этом устройстве биометрия не настроена.",
+    "prompt": "Пройдите аутентификацию для доступа к токенам",
+    "lockedTitle": "Приложение заблокировано",
+    "lockedSubtitle": "Пройдите аутентификацию для доступа к токенам.",
+    "unlock": "Разблокировать"
+  },
+  "home": {
+    "title": "Генератор токенов Tesla",
+    "subtitle": "Генерируйте токены API для Tesla Fleet API и Owner API",
+    "fleetButtonTitle": "Токен Fleet API",
+    "fleetButtonDescription": "Пошаговый процесс регистрации приложения и получения токенов Fleet API",
+    "ownerButtonTitle": "Токен Owner API",
+    "ownerButtonDescription": "Войдите в учётную запись Tesla, чтобы создать токены и легко настроить TeslaMate",
+    "themeSectionTitle": "Тема",
+    "themeLight": "Светлая",
+    "themeDark": "Тёмная",
+    "themeAuto": "Авто",
+    "regionSectionTitle": "Регион",
+    "regionIntl": "Международный",
+    "regionCn": "Китай",
+    "languageSectionTitle": "Язык",
+    "generateButton": "Сгенерировать токены"
+  },
+  "settings": {
+    "tokens": {
+      "fleetGenerator": {
+        "title": "Генератор токенов Fleet",
+        "subtitle": "Пошаговый процесс получения ваших токенов Fleet API",
+        "step1": {
+          "title": "Настройте приложение",
+          "instruction": "Создайте приложение в портале разработчиков и используйте следующие значения:",
+          "openDeveloperPortal": "Открыть портал разработчиков",
+          "allowedOriginUrl": "Allowed Origin URL:",
+          "allowedOriginUrlPlaceholder": "https://ваш-домен-приложения.com",
+          "allowedRedirectUri": "Allowed Redirect URI:",
+          "backButton": "Назад",
+          "nextButton": "Продолжить"
+        },
+        "step2": {
+          "title": "Введите учётные данные",
+          "clientId": "Client ID *",
+          "clientIdPlaceholder": "Ваш Client ID",
+          "clientSecret": "Client Secret *",
+          "clientSecretPlaceholder": "Ваш Client Secret",
+          "backButton": "Назад",
+          "nextButton": "Начать регистрацию"
+        },
+        "step3": {
+          "title": "Регистрация приложения",
+          "partnerToken": "Получение partner token...",
+          "registerNA": "Регистрация региона NA...",
+          "registerEU": "Регистрация региона EU...",
+          "registerCN": "Регистрация региона CN...",
+          "backButton": "Назад",
+          "nextButton": "Продолжить авторизацию"
+        },
+        "step4": {
+          "title": "Токены Fleet",
+          "instruction": "Нажмите кнопку ниже, чтобы открыть страницу авторизации. Войдите в учётную запись, чтобы разрешить доступ.",
+          "backButton": "Назад",
+          "authorizeButton": "Сгенерировать токены",
+          "waitingText": "Ожидание ответа..."
+        },
+        "step5": {
+          "title": "Токены успешно созданы",
+          "accessToken": "Access Token",
+          "refreshToken": "Refresh Token",
+          "backButton": "Назад",
+          "instruction": "Сохраните эти токены в безопасном месте. Они понадобятся для настройки вашего приложения."
+        },
+        "closeButton": "Закрыть",
+        "copyValue": "Значение для копирования",
+        "alerts": {
+          "error": "Ошибка",
+          "copyError": "Не удалось скопировать в буфер обмена. Скопируйте значение вручную.",
+          "missingAuth": "Отсутствуют данные аутентификации",
+          "missingCredentials": "Заполните поля Client ID и Client Secret",
+          "tokenError": "Ошибка получения токенов",
+          "tokensNotReceived": "Токены не получены в ответе",
+          "unknownError": "Неизвестная ошибка",
+          "teslaAuthError": "Ошибка",
+          "authorizationError": "Ошибка авторизации: {{error}}",
+          "browserError": "Не удалось открыть браузер",
+          "success": "Готово!",
+          "tokensGenerated": "Ваши токены успешно созданы."
+        }
+      },
+      "ownerGenerator": {
+        "title": "Owner API",
+        "preparing": "Подготовка подключения…",
+        "retrievingTokens": "Получение токенов...",
+        "successTitle": "Токены Owner API созданы",
+        "accessToken": "Access Token",
+        "refreshToken": "Refresh Token",
+        "closeButton": "Закрыть",
+        "copyValue": "Значение для копирования",
+        "useInTeslaMate": "Использовать эти токены в моём TeslaMate",
+        "useModalTitle": "Импорт в MyTeslaMate",
+        "redirecting": "Перенаправление на MyTeslaMate…",
+        "alerts": {
+          "error": "Ошибка",
+          "copyError": "Не удалось скопировать в буфер обмена. Скопируйте значение вручную.",
+          "missingCode": "Отсутствует code или PKCE",
+          "tokenError": "Ошибка получения токенов",
+          "unknownError": "Неизвестная ошибка"
+        }
+      }
+    }
+  }
+}

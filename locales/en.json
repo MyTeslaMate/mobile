@@ -11,17 +11,15 @@
     "about": "About"
   },
   "about": {
-    "title": "MyTeslaMate Tokens",
+    "title": "Tesla Tokens Generator",
     "version": "v. {{version}} (build {{build}})",
-    "copyright": "© 2026 MyTeslaMate",
     "descriptionTitle": "About",
-    "description": "MyTeslaMate Tokens is a minimalist app that helps you generate the Tesla API tokens needed to connect your third-party tools, such as TeslaMate, to your Tesla account.",
+    "description": "Tesla Tokens Generator is a minimalist app that helps you generate the Tesla API tokens needed to connect your third-party tools, such as TeslaMate, to your Tesla account.",
     "featuresTitle": "Features",
     "featureFleet": "Fleet API token generation",
     "featureOwner": "Owner API token generation",
     "featureSecure": "Encrypted storage and biometric lock",
     "featureTheme": "Light, dark and automatic themes",
-    "featureI18n": "Available in French and English",
     "linksTitle": "Links",
     "website": "MyTeslaMate website"
   },
@@ -63,13 +61,13 @@
     "fleetButtonTitle": "Fleet API token",
     "fleetButtonDescription": "Guided process to register your application and obtain Fleet API tokens",
     "ownerButtonTitle": "Owner API token",
-    "ownerButtonDescription": "Authenticate with your Tesla account to retrieve Owner API tokens",
+    "ownerButtonDescription": "Sign in to your Tesla account to generate your tokens and easily set up your TeslaMate",
     "themeSectionTitle": "Theme",
     "themeLight": "Light",
     "themeDark": "Dark",
     "themeAuto": "Auto",
     "regionSectionTitle": "Region",
-    "regionIntl": "International",
+    "regionIntl": "Worldwide",
     "regionCn": "China",
     "languageSectionTitle": "Language",
     "generateButton": "Generate tokens"
@@ -77,7 +75,7 @@
   "settings": {
     "tokens": {
       "fleetGenerator": {
-        "title": "Fleet API Token Generator",
+        "title": "Fleet Token Generator",
         "subtitle": "Guided process to obtain your Fleet API tokens",
         "step1": {
           "title": "Configure your application",
@@ -87,7 +85,7 @@
           "allowedOriginUrlPlaceholder": "https://your-app-domain.com",
           "allowedRedirectUri": "Allowed Redirect URI:",
           "backButton": "Back",
-          "nextButton": "Continue to step 2"
+          "nextButton": "Continue"
         },
         "step2": {
           "title": "Enter your credentials",
@@ -108,10 +106,10 @@
           "nextButton": "Continue authorization"
         },
         "step4": {
-          "title": "Authorization",
+          "title": "Fleet Tokens",
           "instruction": "Click the button below to open the authorization page. Sign in to your account to authorize access.",
           "backButton": "Back",
-          "authorizeButton": "Authorize",
+          "authorizeButton": "Generate tokens",
           "waitingText": "Waiting for response..."
         },
         "step5": {

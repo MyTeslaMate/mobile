@@ -1,0 +1,161 @@
+{
+  "common": {
+    "loading": "Wird geladen...",
+    "error": "Fehler",
+    "close": "Schließen",
+    "cancel": "Abbrechen"
+  },
+  "tabs": {
+    "fleet": "Fleet API",
+    "owner": "Owner API",
+    "about": "Über"
+  },
+  "about": {
+    "title": "Tesla Tokens Generator",
+    "version": "v. {{version}} (Build {{build}})",
+    "descriptionTitle": "Über",
+    "description": "Tesla Tokens Generator ist eine minimalistische App, mit der Sie die Tesla-API-Tokens erzeugen, die nötig sind, um Drittanwendungen wie TeslaMate mit Ihrem Tesla-Konto zu verbinden.",
+    "featuresTitle": "Funktionen",
+    "featureFleet": "Erzeugung von Fleet-API-Tokens",
+    "featureOwner": "Erzeugung von Owner-API-Tokens",
+    "featureSecure": "Verschlüsselte Speicherung und biometrische Sperre",
+    "featureTheme": "Helles, dunkles und automatisches Design",
+    "linksTitle": "Links",
+    "website": "MyTeslaMate-Website"
+  },
+  "tokenInfo": {
+    "expired": "Token abgelaufen",
+    "expiresOn": "Läuft ab am {{date}}",
+    "scopes": "Berechtigungen"
+  },
+  "tokenCard": {
+    "title": "Letztes Token",
+    "generatedOn": "Erzeugt am {{date}}",
+    "accessToken": "Access Token",
+    "refreshToken": "Refresh Token",
+    "test": "Testen",
+    "clear": "Löschen",
+    "clearTitle": "Token löschen",
+    "clearMessage": "Das gespeicherte Token wird von diesem Gerät entfernt. Diese Aktion kann nicht rückgängig gemacht werden.",
+    "copied": "Kopiert",
+    "copyError": "In die Zwischenablage kann nicht kopiert werden.",
+    "testResult": {
+      "valid": "Token gültig",
+      "invalid": "Token ungültig oder abgelaufen",
+      "error": "Überprüfung nicht möglich"
+    }
+  },
+  "biometric": {
+    "sectionTitle": "Sicherheit",
+    "toggleLabel": "Biometrische Sperre",
+    "toggleDescription": "Face ID / Fingerabdruck beim Öffnen der App verlangen.",
+    "unavailable": "Auf diesem Gerät ist keine Biometrie eingerichtet.",
+    "prompt": "Authentifizieren Sie sich, um auf Ihre Tokens zuzugreifen",
+    "lockedTitle": "App gesperrt",
+    "lockedSubtitle": "Authentifizieren Sie sich, um auf Ihre Tokens zuzugreifen.",
+    "unlock": "Entsperren"
+  },
+  "home": {
+    "title": "Tesla-Token-Generator",
+    "subtitle": "Erzeuge API-Tokens für die Tesla Fleet API und Owner API",
+    "fleetButtonTitle": "Fleet-API-Token",
+    "fleetButtonDescription": "Geführter Ablauf zum Registrieren Ihrer Anwendung und Erhalten von Fleet-API-Tokens",
+    "ownerButtonTitle": "Owner-API-Token",
+    "ownerButtonDescription": "Melden Sie sich mit Ihrem Tesla-Konto an, um Ihre Tokens zu erzeugen und Ihre TeslaMate-Instanz einfach einzurichten",
+    "themeSectionTitle": "Design",
+    "themeLight": "Hell",
+    "themeDark": "Dunkel",
+    "themeAuto": "Automatisch",
+    "regionSectionTitle": "Region",
+    "regionIntl": "Worldwide",
+    "regionCn": "China",
+    "languageSectionTitle": "Sprache",
+    "generateButton": "Tokens erzeugen"
+  },
+  "settings": {
+    "tokens": {
+      "fleetGenerator": {
+        "title": "Fleet-Token-Generator",
+        "subtitle": "Geführter Ablauf zum Erhalten Ihrer Fleet-API-Tokens",
+        "step1": {
+          "title": "Anwendung konfigurieren",
+          "instruction": "Erstellen Sie Ihre Anwendung im Entwicklerportal und verwenden Sie folgende Werte:",
+          "openDeveloperPortal": "Entwicklerportal öffnen",
+          "allowedOriginUrl": "Allowed Origin URL:",
+          "allowedOriginUrlPlaceholder": "https://ihre-app-domain.com",
+          "allowedRedirectUri": "Allowed Redirect URI:",
+          "backButton": "Zurück",
+          "nextButton": "Weiter"
+        },
+        "step2": {
+          "title": "Anmeldedaten eingeben",
+          "clientId": "Client ID *",
+          "clientIdPlaceholder": "Ihre Client ID",
+          "clientSecret": "Client Secret *",
+          "clientSecretPlaceholder": "Ihr Client Secret",
+          "backButton": "Zurück",
+          "nextButton": "Registrierung starten"
+        },
+        "step3": {
+          "title": "Anwendung wird registriert",
+          "partnerToken": "Partner-Token wird abgerufen...",
+          "registerNA": "Region NA wird registriert...",
+          "registerEU": "Region EU wird registriert...",
+          "registerCN": "Region CN wird registriert...",
+          "backButton": "Zurück",
+          "nextButton": "Autorisierung fortsetzen"
+        },
+        "step4": {
+          "title": "Fleet-Tokens",
+          "instruction": "Klicken Sie auf die Schaltfläche unten, um die Autorisierungsseite zu öffnen. Melden Sie sich an, um den Zugriff zu autorisieren.",
+          "backButton": "Zurück",
+          "authorizeButton": "Tokens erzeugen",
+          "waitingText": "Warte auf Antwort..."
+        },
+        "step5": {
+          "title": "Tokens erfolgreich erzeugt",
+          "accessToken": "Access Token",
+          "refreshToken": "Refresh Token",
+          "backButton": "Zurück",
+          "instruction": "Bewahren Sie diese Tokens sicher auf. Sie benötigen sie zur Konfiguration Ihrer Anwendung."
+        },
+        "closeButton": "Schließen",
+        "copyValue": "Zu kopierender Wert",
+        "alerts": {
+          "error": "Fehler",
+          "copyError": "Kopieren in die Zwischenablage nicht möglich. Bitte kopieren Sie den Wert manuell.",
+          "missingAuth": "Fehlende Authentifizierungsinformationen",
+          "missingCredentials": "Bitte füllen Sie die Felder Client ID und Client Secret aus",
+          "tokenError": "Fehler beim Abrufen der Tokens",
+          "tokensNotReceived": "Keine Tokens in der Antwort empfangen",
+          "unknownError": "Unbekannter Fehler",
+          "teslaAuthError": "Fehler",
+          "authorizationError": "Autorisierungsfehler: {{error}}",
+          "browserError": "Browser konnte nicht geöffnet werden",
+          "success": "Erfolg!",
+          "tokensGenerated": "Ihre Tokens wurden erfolgreich erzeugt."
+        }
+      },
+      "ownerGenerator": {
+        "title": "Owner API",
+        "preparing": "Verbindung wird vorbereitet…",
+        "retrievingTokens": "Tokens werden abgerufen...",
+        "successTitle": "Owner-API-Tokens erzeugt",
+        "accessToken": "Access Token",
+        "refreshToken": "Refresh Token",
+        "closeButton": "Schließen",
+        "copyValue": "Zu kopierender Wert",
+        "useInTeslaMate": "Diese Tokens in meinem TeslaMate verwenden",
+        "useModalTitle": "In MyTeslaMate importieren",
+        "redirecting": "Weiterleitung zu MyTeslaMate…",
+        "alerts": {
+          "error": "Fehler",
+          "copyError": "Kopieren in die Zwischenablage nicht möglich. Bitte kopieren Sie den Wert manuell.",
+          "missingCode": "Code oder PKCE fehlt",
+          "tokenError": "Fehler beim Abrufen der Tokens",
+          "unknownError": "Unbekannter Fehler"
+        }
+      }
+    }
+  }
+}

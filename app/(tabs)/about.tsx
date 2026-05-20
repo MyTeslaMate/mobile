@@ -12,6 +12,7 @@ import {
 } from '@/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import {
+  Image,
   Linking,
   Platform,
   Pressable,
@@ -21,13 +22,13 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import appConfig from '@/app.json';
+import Constants from 'expo-constants';
 
-const APP_VERSION = appConfig.expo.version;
+const APP_VERSION = Constants.expoConfig?.version ?? '';
 const APP_BUILD =
   Platform.OS === 'ios'
-    ? appConfig.expo.ios.buildNumber
-    : String(appConfig.expo.android.versionCode);
+    ? (Constants.expoConfig?.ios?.buildNumber ?? '')
+    : String(Constants.expoConfig?.android?.versionCode ?? '');
 const WEBSITE_URL = 'https://app.myteslamate.com';
 
 export default function AboutScreen() {
@@ -48,7 +49,6 @@ export default function AboutScreen() {
     { icon: 'person', label: t('about.featureOwner') },
     { icon: 'lock-closed', label: t('about.featureSecure') },
     { icon: 'color-palette', label: t('about.featureTheme') },
-    { icon: 'language', label: t('about.featureI18n') },
   ];
 
   const handleBiometricToggle = (value: boolean) => {
@@ -69,9 +69,10 @@ export default function AboutScreen() {
     >
       <ScrollView contentContainerStyle={styles.container}>
         <ThemedView style={styles.header}>
-          <View style={styles.appIcon}>
-            <Ionicons name="key" size={48} color="#fff" />
-          </View>
+          <Image
+            source={require('@/assets/images/icon.png')}
+            style={styles.appIcon}
+          />
           <ThemedText type="title" style={styles.title}>
             {t('about.title')}
           </ThemedText>
@@ -79,7 +80,7 @@ export default function AboutScreen() {
             {t('about.version', { version: APP_VERSION, build: APP_BUILD })}
           </ThemedText>
           <ThemedText style={styles.copyright}>
-            {t('about.copyright')}
+            © 2026 Tesflow
           </ThemedText>
         </ThemedView>
 
@@ -89,30 +90,6 @@ export default function AboutScreen() {
           </ThemedText>
           <ThemedText style={styles.paragraph}>
             {t('about.description')}
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedView style={styles.section}>
-          <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
-            {t('about.featuresTitle')}
-          </ThemedText>
-          {features.map(feature => (
-            <View key={feature.label} style={styles.featureRow}>
-              <Ionicons
-                name={feature.icon}
-                size={20}
-                color={colors.primary}
-              />
-              <ThemedText style={styles.featureLabel}>
-                {feature.label}
-              </ThemedText>
-            </View>
-          ))}
-        </ThemedView>
-
-        <ThemedView style={styles.section}>
-          <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
-            {t('about.linksTitle')}
           </ThemedText>
           <Pressable
             style={styles.linkRow}
@@ -128,6 +105,24 @@ export default function AboutScreen() {
               color={colors.textSecondary}
             />
           </Pressable>
+
+          <View style={styles.divider} />
+
+          <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
+            {t('about.featuresTitle')}
+          </ThemedText>
+          {features.map(feature => (
+            <View key={feature.label} style={styles.featureRow}>
+              <Ionicons
+                name={feature.icon}
+                size={20}
+                color={colors.primary}
+              />
+              <ThemedText style={styles.featureLabel}>
+                {feature.label}
+              </ThemedText>
+            </View>
+          ))}
         </ThemedView>
 
         <ThemedView style={styles.section}>
@@ -163,14 +158,14 @@ export default function AboutScreen() {
           <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
             {t('home.themeSectionTitle')}
           </ThemedText>
-          <View style={styles.optionRow}>
+          <View style={styles.segmentedRow}>
             {themeOptions.map(option => {
               const isSelected = themeState.mode === option.mode;
               return (
                 <Pressable
                   key={option.mode}
                   style={[
-                    styles.optionButton,
+                    styles.segmentedButton,
                     isSelected && styles.optionButtonSelected,
                   ]}
                   onPress={() => setThemeMode(option.mode)}
@@ -198,14 +193,14 @@ export default function AboutScreen() {
           <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
             {t('home.languageSectionTitle')}
           </ThemedText>
-          <View style={styles.optionRow}>
+          <View style={styles.languageGrid}>
             {availableLanguages.map(lang => {
               const isSelected = currentLanguage === lang.code;
               return (
                 <Pressable
                   key={lang.code}
                   style={[
-                    styles.optionButton,
+                    styles.languageButton,
                     isSelected && styles.optionButtonSelected,
                   ]}
                   onPress={() =>
@@ -217,6 +212,7 @@ export default function AboutScreen() {
                       styles.optionLabel,
                       isSelected && styles.optionLabelSelected,
                     ]}
+                    numberOfLines={1}
                   >
                     {lang.flag} {lang.name}
                   </ThemedText>
@@ -248,9 +244,6 @@ const createStyles = (colors: any) =>
       width: 88,
       height: 88,
       borderRadius: 20,
-      backgroundColor: colors.primary,
-      alignItems: 'center',
-      justifyContent: 'center',
       marginBottom: 8,
     },
     title: {
@@ -298,6 +291,11 @@ const createStyles = (colors: any) =>
       fontSize: 14,
       fontWeight: '500',
     },
+    divider: {
+      height: StyleSheet.hairlineWidth,
+      backgroundColor: colors.borderColor,
+      marginVertical: 4,
+    },
     settingRow: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -315,18 +313,37 @@ const createStyles = (colors: any) =>
       opacity: 0.6,
       marginTop: 2,
     },
-    optionRow: {
+    segmentedRow: {
       flexDirection: 'row',
       gap: 8,
-      flexWrap: 'wrap',
     },
-    optionButton: {
+    segmentedButton: {
+      flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
       gap: 6,
       backgroundColor: colors.background,
       borderRadius: 10,
-      paddingHorizontal: 14,
+      paddingHorizontal: 12,
+      paddingVertical: 10,
+      borderWidth: 1,
+      borderColor: colors.borderColor,
+    },
+    languageGrid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: 8,
+    },
+    languageButton: {
+      width: '48%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 6,
+      backgroundColor: colors.background,
+      borderRadius: 10,
+      paddingHorizontal: 12,
       paddingVertical: 10,
       borderWidth: 1,
       borderColor: colors.borderColor,

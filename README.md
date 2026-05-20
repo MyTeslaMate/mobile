@@ -1,100 +1,88 @@
-# MyTeslaMate Tokens
+# Tesla Tokens Generator
 
-Application React Native (Expo) minimaliste pour générer des tokens d'API Tesla :
+A minimalist React Native (Expo) app to generate Tesla API tokens:
 
-- **Fleet API** : enregistre votre application Tesla developer dans les régions NA/EU et récupère vos tokens via OAuth2.
-- **Owner API** : récupère les tokens Owner API via PKCE et une WebView dédiée à l'authentification Tesla.
+- **Fleet API**: register your Tesla developer application in the NA/EU regions and retrieve your tokens via OAuth2.
+- **Owner API**: retrieve Owner API tokens via PKCE and a dedicated WebView for Tesla authentication.
 
-L'app est extraite d'un projet plus large (`myteslamate`) en ne gardant que la fonctionnalité de génération de tokens.
+## Features
 
-## Fonctionnalités
+- Tab navigation: **Fleet API**, **Owner API**, and **About**.
+- Region selection (International / China) on each API tab.
+- Light / dark / auto themes (persisted).
+- Internationalization.
 
-- Une navigation par onglets : **Fleet API**, **Owner API** et **À propos**.
-- Sélection de la région (International / Chine) sur chaque onglet API.
-- Thèmes clair / sombre / auto (persistés).
-- Internationalisation FR / EN.
+## Fleet API configuration
 
-## Configuration Fleet API
-
-Le `redirect_uri` utilisé pour enregistrer votre application Tesla est **hardcodé** au début de `components/tokens/TokenFleetGenerator.tsx` :
+The `redirect_uri` used to register your Tesla application is **hardcoded** at the top of `components/tokens/TokenFleetGenerator.tsx`:
 
 ```ts
-const REDIRECT_URI = 'myteslamate://auth/callback/api';
+const REDIRECT_URI = 'mtm://auth/callback/api';
 ```
 
-L'`Allowed Origin URL` n'est plus une constante : il est saisi par l'utilisateur à l'étape 1 du générateur Fleet API.
-
-Le générateur Owner API peut renvoyer les tokens vers MyTeslaMate via l'URL hardcodée au début de `components/tokens/TokenOwnerGenerator.tsx` :
-
-```ts
-const MTM_OWNER_TOKEN_URL = 'https://app.myteslamate.com/owner-token';
-```
-
-Modifiez ces valeurs pour correspondre à votre application Tesla Developer / votre instance.
-
-## Démarrage
+## Getting started
 
 ```bash
 npm install
 npx expo start
 ```
 
-Pour build natif (dev client requis pour la WebView + deep link) :
+For native builds (dev client required for the WebView + deep link):
 
 ```bash
 npx expo run:ios
 npx expo run:android
 ```
 
-## Build App Store / Play Store (EAS)
+## App Store / Play Store build (EAS)
 
-Les builds de production sont compilés dans le cloud via **EAS Build** — aucun Mac requis. La configuration se trouve dans `eas.json` (profils `development`, `preview`, `production`).
+Production builds are compiled in the cloud via **EAS Build** — no Mac required. The configuration lives in `eas.json` (profiles `development`, `preview`, `production`).
 
-Préparation, à faire **une seule fois** :
+One-time setup:
 
 ```bash
 npm install -g eas-cli
 eas login
-eas init                 # ajoute extra.eas.projectId dans app.json
-eas credentials          # génère/configure la signature iOS et Android
+eas init                 # adds extra.eas.projectId to app.json
+eas credentials          # generates/configures iOS and Android signing
 ```
 
-Lancer un build manuellement :
+Run a build manually:
 
 ```bash
 eas build --platform all --profile production
 ```
 
-### CI GitHub Actions
+### GitHub Actions CI
 
-Le workflow `.github/workflows/eas-build.yml` lance les builds iOS + Android :
+The `.github/workflows/eas-build.yml` workflow triggers iOS + Android builds:
 
-- automatiquement sur un tag `v*` (ex. `git tag v1.0.0 && git push --tags`) ;
-- manuellement via *Run workflow* (choix de la plateforme et du profil).
+- automatically on a `v*` tag (e.g. `git tag v1.0.0 && git push --tags`);
+- manually via *Run workflow* (choose the platform and profile).
 
-Le runner GitHub ne fait que déclencher (`--no-wait`) ; build et envoi aux stores s'exécutent sur les serveurs EAS. Avec le profil `production`, le workflow ajoute `--auto-submit` : dès qu'un build réussit, il est envoyé automatiquement vers App Store Connect (iOS) et la piste *internal* de Google Play (Android).
+The GitHub runner only triggers the build (`--no-wait`); compilation and store submission run on EAS servers. With the `production` profile, the workflow adds `--auto-submit`: as soon as a build succeeds, it is automatically sent to App Store Connect (iOS) and the Google Play *internal* track (Android).
 
-### Credentials de publication
+### Publishing credentials
 
-Tout est stocké côté EAS (rien de sensible dans le dépôt). À configurer **une seule fois** :
+Everything is stored on the EAS side (nothing sensitive in the repo). One-time setup:
 
-1. **`EXPO_TOKEN`** (secret GitHub) — jeton d'accès Expo.
+1. **`EXPO_TOKEN`** (GitHub secret) — Expo access token.
    - expo.dev → *Account* → *Settings* → *Access tokens* → *Create token*.
-   - GitHub → repo → *Settings* → *Secrets and variables* → *Actions* → *New repository secret*, nommé `EXPO_TOKEN`.
+   - GitHub → repo → *Settings* → *Secrets and variables* → *Actions* → *New repository secret*, named `EXPO_TOKEN`.
 
-2. **iOS — App Store Connect API Key** (pour l'envoi automatique).
-   - App Store Connect → *Users and Access* → onglet *Integrations* → *App Store Connect API* → *Generate API Key*, rôle *App Manager*.
-   - Récupérer l'**Issuer ID**, le **Key ID**, et télécharger le fichier **`.p8`** (téléchargeable une seule fois).
-   - Enregistrer ces valeurs dans EAS : `eas credentials` → plateforme *iOS* → *App Store Connect API Key*.
-   - L'app doit déjà exister dans App Store Connect avec le Bundle ID `fr.opcode.myteslamatetokens`.
+2. **iOS — App Store Connect API Key** (for automatic submission).
+   - App Store Connect → *Users and Access* → *Integrations* tab → *App Store Connect API* → *Generate API Key*, role *App Manager*.
+   - Note the **Issuer ID**, the **Key ID**, and download the **`.p8`** file (downloadable only once).
+   - Save these values in EAS: `eas credentials` → *iOS* platform → *App Store Connect API Key*.
+   - The app must already exist in App Store Connect with the bundle ID `com.myteslamate.tokens`.
 
-3. **Android — compte de service Google Play** (pour l'envoi automatique).
-   - Google Play Console → *Users and permissions* → *Invite new users*, ou via Google Cloud Console → créer un *service account* puis une **clé JSON**.
-   - Dans la Play Console, accorder à ce compte les droits de publication (*Releases*).
-   - Enregistrer la clé JSON dans EAS : `eas credentials` → plateforme *Android* → *Google Service Account*.
-   - ⚠️ Google exige que **le tout premier AAB soit envoyé manuellement** via la Play Console ; les envois suivants peuvent être automatisés.
+3. **Android — Google Play service account** (for automatic submission).
+   - Google Play Console → *Users and permissions* → *Invite new users*, or via Google Cloud Console → create a *service account* and a **JSON key**.
+   - In the Play Console, grant this account release permissions (*Releases*).
+   - Save the JSON key in EAS: `eas credentials` → *Android* platform → *Google Service Account*.
+   - ⚠️ Google requires that **the very first AAB be uploaded manually** via the Play Console; subsequent uploads can be automated.
 
-Les builds iOS sont déposés sur App Store Connect / TestFlight — la soumission finale à la revue Apple reste manuelle. Les builds Android arrivent sur la piste *internal* (modifiable dans `eas.json` → `submit.production.android.track`).
+iOS builds are pushed to App Store Connect / TestFlight — the final submission to Apple review remains manual. Android builds land on the *internal* track (configurable in `eas.json` → `submit.production.android.track`).
 
 ## Stack
 

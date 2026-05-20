@@ -1,5 +1,4 @@
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import { useLocalization } from '@/contexts/LocalizationContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
 import { useRegion, type Region } from '@/hooks/useRegion';
@@ -17,7 +16,7 @@ export function RegionSelector() {
   ];
 
   return (
-    <ThemedView style={styles.section}>
+    <View style={styles.wrapper}>
       <ThemedText type="defaultSemiBold" style={styles.title}>
         {t('home.regionSectionTitle')}
       </ThemedText>
@@ -39,29 +38,28 @@ export function RegionSelector() {
           );
         })}
       </View>
-    </ThemedView>
+    </View>
   );
 }
 
 const createStyles = (colors: any) =>
   StyleSheet.create({
-    section: {
-      backgroundColor: colors.cardBackground,
-      borderRadius: 16,
-      padding: 16,
-      gap: 12,
+    wrapper: {
+      gap: 10,
     },
     title: {
-      marginBottom: 4,
+      fontSize: 14,
+      opacity: 0.7,
     },
     row: {
       flexDirection: 'row',
       gap: 8,
-      flexWrap: 'wrap',
     },
     button: {
+      flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
       gap: 6,
       backgroundColor: colors.background,
       borderRadius: 10,

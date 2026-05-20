@@ -1,0 +1,161 @@
+{
+  "common": {
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "close": "Chiudi",
+    "cancel": "Annulla"
+  },
+  "tabs": {
+    "fleet": "Fleet API",
+    "owner": "Owner API",
+    "about": "Informazioni"
+  },
+  "about": {
+    "title": "Tesla Tokens Generator",
+    "version": "v. {{version}} (build {{build}})",
+    "descriptionTitle": "Informazioni",
+    "description": "Tesla Tokens Generator è un'app minimalista che ti aiuta a generare i token dell'API Tesla necessari per collegare strumenti di terze parti, come TeslaMate, al tuo account Tesla.",
+    "featuresTitle": "Funzionalità",
+    "featureFleet": "Generazione di token Fleet API",
+    "featureOwner": "Generazione di token Owner API",
+    "featureSecure": "Archiviazione cifrata e blocco biometrico",
+    "featureTheme": "Temi chiaro, scuro e automatico",
+    "linksTitle": "Link",
+    "website": "Sito MyTeslaMate"
+  },
+  "tokenInfo": {
+    "expired": "Token scaduto",
+    "expiresOn": "Scade il {{date}}",
+    "scopes": "Ambiti"
+  },
+  "tokenCard": {
+    "title": "Ultimo token",
+    "generatedOn": "Generato il {{date}}",
+    "accessToken": "Access Token",
+    "refreshToken": "Refresh Token",
+    "test": "Prova",
+    "clear": "Cancella",
+    "clearTitle": "Cancella token",
+    "clearMessage": "Il token salvato verrà rimosso da questo dispositivo. Questa azione non può essere annullata.",
+    "copied": "Copiato",
+    "copyError": "Impossibile copiare negli appunti.",
+    "testResult": {
+      "valid": "Token valido",
+      "invalid": "Token non valido o scaduto",
+      "error": "Impossibile verificare"
+    }
+  },
+  "biometric": {
+    "sectionTitle": "Sicurezza",
+    "toggleLabel": "Blocco biometrico",
+    "toggleDescription": "Richiedi Face ID / impronta all'apertura dell'app.",
+    "unavailable": "Nessun dato biometrico configurato su questo dispositivo.",
+    "prompt": "Autenticati per accedere ai tuoi token",
+    "lockedTitle": "App bloccata",
+    "lockedSubtitle": "Autenticati per accedere ai tuoi token.",
+    "unlock": "Sblocca"
+  },
+  "home": {
+    "title": "Generatore di token Tesla",
+    "subtitle": "Genera token API per Tesla Fleet API e Owner API",
+    "fleetButtonTitle": "Token Fleet API",
+    "fleetButtonDescription": "Procedura guidata per registrare la tua applicazione e ottenere i token Fleet API",
+    "ownerButtonTitle": "Token Owner API",
+    "ownerButtonDescription": "Accedi al tuo account Tesla per generare i tuoi token e configurare facilmente la tua istanza TeslaMate",
+    "themeSectionTitle": "Tema",
+    "themeLight": "Chiaro",
+    "themeDark": "Scuro",
+    "themeAuto": "Automatico",
+    "regionSectionTitle": "Regione",
+    "regionIntl": "Internazionale",
+    "regionCn": "Cina",
+    "languageSectionTitle": "Lingua",
+    "generateButton": "Genera token"
+  },
+  "settings": {
+    "tokens": {
+      "fleetGenerator": {
+        "title": "Generatore di token Fleet",
+        "subtitle": "Procedura guidata per ottenere i tuoi token Fleet API",
+        "step1": {
+          "title": "Configura la tua applicazione",
+          "instruction": "Crea la tua applicazione nel portale sviluppatori e utilizza i seguenti valori:",
+          "openDeveloperPortal": "Apri portale sviluppatori",
+          "allowedOriginUrl": "Allowed Origin URL:",
+          "allowedOriginUrlPlaceholder": "https://il-tuo-dominio.com",
+          "allowedRedirectUri": "Allowed Redirect URI:",
+          "backButton": "Indietro",
+          "nextButton": "Continua"
+        },
+        "step2": {
+          "title": "Inserisci le tue credenziali",
+          "clientId": "Client ID *",
+          "clientIdPlaceholder": "Il tuo Client ID",
+          "clientSecret": "Client Secret *",
+          "clientSecretPlaceholder": "Il tuo Client Secret",
+          "backButton": "Indietro",
+          "nextButton": "Avvia registrazione"
+        },
+        "step3": {
+          "title": "Registrazione dell'applicazione",
+          "partnerToken": "Ottenimento del partner token...",
+          "registerNA": "Registrazione regione NA...",
+          "registerEU": "Registrazione regione EU...",
+          "registerCN": "Registrazione regione CN...",
+          "backButton": "Indietro",
+          "nextButton": "Continua autorizzazione"
+        },
+        "step4": {
+          "title": "Token Fleet",
+          "instruction": "Clicca sul pulsante per aprire la pagina di autorizzazione. Accedi al tuo account per autorizzare l'accesso.",
+          "backButton": "Indietro",
+          "authorizeButton": "Genera token",
+          "waitingText": "In attesa di risposta..."
+        },
+        "step5": {
+          "title": "Token generati con successo",
+          "accessToken": "Access Token",
+          "refreshToken": "Refresh Token",
+          "backButton": "Indietro",
+          "instruction": "Conserva questi token in modo sicuro. Ti serviranno per configurare la tua applicazione."
+        },
+        "closeButton": "Chiudi",
+        "copyValue": "Valore da copiare",
+        "alerts": {
+          "error": "Errore",
+          "copyError": "Impossibile copiare negli appunti. Copia il valore manualmente.",
+          "missingAuth": "Informazioni di autenticazione mancanti",
+          "missingCredentials": "Compila i campi Client ID e Client Secret",
+          "tokenError": "Errore nell'ottenimento dei token",
+          "tokensNotReceived": "Nessun token ricevuto nella risposta",
+          "unknownError": "Errore sconosciuto",
+          "teslaAuthError": "Errore",
+          "authorizationError": "Errore di autorizzazione: {{error}}",
+          "browserError": "Impossibile aprire il browser",
+          "success": "Riuscito!",
+          "tokensGenerated": "I tuoi token sono stati generati con successo."
+        }
+      },
+      "ownerGenerator": {
+        "title": "Owner API",
+        "preparing": "Preparazione della connessione…",
+        "retrievingTokens": "Recupero dei token...",
+        "successTitle": "Token Owner API generati",
+        "accessToken": "Access Token",
+        "refreshToken": "Refresh Token",
+        "closeButton": "Chiudi",
+        "copyValue": "Valore da copiare",
+        "useInTeslaMate": "Usa questi token nel mio TeslaMate",
+        "useModalTitle": "Importa in MyTeslaMate",
+        "redirecting": "Reindirizzamento a MyTeslaMate…",
+        "alerts": {
+          "error": "Errore",
+          "copyError": "Impossibile copiare negli appunti. Copia il valore manualmente.",
+          "missingCode": "Code o PKCE mancanti",
+          "tokenError": "Errore nell'ottenimento dei token",
+          "unknownError": "Errore sconosciuto"
+        }
+      }
+    }
+  }
+}

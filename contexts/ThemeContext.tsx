@@ -25,12 +25,12 @@ type ThemeAction =
   | { type: 'SET_ACTIVE_THEME'; payload: ActiveTheme }
   | { type: 'SET_LOADING'; payload: boolean };
 
-const THEME_STORAGE_KEY = 'myteslamate_tokens_theme_mode';
+const THEME_STORAGE_KEY = 'mtm_tokens_theme_mode';
 
 const initialState: ThemeState = {
-  mode: 'auto',
-  activeTheme: 'light',
-  colors: Colors.light,
+  mode: 'dark',
+  activeTheme: 'dark',
+  colors: Colors.dark,
   isLoading: true,
 };
 
@@ -65,7 +65,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       dispatch({ type: 'SET_LOADING', payload: true });
 
       const savedMode = await AsyncStorage.getItem(THEME_STORAGE_KEY);
-      const themeMode: ThemeMode = (savedMode as ThemeMode) || 'auto';
+      const themeMode: ThemeMode = (savedMode as ThemeMode) || 'dark';
 
       dispatch({ type: 'SET_THEME_MODE', payload: themeMode });
 
@@ -79,11 +79,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       dispatch({ type: 'SET_ACTIVE_THEME', payload: activeTheme });
     } catch (error) {
       console.error('Error loading theme mode:', error);
-      dispatch({ type: 'SET_THEME_MODE', payload: 'auto' });
-      dispatch({
-        type: 'SET_ACTIVE_THEME',
-        payload: systemColorScheme ?? 'light',
-      });
+      dispatch({ type: 'SET_THEME_MODE', payload: 'dark' });
+      dispatch({ type: 'SET_ACTIVE_THEME', payload: 'dark' });
     } finally {
       dispatch({ type: 'SET_LOADING', payload: false });
     }

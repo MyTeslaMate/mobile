@@ -3,7 +3,15 @@ import * as Localization from 'expo-localization';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export type SupportedLanguage = 'fr' | 'en';
+export type SupportedLanguage =
+  | 'de'
+  | 'en'
+  | 'es'
+  | 'fr'
+  | 'it'
+  | 'nl'
+  | 'ru'
+  | 'zh';
 
 interface LocalizationContextType {
   currentLanguage: SupportedLanguage;
@@ -18,8 +26,14 @@ const LocalizationContext = createContext<LocalizationContextType | undefined>(
 );
 
 const AVAILABLE_LANGUAGES = [
-  { code: 'fr' as SupportedLanguage, name: 'Français', flag: '🇫🇷' },
   { code: 'en' as SupportedLanguage, name: 'English', flag: '🇺🇸' },
+  { code: 'fr' as SupportedLanguage, name: 'Français', flag: '🇫🇷' },
+  { code: 'es' as SupportedLanguage, name: 'Español', flag: '🇪🇸' },
+  { code: 'de' as SupportedLanguage, name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'zh' as SupportedLanguage, name: '中文（简体）', flag: '🇨🇳' },
+  { code: 'nl' as SupportedLanguage, name: 'Nederlands', flag: '🇳🇱' },
+  { code: 'it' as SupportedLanguage, name: 'Italiano', flag: '🇮🇹' },
+  { code: 'ru' as SupportedLanguage, name: 'Русский', flag: '🇷🇺' },
 ];
 
 export const LocalizationProvider: React.FC<{ children: React.ReactNode }> = ({

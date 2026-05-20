@@ -35,17 +35,18 @@ export default function OwnerScreen() {
           </ThemedText>
         </ThemedView>
 
-        <RegionSelector />
-
-        <Pressable
-          style={styles.generateButton}
-          onPress={() => setIsModalVisible(true)}
-        >
-          <Ionicons name="key" size={20} color="#fff" />
-          <ThemedText style={styles.generateButtonText}>
-            {t('home.generateButton')}
-          </ThemedText>
-        </Pressable>
+        <ThemedView style={styles.actionCard}>
+          <RegionSelector />
+          <Pressable
+            style={styles.generateButton}
+            onPress={() => setIsModalVisible(true)}
+          >
+            <Ionicons name="key" size={20} color="#fff" />
+            <ThemedText style={styles.generateButtonText}>
+              {t('home.generateButton')}
+            </ThemedText>
+          </Pressable>
+        </ThemedView>
 
         <StoredTokenCard type="owner" />
       </ScrollView>
@@ -82,14 +83,20 @@ const createStyles = (colors: any) =>
       opacity: 0.7,
       paddingHorizontal: 16,
     },
+    actionCard: {
+      backgroundColor: colors.cardBackground,
+      borderRadius: 16,
+      padding: 16,
+      gap: 14,
+    },
     generateButton: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
       gap: 8,
       backgroundColor: colors.primary,
-      borderRadius: 16,
-      padding: 18,
+      borderRadius: 12,
+      padding: 16,
     },
     generateButtonText: {
       color: '#fff',

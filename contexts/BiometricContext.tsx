@@ -12,7 +12,7 @@ import React, {
 } from 'react';
 import { AppState } from 'react-native';
 
-const STORAGE_KEY = 'myteslamate_tokens_biometric_lock';
+const STORAGE_KEY = 'mtm_tokens_biometric_lock';
 
 interface BiometricContextType {
   isAvailable: boolean;

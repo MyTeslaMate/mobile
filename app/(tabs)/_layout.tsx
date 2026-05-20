@@ -9,6 +9,7 @@ export default function TabsLayout() {
 
   return (
     <Tabs
+      initialRouteName="owner"
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
@@ -20,20 +21,20 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
-        options={{
-          title: t('tabs.fleet'),
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="cloud" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="owner"
         options={{
           title: t('tabs.owner'),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: t('tabs.fleet'),
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="cloud" size={size} color={color} />
           ),
         }}
       />
