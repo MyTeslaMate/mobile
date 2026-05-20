@@ -38,6 +38,16 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
+      - name: Sync version from git tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          VERSION="${VERSION#v}"
+          echo "Setting version to $VERSION"
+          npm pkg set version="$VERSION"
+          VERSION="$VERSION" node -e "const fs=require('fs');const p='app.json';const j=JSON.parse(fs.readFileSync(p));j.expo.version=process.env.VERSION;fs.writeFileSync(p,JSON.stringify(j,null,2)+'\n');"
+
       - name: Setup EAS
         uses: expo/expo-github-action@v8
         with:
