@@ -27,6 +27,12 @@ type ThemeAction =
 
 const THEME_STORAGE_KEY = 'mtm_tokens_theme_mode';
 
+function resolveSystemTheme(
+  scheme: ReturnType<typeof useColorScheme>
+): ActiveTheme {
+  return scheme === 'dark' ? 'dark' : 'light';
+}
+
 const initialState: ThemeState = {
   mode: 'dark',
   activeTheme: 'dark',
@@ -71,7 +77,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
       let activeTheme: ActiveTheme;
       if (themeMode === 'auto') {
-        activeTheme = systemColorScheme ?? 'light';
+        activeTheme = resolveSystemTheme(systemColorScheme);
       } else {
         activeTheme = themeMode;
       }
@@ -88,7 +94,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (state.mode === 'auto' && systemColorScheme) {
-      dispatch({ type: 'SET_ACTIVE_THEME', payload: systemColorScheme });
+      dispatch({
+        type: 'SET_ACTIVE_THEME',
+        payload: resolveSystemTheme(systemColorScheme),
+      });
     }
   }, [systemColorScheme, state.mode]);
 
@@ -103,7 +112,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
       let activeTheme: ActiveTheme;
       if (mode === 'auto') {
-        activeTheme = systemColorScheme ?? 'light';
+        activeTheme = resolveSystemTheme(systemColorScheme);
       } else {
         activeTheme = mode;
       }
