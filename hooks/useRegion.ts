@@ -1,11 +1,24 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 export type Region = 'intl' | 'cn';
 
-const REGION_STORAGE_KEY = '@myteslamate_tokens_region';
+const REGION_STORAGE_KEY = '@mtm_tokens_region';
 
-export function useRegion() {
+interface RegionContextType {
+  region: Region;
+  setRegion: (next: Region) => Promise<void>;
+}
+
+const RegionContext = createContext<RegionContextType | undefined>(undefined);
+
+export function RegionProvider({ children }: { children: ReactNode }) {
   const [region, setRegionState] = useState<Region>('intl');
 
   useEffect(() => {
@@ -25,5 +38,17 @@ export function useRegion() {
     }
   };
 
-  return { region, setRegion };
+  return React.createElement(
+    RegionContext.Provider,
+    { value: { region, setRegion } },
+    children
+  );
+}
+
+export function useRegion(): RegionContextType {
+  const context = useContext(RegionContext);
+  if (!context) {
+    throw new Error('useRegion must be used within a RegionProvider');
+  }
+  return context;
 }

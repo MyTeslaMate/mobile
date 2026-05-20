@@ -2,7 +2,58 @@
   "common": {
     "loading": "Loading...",
     "error": "Error",
-    "close": "Close"
+    "close": "Close",
+    "cancel": "Cancel"
+  },
+  "tabs": {
+    "fleet": "Fleet API",
+    "owner": "Owner API",
+    "about": "About"
+  },
+  "about": {
+    "title": "Tesla Tokens Generator",
+    "version": "v. {{version}} (build {{build}})",
+    "descriptionTitle": "About",
+    "description": "Tesla Tokens Generator is a minimalist app that helps you generate the Tesla API tokens needed to connect your third-party tools, such as TeslaMate, to your Tesla account.",
+    "featuresTitle": "Features",
+    "featureFleet": "Fleet API token generation",
+    "featureOwner": "Owner API token generation",
+    "featureSecure": "Encrypted storage and biometric lock",
+    "featureTheme": "Light, dark and automatic themes",
+    "linksTitle": "Links",
+    "website": "MyTeslaMate website"
+  },
+  "tokenInfo": {
+    "expired": "Token expired",
+    "expiresOn": "Expires on {{date}}",
+    "scopes": "Scopes"
+  },
+  "tokenCard": {
+    "title": "Latest token",
+    "generatedOn": "Generated on {{date}}",
+    "accessToken": "Access Token",
+    "refreshToken": "Refresh Token",
+    "test": "Test",
+    "clear": "Clear",
+    "clearTitle": "Clear token",
+    "clearMessage": "The saved token will be removed from this device. This action cannot be undone.",
+    "copied": "Copied",
+    "copyError": "Unable to copy to clipboard.",
+    "testResult": {
+      "valid": "Token valid",
+      "invalid": "Token invalid or expired",
+      "error": "Could not verify"
+    }
+  },
+  "biometric": {
+    "sectionTitle": "Security",
+    "toggleLabel": "Biometric lock",
+    "toggleDescription": "Require Face ID / fingerprint when opening the app.",
+    "unavailable": "No biometrics configured on this device.",
+    "prompt": "Authenticate to access your tokens",
+    "lockedTitle": "App locked",
+    "lockedSubtitle": "Authenticate to access your tokens.",
+    "unlock": "Unlock"
   },
   "home": {
     "title": "Tesla Token Generator",
@@ -10,20 +61,21 @@
     "fleetButtonTitle": "Fleet API token",
     "fleetButtonDescription": "Guided process to register your application and obtain Fleet API tokens",
     "ownerButtonTitle": "Owner API token",
-    "ownerButtonDescription": "Authenticate with your Tesla account to retrieve Owner API tokens",
+    "ownerButtonDescription": "Sign in to your Tesla account to generate your tokens and easily set up your TeslaMate",
     "themeSectionTitle": "Theme",
     "themeLight": "Light",
     "themeDark": "Dark",
     "themeAuto": "Auto",
     "regionSectionTitle": "Region",
-    "regionIntl": "International",
+    "regionIntl": "Worldwide",
     "regionCn": "China",
-    "languageSectionTitle": "Language"
+    "languageSectionTitle": "Language",
+    "generateButton": "Generate tokens"
   },
   "settings": {
     "tokens": {
       "fleetGenerator": {
-        "title": "Fleet API Token Generator",
+        "title": "Fleet Token Generator",
         "subtitle": "Guided process to obtain your Fleet API tokens",
         "step1": {
           "title": "Configure your application",
@@ -33,7 +85,7 @@
           "allowedOriginUrlPlaceholder": "https://your-app-domain.com",
           "allowedRedirectUri": "Allowed Redirect URI:",
           "backButton": "Back",
-          "nextButton": "Continue to step 2"
+          "nextButton": "Continue"
         },
         "step2": {
           "title": "Enter your credentials",
@@ -54,10 +106,10 @@
           "nextButton": "Continue authorization"
         },
         "step4": {
-          "title": "Authorization",
+          "title": "Fleet Tokens",
           "instruction": "Click the button below to open the authorization page. Sign in to your account to authorize access.",
           "backButton": "Back",
-          "authorizeButton": "Authorize",
+          "authorizeButton": "Generate tokens",
           "waitingText": "Waiting for response..."
         },
         "step5": {

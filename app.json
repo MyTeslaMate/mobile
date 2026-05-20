@@ -1,41 +1,55 @@
 {
   "expo": {
-    "name": "MyTeslaMate Tokens",
-    "slug": "myteslamate-tokens",
+    "name": "Tesla Tokens Generator",
+    "slug": "tesla-tokens-generator",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myteslamate",
+    "scheme": "mtm",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "buildNumber": "1",
       "supportsTablet": true,
-      "bundleIdentifier": "fr.opcode.myteslamatetokens",
+      "bundleIdentifier": "com.myteslamate.tokens",
       "infoPlist": {
         "CFBundleURLTypes": [
           {
-            "CFBundleURLName": "myteslamate",
-            "CFBundleURLSchemes": ["myteslamate"]
+            "CFBundleURLName": "mtm",
+            "CFBundleURLSchemes": [
+              "mtm"
+            ]
           }
         ],
         "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
-      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "fr.opcode.myteslamatetokens",
+      "package": "com.myteslamate.tokens",
       "intentFilters": [
         {
           "action": "VIEW",
-          "data": [{ "scheme": "myteslamate" }],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "data": [
+            {
+              "scheme": "mtm"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
+      ],
+      "permissions": [
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT"
+      ],
+      "blockedPermissions": [
+        "com.google.android.gms.permission.AD_ID"
       ]
     },
     "web": {
@@ -54,13 +68,25 @@
           "resizeMode": "contain",
           "backgroundColor": "#111111"
         }
-      ]
+      ],
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Permet de déverrouiller MyTeslaMate Tokens avec Face ID."
+        }
+      ],
+      "expo-font",
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
-      "router": {}
-    }
+      "router": {},
+      "eas": {
+        "projectId": "9604440e-bdb3-4c3b-a62e-c45b25b96a06"
+      }
+    },
+    "owner": "myteslamatecoms-organization"
   }
 }

@@ -1,0 +1,161 @@
+{
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "close": "关闭",
+    "cancel": "取消"
+  },
+  "tabs": {
+    "fleet": "Fleet API",
+    "owner": "Owner API",
+    "about": "关于"
+  },
+  "about": {
+    "title": "Tesla Tokens Generator",
+    "version": "v. {{version}} (build {{build}})",
+    "descriptionTitle": "关于",
+    "description": "Tesla Tokens Generator 是一款简洁的应用,可帮助您生成 Tesla API 令牌,以便将 TeslaMate 等第三方工具连接到您的 Tesla 账户。",
+    "featuresTitle": "功能",
+    "featureFleet": "生成 Fleet API 令牌",
+    "featureOwner": "生成 Owner API 令牌",
+    "featureSecure": "加密存储和生物识别锁",
+    "featureTheme": "浅色、深色和自动主题",
+    "linksTitle": "链接",
+    "website": "MyTeslaMate 网站"
+  },
+  "tokenInfo": {
+    "expired": "令牌已过期",
+    "expiresOn": "{{date}} 到期",
+    "scopes": "权限范围"
+  },
+  "tokenCard": {
+    "title": "最新令牌",
+    "generatedOn": "生成于 {{date}}",
+    "accessToken": "Access Token",
+    "refreshToken": "Refresh Token",
+    "test": "测试",
+    "clear": "清除",
+    "clearTitle": "清除令牌",
+    "clearMessage": "已保存的令牌将从此设备上移除。此操作无法撤销。",
+    "copied": "已复制",
+    "copyError": "无法复制到剪贴板。",
+    "testResult": {
+      "valid": "令牌有效",
+      "invalid": "令牌无效或已过期",
+      "error": "无法验证"
+    }
+  },
+  "biometric": {
+    "sectionTitle": "安全",
+    "toggleLabel": "生物识别锁",
+    "toggleDescription": "打开应用时要求 Face ID / 指纹。",
+    "unavailable": "此设备未配置生物识别。",
+    "prompt": "请验证身份以访问您的令牌",
+    "lockedTitle": "应用已锁定",
+    "lockedSubtitle": "请验证身份以访问您的令牌。",
+    "unlock": "解锁"
+  },
+  "home": {
+    "title": "Tesla 令牌生成器",
+    "subtitle": "为 Tesla Fleet API 和 Owner API 生成 API 令牌",
+    "fleetButtonTitle": "Fleet API 令牌",
+    "fleetButtonDescription": "通过引导式流程注册您的应用并获取 Fleet API 令牌",
+    "ownerButtonTitle": "Owner API 令牌",
+    "ownerButtonDescription": "登录 Tesla 账户以生成令牌并轻松设置 TeslaMate 实例",
+    "themeSectionTitle": "主题",
+    "themeLight": "浅色",
+    "themeDark": "深色",
+    "themeAuto": "自动",
+    "regionSectionTitle": "地区",
+    "regionIntl": "Worldwide",
+    "regionCn": "中国",
+    "languageSectionTitle": "语言",
+    "generateButton": "生成令牌"
+  },
+  "settings": {
+    "tokens": {
+      "fleetGenerator": {
+        "title": "Fleet 令牌生成器",
+        "subtitle": "通过引导式流程获取您的 Fleet API 令牌",
+        "step1": {
+          "title": "配置您的应用",
+          "instruction": "在开发者门户中创建您的应用,并使用以下值:",
+          "openDeveloperPortal": "打开开发者门户",
+          "allowedOriginUrl": "Allowed Origin URL:",
+          "allowedOriginUrlPlaceholder": "https://your-app-domain.com",
+          "allowedRedirectUri": "Allowed Redirect URI:",
+          "backButton": "返回",
+          "nextButton": "继续"
+        },
+        "step2": {
+          "title": "输入您的凭据",
+          "clientId": "Client ID *",
+          "clientIdPlaceholder": "您的 Client ID",
+          "clientSecret": "Client Secret *",
+          "clientSecretPlaceholder": "您的 Client Secret",
+          "backButton": "返回",
+          "nextButton": "开始注册"
+        },
+        "step3": {
+          "title": "正在注册您的应用",
+          "partnerToken": "正在获取合作伙伴令牌...",
+          "registerNA": "正在注册 NA 区域...",
+          "registerEU": "正在注册 EU 区域...",
+          "registerCN": "正在注册 CN 区域...",
+          "backButton": "返回",
+          "nextButton": "继续授权"
+        },
+        "step4": {
+          "title": "Fleet 令牌",
+          "instruction": "点击下方按钮打开授权页面。登录您的账户以授权访问。",
+          "backButton": "返回",
+          "authorizeButton": "生成令牌",
+          "waitingText": "正在等待响应..."
+        },
+        "step5": {
+          "title": "令牌生成成功",
+          "accessToken": "Access Token",
+          "refreshToken": "Refresh Token",
+          "backButton": "返回",
+          "instruction": "请妥善保存这些令牌。您将需要它们来配置您的应用。"
+        },
+        "closeButton": "关闭",
+        "copyValue": "要复制的值",
+        "alerts": {
+          "error": "错误",
+          "copyError": "无法复制到剪贴板。请手动复制该值。",
+          "missingAuth": "缺少身份验证信息",
+          "missingCredentials": "请填写 Client ID 和 Client Secret 字段",
+          "tokenError": "获取令牌时出错",
+          "tokensNotReceived": "响应中未收到令牌",
+          "unknownError": "未知错误",
+          "teslaAuthError": "错误",
+          "authorizationError": "授权错误:{{error}}",
+          "browserError": "无法打开浏览器",
+          "success": "成功!",
+          "tokensGenerated": "您的令牌已成功生成。"
+        }
+      },
+      "ownerGenerator": {
+        "title": "Owner API",
+        "preparing": "正在准备连接…",
+        "retrievingTokens": "正在获取令牌...",
+        "successTitle": "Owner API 令牌已生成",
+        "accessToken": "Access Token",
+        "refreshToken": "Refresh Token",
+        "closeButton": "关闭",
+        "copyValue": "要复制的值",
+        "useInTeslaMate": "在我的 TeslaMate 中使用这些令牌",
+        "useModalTitle": "导入 MyTeslaMate",
+        "redirecting": "正在重定向到 MyTeslaMate…",
+        "alerts": {
+          "error": "错误",
+          "copyError": "无法复制到剪贴板。请手动复制该值。",
+          "missingCode": "缺少 Code 或 PKCE",
+          "tokenError": "获取令牌时出错",
+          "unknownError": "未知错误"
+        }
+      }
+    }
+  }
+}

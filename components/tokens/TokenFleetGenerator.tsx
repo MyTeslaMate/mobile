@@ -2,13 +2,15 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useLocalization } from '@/contexts/LocalizationContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
+import { useTokenStore } from '@/contexts/TokenStoreContext';
 import { Region } from '@/hooks/useRegion';
 import { Ionicons } from '@expo/vector-icons';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
   Linking,
+  Modal,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -16,9 +18,17 @@ import {
   View,
 } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
+import * as SecureStore from 'expo-secure-store';
+import { WebView } from 'react-native-webview';
 
 // Hardcoded values — change these to match your registered Tesla application
-const REDIRECT_URI = 'myteslamate://auth/callback/api';
+const REDIRECT_URI = 'mtm://auth/callback/api';
+
+const FORM_STORAGE_KEYS = {
+  originUrl: 'fleet_form_origin_url',
+  clientId: 'fleet_form_client_id',
+  clientSecret: 'fleet_form_client_secret',
+} as const;
 
 // Extract the bare domain (hostname) from an origin URL entered by the user
 const extractDomain = (url: string) =>
@@ -26,6 +36,20 @@ const extractDomain = (url: string) =>
     .trim()
     .replace(/^https?:\/\//i, '')
     .replace(/\/.*$/, '');
+
+// Tesla's OAuth errors carry an error_description that's much more actionable
+// than the OAuth2 error code alone (e.g. "unauthorized_client" vs "Client does
+// not have the requested scopes enabled").
+const formatOAuthError = (
+  data: { error?: string; error_description?: string } | null | undefined,
+  fallback: string
+) => {
+  if (!data) return fallback;
+  if (data.error && data.error_description) {
+    return `${data.error}: ${data.error_description}`;
+  }
+  return data.error_description || data.error || fallback;
+};
 
 const REGION_CONFIG = {
   intl: {
@@ -80,6 +104,7 @@ export default function TokenFleetGenerator({
 }: TokenFleetGeneratorProps) {
   const colors = useThemeColors();
   const { t } = useLocalization();
+  const { saveTokens } = useTokenStore();
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [originUrl, setOriginUrl] = useState('');
   const [clientId, setClientId] = useState('');
@@ -90,9 +115,41 @@ export default function TokenFleetGenerator({
     access_token?: string;
     refresh_token?: string;
   } | null>(null);
+  const [authWebViewVisible, setAuthWebViewVisible] = useState(false);
+  const [authUrl, setAuthUrl] = useState('');
+  const handledRef = useRef(false);
 
   const config = useMemo(() => REGION_CONFIG[region], [region]);
   const styles = createStyles(colors);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const [savedOrigin, savedClientId, savedClientSecret] =
+          await Promise.all([
+            SecureStore.getItemAsync(FORM_STORAGE_KEYS.originUrl),
+            SecureStore.getItemAsync(FORM_STORAGE_KEYS.clientId),
+            SecureStore.getItemAsync(FORM_STORAGE_KEYS.clientSecret),
+          ]);
+        if (savedOrigin) setOriginUrl(savedOrigin);
+        if (savedClientId) setClientId(savedClientId);
+        if (savedClientSecret) setClientSecret(savedClientSecret);
+      } catch (error) {
+        console.error('Failed to load saved Fleet form values:', error);
+      }
+    })();
+  }, []);
+
+  const persistFormValue = async (
+    key: (typeof FORM_STORAGE_KEYS)[keyof typeof FORM_STORAGE_KEYS],
+    value: string
+  ) => {
+    try {
+      await SecureStore.setItemAsync(key, value);
+    } catch (error) {
+      console.error(`Failed to persist ${key}:`, error);
+    }
+  };
 
   const processAuthCallback = useCallback(
     async (code: string) => {
@@ -125,8 +182,10 @@ export default function TokenFleetGenerator({
 
         if (!response.ok) {
           throw new Error(
-            tokenData.error ||
+            formatOAuthError(
+              tokenData,
               t('settings.tokens.fleetGenerator.alerts.tokenError')
+            )
           );
         }
 
@@ -134,6 +193,13 @@ export default function TokenFleetGenerator({
           setFinalTokens({
             access_token: tokenData.access_token,
             refresh_token: tokenData.refresh_token,
+          });
+          setCurrentStep(5);
+          await saveTokens('fleet', {
+            accessToken: tokenData.access_token,
+            refreshToken: tokenData.refresh_token,
+            region,
+            createdAt: Date.now(),
           });
           Alert.alert(
             t('settings.tokens.fleetGenerator.alerts.success'),
@@ -158,36 +224,72 @@ export default function TokenFleetGenerator({
         setIsLoading(false);
       }
     },
-    [clientId, clientSecret, config, t]
+    [clientId, clientSecret, config, region, saveTokens, t]
   );
 
+  const handleCallbackUrl = useCallback(
+    async (callbackUrl: string) => {
+      if (handledRef.current) return;
+      handledRef.current = true;
+      setAuthWebViewVisible(false);
+
+      const parsed = new URL(callbackUrl.replace('mtm://', 'https://'));
+      const code = parsed.searchParams.get('code');
+      const error = parsed.searchParams.get('error');
+
+      if (error) {
+        Alert.alert(
+          t('settings.tokens.fleetGenerator.alerts.teslaAuthError'),
+          t('settings.tokens.fleetGenerator.alerts.authorizationError', {
+            error,
+          })
+        );
+        return;
+      }
+
+      if (code) {
+        await processAuthCallback(code);
+      }
+    },
+    [processAuthCallback, t]
+  );
+
+  // The mtm:// redirect URI cannot be loaded by WKWebView — capture it
+  // from any of the load callbacks and de-duplicate with handledRef since the
+  // auth code is single-use.
+  const maybeHandleCallback = (url?: string | null) => {
+    if (!url || handledRef.current) return false;
+    if (url.startsWith(REDIRECT_URI)) {
+      handleCallbackUrl(url);
+      return true;
+    }
+    return false;
+  };
+
+  const handleShouldStartLoad = (request: { url: string }) =>
+    !maybeHandleCallback(request.url);
+
+  const handleNavStateChange = (navState: { url?: string }) => {
+    maybeHandleCallback(navState.url);
+  };
+
+  const handleWebViewError = (event: { nativeEvent?: { url?: string } }) => {
+    maybeHandleCallback(event.nativeEvent?.url);
+  };
+
   useEffect(() => {
+    // Fallback: if for any reason the redirect escapes the WebView and lands
+    // back into the app via OS deep link, still process it.
     const handleDeepLink = async (event: { url: string }) => {
       if (event.url.includes(REDIRECT_URI)) {
-        const url = new URL(event.url.replace('myteslamate://', 'https://'));
-        const code = url.searchParams.get('code');
-        const error = url.searchParams.get('error');
-
-        if (error) {
-          Alert.alert(
-            t('settings.tokens.fleetGenerator.alerts.teslaAuthError'),
-            t('settings.tokens.fleetGenerator.alerts.authorizationError', {
-              error,
-            })
-          );
-          return;
-        }
-
-        if (code && currentStep === 5) {
-          await processAuthCallback(code);
-        }
+        await handleCallbackUrl(event.url);
       }
     };
 
     const subscription = Linking.addEventListener('url', handleDeepLink);
 
     return () => subscription?.remove();
-  }, [currentStep, processAuthCallback, t]);
+  }, [handleCallbackUrl]);
 
   const copyToClipboard = async (text: string, type: string) => {
     try {
@@ -216,6 +318,11 @@ export default function TokenFleetGenerator({
 
     setIsLoading(true);
     setCurrentStep(3);
+
+    await Promise.all([
+      persistFormValue(FORM_STORAGE_KEYS.clientId, clientId),
+      persistFormValue(FORM_STORAGE_KEYS.clientSecret, clientSecret),
+    ]);
 
     const progressItems: ProgressItem[] = [
       {
@@ -258,7 +365,10 @@ export default function TokenFleetGenerator({
 
       if (!tokenResponse.ok || !tokenData.access_token) {
         throw new Error(
-          tokenData.error || "Erreur lors de l'obtention du token"
+          formatOAuthError(
+            tokenData,
+            t('settings.tokens.fleetGenerator.alerts.tokenError')
+          )
         );
       }
 
@@ -287,7 +397,9 @@ export default function TokenFleetGenerator({
         const data = await response.json();
 
         if (!response.ok && data.error && !data.error.includes('already')) {
-          throw new Error(`${pa.id}: ${data.error}`);
+          throw new Error(
+            `${pa.id}: ${formatOAuthError(data, data.error)}`
+          );
         }
 
         setProgress(prev =>
@@ -299,7 +411,9 @@ export default function TokenFleetGenerator({
     } catch (error) {
       console.error('API request failed:', error);
       const errorMessage =
-        error instanceof Error ? error.message : 'Erreur inconnue';
+        error instanceof Error
+          ? error.message
+          : t('settings.tokens.fleetGenerator.alerts.unknownError');
 
       setProgress(prev =>
         prev.map(p =>
@@ -309,29 +423,26 @@ export default function TokenFleetGenerator({
         )
       );
 
-      Alert.alert('Erreur', errorMessage);
+      Alert.alert(
+        t('settings.tokens.fleetGenerator.alerts.error'),
+        errorMessage
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
-  const openTeslaAuth = async () => {
+  const openTeslaAuth = () => {
     const redirectUri = encodeURIComponent(REDIRECT_URI);
     const scope = encodeURIComponent(
       'openid offline_access user_data vehicle_device_data vehicle_location vehicle_cmds vehicle_charging_cmds energy_device_data energy_cmds'
     );
 
-    const authUrl = `${config.authorizeUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code&prompt=login&state=${clientId}`;
+    const url = `${config.authorizeUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code&prompt=login&state=${clientId}`;
 
-    try {
-      await Linking.openURL(authUrl);
-      setCurrentStep(5);
-    } catch (error) {
-      Alert.alert(
-        t('settings.tokens.fleetGenerator.alerts.error'),
-        t('settings.tokens.fleetGenerator.alerts.browserError')
-      );
-    }
+    handledRef.current = false;
+    setAuthUrl(url);
+    setAuthWebViewVisible(true);
   };
 
   const renderStep1 = () => (
@@ -395,7 +506,10 @@ export default function TokenFleetGenerator({
             styles.nextButton,
             !originUrl.trim() && styles.disabledButton,
           ]}
-          onPress={() => setCurrentStep(2)}
+          onPress={() => {
+            persistFormValue(FORM_STORAGE_KEYS.originUrl, originUrl.trim());
+            setCurrentStep(2);
+          }}
           disabled={!originUrl.trim()}
         >
           <ThemedText style={styles.nextButtonText}>
@@ -559,7 +673,6 @@ export default function TokenFleetGenerator({
         </Pressable>
       </View>
       <ThemedText style={styles.waitingText}>
-        {t('settings.tokens.fleetGenerator.step4.waitingText')}
       </ThemedText>
     </ThemedView>
   );
@@ -670,6 +783,44 @@ export default function TokenFleetGenerator({
           </ThemedText>
         </Pressable>
       )}
+
+      <Modal
+        visible={authWebViewVisible}
+        animationType="slide"
+        transparent={false}
+        onRequestClose={() => setAuthWebViewVisible(false)}
+        presentationStyle="pageSheet"
+      >
+        <ThemedView
+          style={[styles.modalContainer, { backgroundColor: colors.background }]}
+        >
+          <View style={styles.modalHeader}>
+            <Ionicons name="car-sport" size={24} color={colors.primary} />
+            <ThemedText type="title" style={styles.modalTitle}>
+              {t('settings.tokens.fleetGenerator.step4.title')}
+            </ThemedText>
+          </View>
+          {authUrl ? (
+            <WebView
+              source={{ uri: authUrl }}
+              originWhitelist={['https://*', 'mtm://*']}
+              onShouldStartLoadWithRequest={handleShouldStartLoad}
+              onNavigationStateChange={handleNavStateChange}
+              onError={handleWebViewError}
+              startInLoadingState
+              style={styles.webview}
+            />
+          ) : null}
+          <Pressable
+            style={styles.modalCloseButton}
+            onPress={() => setAuthWebViewVisible(false)}
+          >
+            <ThemedText style={styles.closeButtonText}>
+              {t('settings.tokens.fleetGenerator.closeButton')}
+            </ThemedText>
+          </Pressable>
+        </ThemedView>
+      </Modal>
     </ScrollView>
   );
 }
@@ -822,13 +973,13 @@ const createStyles = (colors: any) =>
       opacity: 0.5,
     },
     teslaAuthButton: {
+      flex: 2,
       flexDirection: 'row',
       backgroundColor: '#E31E3E',
       borderRadius: 12,
       padding: 16,
       alignItems: 'center',
       justifyContent: 'center',
-      marginVertical: 16,
     },
     teslaAuthButtonText: {
       color: '#fff',
@@ -907,5 +1058,35 @@ const createStyles = (colors: any) =>
     },
     closeButtonText: {
       fontWeight: '500',
+    },
+    modalContainer: {
+      flex: 1,
+      paddingTop: 32,
+      paddingHorizontal: 16,
+    },
+    modalHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 16,
+      gap: 8,
+    },
+    modalTitle: {
+      textAlign: 'center',
+    },
+    webview: {
+      flex: 1,
+      borderRadius: 12,
+      overflow: 'hidden',
+    },
+    modalCloseButton: {
+      backgroundColor: colors.background,
+      borderRadius: 12,
+      padding: 16,
+      alignItems: 'center',
+      marginTop: 8,
+      marginBottom: 32,
+      borderWidth: 1,
+      borderColor: colors.borderColor,
     },
   });
