@@ -2,8 +2,10 @@
 
 A minimalist React Native (Expo) app to generate Tesla API tokens:
 
-- **Fleet API**: register your Tesla developer application in the NA/EU regions and retrieve your tokens via OAuth2.
+- **Fleet API**: register your Tesla developer application in the NA/EU/CN regions and retrieve your tokens via OAuth2.
 - **Owner API**: retrieve Owner API tokens via PKCE and a dedicated WebView for Tesla authentication.
+
+Open-source under the **GNU GPL v3.0** — see [LICENSE](LICENSE).
 
 ## Features
 
@@ -12,84 +14,70 @@ A minimalist React Native (Expo) app to generate Tesla API tokens:
 - Light / dark / auto themes (persisted).
 - Internationalization.
 
-## Fleet API configuration
-
-The `redirect_uri` used to register your Tesla application is **hardcoded** at the top of `components/tokens/TokenFleetGenerator.tsx`:
-
-```ts
-const REDIRECT_URI = 'mtm://auth/callback/api';
-```
-
 ## Getting started
+
+Requirements: Node.js 20+, npm, and (for native builds) Xcode / Android Studio.
 
 ```bash
 npm install
 npx expo start
 ```
 
-For native builds (dev client required for the WebView + deep link):
+Expo Go is not enough — the app uses a custom WebView + deep-link flow that needs a **dev client** native build:
 
 ```bash
 npx expo run:ios
 npx expo run:android
 ```
 
-## App Store / Play Store build (EAS)
+After the first native build, you can keep using `npx expo start` and reload on the dev client.
 
-Production builds are compiled in the cloud via **EAS Build** — no Mac required. The configuration lives in `eas.json` (profiles `development`, `preview`, `production`).
+## Fleet API configuration
 
-One-time setup:
+The `redirect_uri` used to register your Tesla application is **hardcoded** at the top of [components/tokens/TokenFleetGenerator.tsx](components/tokens/TokenFleetGenerator.tsx):
 
-```bash
-npm install -g eas-cli
-eas login
-eas init                 # adds extra.eas.projectId to app.json
-eas credentials          # generates/configures iOS and Android signing
+```ts
+const REDIRECT_URI = 'mtm://auth/callback/api';
 ```
 
-Run a build manually:
+If you fork the project and change the scheme, update both this constant and `expo.scheme` / the iOS/Android intent filters in [app.json](app.json).
 
-```bash
-eas build --platform all --profile production
+## Project layout
+
+```
+app/           Expo Router screens (tabs: fleet, owner, about)
+components/    UI components, including the token generators
+contexts/      Theme + biometric lock contexts
+hooks/         Reusable hooks (region selection, …)
+lib/           Helpers (PKCE, storage, …)
+locales/       i18next translation files
+assets/        Icons, splash, fonts
 ```
 
-### GitHub Actions CI
+## Useful scripts
 
-The `.github/workflows/eas-build.yml` workflow triggers iOS + Android builds:
+```bash
+npm run lint        # expo lint
+npm run start       # expo start
+npm run ios         # expo run:ios
+npm run android     # expo run:android
+```
 
-- automatically on a `v*` tag (e.g. `git tag v1.0.0 && git push --tags`);
-- manually via *Run workflow* (choose the platform and profile).
+## Contributing
 
-The GitHub runner only triggers the build (`--no-wait`); compilation and store submission run on EAS servers. With the `production` profile, the workflow adds `--auto-submit`: as soon as a build succeeds, it is automatically sent to App Store Connect (iOS) and the Google Play *internal* track (Android).
-
-### Publishing credentials
-
-Everything is stored on the EAS side (nothing sensitive in the repo). One-time setup:
-
-1. **`EXPO_TOKEN`** (GitHub secret) — Expo access token.
-   - expo.dev → *Account* → *Settings* → *Access tokens* → *Create token*.
-   - GitHub → repo → *Settings* → *Secrets and variables* → *Actions* → *New repository secret*, named `EXPO_TOKEN`.
-
-2. **iOS — App Store Connect API Key** (for automatic submission).
-   - App Store Connect → *Users and Access* → *Integrations* tab → *App Store Connect API* → *Generate API Key*, role *App Manager*.
-   - Note the **Issuer ID**, the **Key ID**, and download the **`.p8`** file (downloadable only once).
-   - Save these values in EAS: `eas credentials` → *iOS* platform → *App Store Connect API Key*.
-   - The app must already exist in App Store Connect with the bundle ID `com.myteslamate.tokens`.
-
-3. **Android — Google Play service account** (for automatic submission).
-   - Google Play Console → *Users and permissions* → *Invite new users*, or via Google Cloud Console → create a *service account* and a **JSON key**.
-   - In the Play Console, grant this account release permissions (*Releases*).
-   - Save the JSON key in EAS: `eas credentials` → *Android* platform → *Google Service Account*.
-   - ⚠️ Google requires that **the very first AAB be uploaded manually** via the Play Console; subsequent uploads can be automated.
-
-iOS builds are pushed to App Store Connect / TestFlight — the final submission to Apple review remains manual. Android builds land on the *internal* track (configurable in `eas.json` → `submit.production.android.track`).
+Issues and pull requests are welcome. Please run `npm run lint` before opening a PR and keep changes focused (one topic per PR).
 
 ## Stack
 
-- Expo (~53) + Expo Router
-- React Native 0.79
+- Expo SDK 55 + Expo Router
+- React Native 0.83
+- React 19
 - TypeScript
 - i18next / react-i18next
-- expo-clipboard, expo-localization
+- expo-clipboard, expo-localization, expo-secure-store, expo-local-authentication
 - react-native-webview (Owner API)
 - js-sha256 (PKCE)
+
+## License
+
+This project is licensed under the GNU General Public License v3.0. See [LICENSE](LICENSE) for the full text.
