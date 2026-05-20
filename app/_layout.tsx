@@ -9,6 +9,7 @@ import { ReactNode } from 'react';
 import 'react-native-reanimated';
 
 import { BiometricGate } from '@/components/BiometricGate';
+import { UpdateGate } from '@/components/UpdateGate';
 import { BiometricProvider } from '@/contexts/BiometricContext';
 import { LocalizationProvider } from '@/contexts/LocalizationContext';
 import {
@@ -52,14 +53,16 @@ export default function RootLayout() {
           <TokenStoreProvider>
             <BiometricProvider>
               <NavigationWrapper>
-                <BiometricGate>
-                  <Stack>
-                    <Stack.Screen
-                      name="(tabs)"
-                      options={{ headerShown: false }}
-                    />
-                  </Stack>
-                </BiometricGate>
+                <UpdateGate>
+                  <BiometricGate>
+                    <Stack>
+                      <Stack.Screen
+                        name="(tabs)"
+                        options={{ headerShown: false }}
+                      />
+                    </Stack>
+                  </BiometricGate>
+                </UpdateGate>
               </NavigationWrapper>
             </BiometricProvider>
           </TokenStoreProvider>

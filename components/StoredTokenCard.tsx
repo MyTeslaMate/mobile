@@ -1,9 +1,14 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { TokenInfo } from '@/components/TokenInfo';
+import { TeslaMateConnectModal } from '@/components/tokens/TeslaMateConnectModal';
 import { useLocalization } from '@/contexts/LocalizationContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
-import { useTokenStore, type TokenType } from '@/contexts/TokenStoreContext';
+import {
+  useTokenStore,
+  type StoredTokens,
+  type TokenType,
+} from '@/contexts/TokenStoreContext';
 import {
   decodeJwt,
   getTokenExpiry,
@@ -13,7 +18,7 @@ import { testToken, type TokenTestResult } from '@/lib/tokenTest';
 import { Ionicons } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
 import { useEffect, useMemo, useState } from 'react';
-import { ActivityIndicator, Alert, Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, Pressable, Share, StyleSheet, View } from 'react-native';
 
 function formatDate(date: Date): string {
   const pad = (n: number) => String(n).padStart(2, '0');
@@ -21,32 +26,64 @@ function formatDate(date: Date): string {
 }
 
 export function StoredTokenCard({ type }: { type: TokenType }) {
+  const { fleetTokens, ownerTokens } = useTokenStore();
+  const tokens = type === 'fleet' ? fleetTokens : ownerTokens;
+
+  const ordered = useMemo(
+    () =>
+      tokens
+        .map((token, index) => ({ token, number: index + 1 }))
+        .reverse(),
+    [tokens]
+  );
+
+  if (ordered.length === 0) return null;
+
+  return (
+    <View style={styles.list}>
+      {ordered.map(({ token, number }) => (
+        <SingleTokenCard
+          key={token.id}
+          type={type}
+          token={token}
+          number={number}
+        />
+      ))}
+    </View>
+  );
+}
+
+function SingleTokenCard({
+  type,
+  token,
+  number,
+}: {
+  type: TokenType;
+  token: StoredTokens;
+  number: number;
+}) {
   const colors = useThemeColors();
   const { t } = useLocalization();
-  const { fleetTokens, ownerTokens, clearTokens } = useTokenStore();
-  const tokens = type === 'fleet' ? fleetTokens : ownerTokens;
+  const { clearToken } = useTokenStore();
 
   const [testResult, setTestResult] = useState<TokenTestResult | null>(null);
   const [testing, setTesting] = useState(false);
+  const [connectVisible, setConnectVisible] = useState(false);
 
-  const createdAt = tokens?.createdAt;
   useEffect(() => {
     setTestResult(null);
-  }, [createdAt]);
+  }, [token.accessToken]);
 
   const expiryInfo = useMemo(() => {
-    if (!tokens?.accessToken) return null;
-    const payload = decodeJwt(tokens.accessToken);
+    const payload = decodeJwt(token.accessToken);
     if (!payload) return null;
     return {
       expiry: getTokenExpiry(payload),
       expired: isTokenExpired(payload),
     };
-  }, [tokens?.accessToken]);
+  }, [token.accessToken]);
 
-  const styles = createStyles(colors);
-
-  if (!tokens) return null;
+  const cardStyles = createStyles(colors);
 
   const copyToClipboard = async (value: string, label: string) => {
     try {
@@ -57,10 +94,33 @@ export function StoredTokenCard({ type }: { type: TokenType }) {
     }
   };
 
+  const shareTokens = async () => {
+    const typeLabel = t(type === 'fleet' ? 'home.typeFleet' : 'home.typeOwner');
+    const regionLabel = t(
+      token.region === 'cn' ? 'home.regionCn' : 'home.regionIntl'
+    );
+    const message = [
+      t('tokenCard.shareHeader', { type: typeLabel }),
+      '',
+      `${t('tokenCard.accessToken')}:`,
+      token.accessToken,
+      '',
+      `${t('tokenCard.refreshToken')}:`,
+      token.refreshToken,
+      '',
+      `${t('home.regionSectionTitle')}: ${regionLabel}`,
+    ].join('\n');
+    try {
+      await Share.share({ message });
+    } catch {
+      Alert.alert(t('common.error'), t('tokenCard.shareError'));
+    }
+  };
+
   const runTest = async () => {
     setTesting(true);
     setTestResult(null);
-    const result = await testToken(type, tokens.accessToken, tokens.region);
+    const result = await testToken(type, token.accessToken, token.region);
     setTestResult(result);
     setTesting(false);
   };
@@ -71,7 +131,7 @@ export function StoredTokenCard({ type }: { type: TokenType }) {
       {
         text: t('tokenCard.clear'),
         style: 'destructive',
-        onPress: () => clearTokens(type),
+        onPress: () => clearToken(type, token.id),
       },
     ]);
   };
@@ -84,14 +144,21 @@ export function StoredTokenCard({ type }: { type: TokenType }) {
         : colors.textSecondary;
 
   return (
-    <ThemedView style={styles.card}>
-      <View style={styles.header}>
+    <ThemedView style={cardStyles.card}>
+      <View style={cardStyles.header}>
         <Ionicons name="bookmark" size={18} color={colors.primary} />
-        <ThemedText type="defaultSemiBold" style={styles.headerTitle}>
-          {t('tokenCard.title')}
-        </ThemedText>
+        <View style={cardStyles.headerTitleBlock}>
+          <ThemedText type="defaultSemiBold">
+            {t('tokenCard.titleNumbered', { number })}
+          </ThemedText>
+          <ThemedText style={cardStyles.headerSubtitle}>
+            {t('tokenCard.generatedOn', {
+              date: formatDate(new Date(token.createdAt)),
+            })}
+          </ThemedText>
+        </View>
         {expiryInfo?.expiry && (
-          <View style={styles.headerExpiry}>
+          <View style={cardStyles.headerExpiry}>
             <Ionicons
               name={expiryInfo.expired ? 'alert-circle' : 'time-outline'}
               size={14}
@@ -99,7 +166,7 @@ export function StoredTokenCard({ type }: { type: TokenType }) {
             />
             <ThemedText
               style={[
-                styles.headerDate,
+                cardStyles.headerDate,
                 expiryInfo.expired && { color: colors.danger, opacity: 1 },
               ]}
             >
@@ -111,36 +178,36 @@ export function StoredTokenCard({ type }: { type: TokenType }) {
         )}
       </View>
 
-      <TokenInfo accessToken={tokens.accessToken} />
+      <TokenInfo accessToken={token.accessToken} />
 
-      <View style={styles.tokenRow}>
-        <ThemedText style={styles.tokenInlineLabel}>
+      <View style={cardStyles.tokenRow}>
+        <ThemedText style={cardStyles.tokenInlineLabel}>
           {t('tokenCard.accessToken')}
         </ThemedText>
-        <ThemedText style={styles.tokenText} numberOfLines={1}>
-          {tokens.accessToken}
+        <ThemedText style={cardStyles.tokenText} numberOfLines={1}>
+          {token.accessToken}
         </ThemedText>
         <Pressable
-          style={styles.copyButton}
+          style={cardStyles.copyButton}
           onPress={() =>
-            copyToClipboard(tokens.accessToken, t('tokenCard.accessToken'))
+            copyToClipboard(token.accessToken, t('tokenCard.accessToken'))
           }
         >
           <Ionicons name="clipboard" size={18} color={colors.primary} />
         </Pressable>
       </View>
 
-      <View style={styles.tokenRow}>
-        <ThemedText style={styles.tokenInlineLabel}>
+      <View style={cardStyles.tokenRow}>
+        <ThemedText style={cardStyles.tokenInlineLabel}>
           {t('tokenCard.refreshToken')}
         </ThemedText>
-        <ThemedText style={styles.tokenText} numberOfLines={1}>
-          {tokens.refreshToken}
+        <ThemedText style={cardStyles.tokenText} numberOfLines={1}>
+          {token.refreshToken}
         </ThemedText>
         <Pressable
-          style={styles.copyButton}
+          style={cardStyles.copyButton}
           onPress={() =>
-            copyToClipboard(tokens.refreshToken, t('tokenCard.refreshToken'))
+            copyToClipboard(token.refreshToken, t('tokenCard.refreshToken'))
           }
         >
           <Ionicons name="clipboard" size={18} color={colors.primary} />
@@ -148,7 +215,7 @@ export function StoredTokenCard({ type }: { type: TokenType }) {
       </View>
 
       {testResult && (
-        <View style={styles.row}>
+        <View style={cardStyles.row}>
           <Ionicons
             name={
               testResult.status === 'valid'
@@ -161,7 +228,7 @@ export function StoredTokenCard({ type }: { type: TokenType }) {
             color={testColor}
           />
           <ThemedText
-            style={[styles.testText, { color: testColor, flex: 1 }]}
+            style={[cardStyles.testText, { color: testColor, flex: 1 }]}
             numberOfLines={1}
           >
             {t(`tokenCard.testResult.${testResult.status}`)}
@@ -174,9 +241,9 @@ export function StoredTokenCard({ type }: { type: TokenType }) {
         </View>
       )}
 
-      <View style={styles.actions}>
+      <View style={cardStyles.actions}>
         <Pressable
-          style={[styles.actionButton, styles.testButton]}
+          style={[cardStyles.actionButton, cardStyles.testButton]}
           onPress={runTest}
           disabled={testing}
         >
@@ -185,23 +252,59 @@ export function StoredTokenCard({ type }: { type: TokenType }) {
           ) : (
             <Ionicons name="pulse" size={18} color="#fff" />
           )}
-          <ThemedText style={styles.testButtonText}>
+          <ThemedText style={cardStyles.testButtonText}>
             {t('tokenCard.test')}
           </ThemedText>
         </Pressable>
         <Pressable
-          style={[styles.actionButton, styles.clearButton]}
+          style={[cardStyles.actionButton, cardStyles.shareButton]}
+          onPress={shareTokens}
+        >
+          <Ionicons name="share-outline" size={18} color={colors.primary} />
+          <ThemedText style={[cardStyles.shareButtonText, { color: colors.primary }]}>
+            {t('tokenCard.share')}
+          </ThemedText>
+        </Pressable>
+        <Pressable
+          style={[cardStyles.actionButton, cardStyles.clearButton]}
           onPress={confirmClear}
         >
           <Ionicons name="trash" size={18} color={colors.danger} />
-          <ThemedText style={[styles.clearButtonText, { color: colors.danger }]}>
+          <ThemedText style={[cardStyles.clearButtonText, { color: colors.danger }]}>
             {t('tokenCard.clear')}
           </ThemedText>
         </Pressable>
       </View>
+
+      {type === 'owner' && (
+        <>
+          <Pressable
+            style={[cardStyles.actionButton, cardStyles.connectButton]}
+            onPress={() => setConnectVisible(true)}
+          >
+            <Ionicons name="car-sport" size={18} color="#fff" />
+            <ThemedText style={cardStyles.testButtonText}>
+              {t('settings.tokens.ownerGenerator.useModalTitle')}
+            </ThemedText>
+          </Pressable>
+          <TeslaMateConnectModal
+            visible={connectVisible}
+            onClose={() => setConnectVisible(false)}
+            accessToken={token.accessToken}
+            refreshToken={token.refreshToken}
+            region={token.region}
+          />
+        </>
+      )}
     </ThemedView>
   );
 }
+
+const styles = StyleSheet.create({
+  list: {
+    gap: 12,
+  },
+});
 
 const createStyles = (colors: any) =>
   StyleSheet.create({
@@ -216,8 +319,13 @@ const createStyles = (colors: any) =>
       alignItems: 'center',
       gap: 8,
     },
-    headerTitle: {
+    headerTitleBlock: {
       flex: 1,
+    },
+    headerSubtitle: {
+      fontSize: 12,
+      opacity: 0.6,
+      color: colors.textSecondary,
     },
     headerExpiry: {
       flexDirection: 'row',
@@ -256,9 +364,6 @@ const createStyles = (colors: any) =>
       borderRadius: 8,
       padding: 8,
     },
-    testResult: {
-      gap: 4,
-    },
     row: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -267,10 +372,6 @@ const createStyles = (colors: any) =>
     testText: {
       fontSize: 13,
       fontWeight: '500',
-    },
-    accountName: {
-      fontSize: 13,
-      opacity: 0.8,
     },
     actions: {
       flexDirection: 'row',
@@ -288,6 +389,10 @@ const createStyles = (colors: any) =>
     testButton: {
       backgroundColor: colors.primary,
     },
+    connectButton: {
+      backgroundColor: colors.primary,
+      marginTop: 4,
+    },
     testButtonText: {
       color: '#fff',
       fontWeight: '600',
@@ -298,6 +403,14 @@ const createStyles = (colors: any) =>
       borderColor: colors.borderColor,
     },
     clearButtonText: {
+      fontWeight: '600',
+    },
+    shareButton: {
+      backgroundColor: colors.background,
+      borderWidth: 1,
+      borderColor: colors.borderColor,
+    },
+    shareButtonText: {
       fontWeight: '600',
     },
   });

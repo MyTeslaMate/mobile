@@ -9,7 +9,6 @@ export default function TabsLayout() {
 
   return (
     <Tabs
-      initialRouteName="owner"
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
@@ -21,7 +20,7 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen
-        name="owner"
+        name="index"
         options={{
           title: t('tabs.owner'),
           tabBarIcon: ({ color, size }) => (
@@ -30,7 +29,7 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="index"
+        name="fleet"
         options={{
           title: t('tabs.fleet'),
           tabBarIcon: ({ color, size }) => (

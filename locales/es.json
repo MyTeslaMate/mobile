@@ -18,10 +18,11 @@
     "featuresTitle": "Funcionalidades",
     "featureFleet": "Generación de tokens Fleet API",
     "featureOwner": "Generación de tokens Owner API",
+    "featureHistory": "Tokens guardados en el dispositivo para reutilizarlos fácilmente",
     "featureSecure": "Almacenamiento cifrado y bloqueo biométrico",
     "featureTheme": "Temas claro, oscuro y automático",
     "linksTitle": "Enlaces",
-    "website": "Sitio web de MyTeslaMate"
+    "website": "Tu instancia de TeslaMate"
   },
   "tokenInfo": {
     "expired": "Token caducado",
@@ -30,11 +31,15 @@
   },
   "tokenCard": {
     "title": "Último token",
+    "titleNumbered": "Token n.º {{number}}",
     "generatedOn": "Generado el {{date}}",
     "accessToken": "Access Token",
     "refreshToken": "Refresh Token",
     "test": "Probar",
     "clear": "Borrar",
+    "share": "Compartir",
+    "shareHeader": "MyTeslaMate — Tokens API {{type}}",
+    "shareError": "No se puede compartir.",
     "clearTitle": "Borrar token",
     "clearMessage": "El token guardado se eliminará de este dispositivo. Esta acción no se puede deshacer.",
     "copied": "Copiado",
@@ -53,7 +58,18 @@
     "prompt": "Autentícate para acceder a tus tokens",
     "lockedTitle": "Aplicación bloqueada",
     "lockedSubtitle": "Autentícate para acceder a tus tokens.",
-    "unlock": "Desbloquear"
+    "unlock": "Desbloquear",
+    "enablePromptTitle": "¿Activar el bloqueo biométrico?",
+    "enablePromptMessage": "Protege tus tokens con Face ID o huella cada vez que abras la app. Puedes cambiarlo más tarde en Ajustes.",
+    "enablePromptEnable": "Activar",
+    "enablePromptLater": "Ahora no"
+  },
+  "update": {
+    "title": "Actualización requerida",
+    "message": "Hay una nueva versión de la aplicación disponible. Actualiza para continuar.",
+    "currentVersion": "Versión instalada: {{version}}",
+    "latestVersion": "Última versión: {{version}}",
+    "button": "Actualizar ahora"
   },
   "home": {
     "title": "Generador de tokens Tesla",
@@ -70,7 +86,9 @@
     "regionIntl": "Worldwide",
     "regionCn": "China",
     "languageSectionTitle": "Idioma",
-    "generateButton": "Generar tokens"
+    "typeFleet": "Fleet",
+    "typeOwner": "Owner",
+    "generateButton": "Generar tokens {{type}} — {{region}}"
   },
   "settings": {
     "tokens": {
@@ -146,7 +164,7 @@
         "closeButton": "Cerrar",
         "copyValue": "Valor a copiar",
         "useInTeslaMate": "Usar estos tokens en mi TeslaMate",
-        "useModalTitle": "Importar en MyTeslaMate",
+        "useModalTitle": "Conectar mi TeslaMate",
         "redirecting": "Redirigiendo a MyTeslaMate…",
         "alerts": {
           "error": "Error",

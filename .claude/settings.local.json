@@ -8,7 +8,19 @@
       "Bash(./node_modules/.bin/expo run:ios)",
       "Bash(eas build:list --limit 5 --json --non-interactive)",
       "Bash(eas build:view 2234f8e7-4f62-4f67-ad36-ed522b3b1ffc --json)",
-      "Bash(python3 -c \"import sys, json; d=json.load\\(sys.stdin\\); print\\(d.get\\('logFiles',[]\\)\\)\")"
+      "Bash(python3 -c \"import sys, json; d=json.load\\(sys.stdin\\); print\\(d.get\\('logFiles',[]\\)\\)\")",
+      "Read(//Users/julien/Sites/MTM/app/**)",
+      "Read(//Users/julien/Sites/MTM/test/teslamate/priv/repo/migrations/**)",
+      "Read(//Users/julien/Sites/MTM/test/teslamate/lib/teslamate/auth/**)",
+      "Bash(./php -l app/Http/Controllers/TokensController.php)",
+      "Bash(./php -l routes/api.php)"
+    ],
+    "additionalDirectories": [
+      "/Users/julien/Sites/MTM/app/routes",
+      "/Users/julien/Sites/MTM/app/lang",
+      "/Users/julien/Sites/MTM/app/.helm",
+      "/Users/julien/Sites/MTM/app/resources/views/mobile",
+      "/Users/julien/Sites/MTM/app/resources/views/components"
     ]
   }
 }

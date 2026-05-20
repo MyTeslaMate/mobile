@@ -2,20 +2,32 @@ import { RegionSelector } from '@/components/RegionSelector';
 import { StoredTokenCard } from '@/components/StoredTokenCard';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import TokenFleetGenerator from '@/components/tokens/TokenFleetGenerator';
+import { TokenOwnerGenerator } from '@/components/tokens/TokenOwnerGenerator';
 import { useLocalization } from '@/contexts/LocalizationContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
 import { useRegion } from '@/hooks/useRegion';
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet } from 'react-native';
+import { router, useLocalSearchParams } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function FleetScreen() {
+export default function OwnerScreen() {
   const colors = useThemeColors();
   const { t } = useLocalization();
   const { region } = useRegion();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const { generate } = useLocalSearchParams<{ generate?: string }>();
+
+  // Deep link: `mtm:///?generate=1` opens the Owner tab and auto-launches
+  // the token generator modal. We clear the param right after so backing
+  // out and re-entering this tab does not re-trigger the modal.
+  useEffect(() => {
+    if (generate === '1') {
+      setIsModalVisible(true);
+      router.setParams({ generate: undefined });
+    }
+  }, [generate]);
 
   const styles = createStyles(colors);
 
@@ -26,12 +38,12 @@ export default function FleetScreen() {
     >
       <ScrollView contentContainerStyle={styles.container}>
         <ThemedView style={styles.header}>
-          <Ionicons name="cloud" size={48} color={colors.primary} />
+          <Ionicons name="person" size={48} color={colors.primary} />
           <ThemedText type="title" style={styles.title}>
-            {t('home.fleetButtonTitle')}
+            {t('home.ownerButtonTitle')}
           </ThemedText>
           <ThemedText style={styles.subtitle}>
-            {t('home.fleetButtonDescription')}
+            {t('home.ownerButtonDescription')}
           </ThemedText>
         </ThemedView>
 
@@ -43,30 +55,22 @@ export default function FleetScreen() {
           >
             <Ionicons name="key" size={20} color="#fff" />
             <ThemedText style={styles.generateButtonText}>
-              {t('home.generateButton')}
+              {t('home.generateButton', {
+                type: t('home.typeOwner'),
+                region: t(region === 'cn' ? 'home.regionCn' : 'home.regionIntl'),
+              })}
             </ThemedText>
           </Pressable>
         </ThemedView>
 
-        <StoredTokenCard type="fleet" />
+        <StoredTokenCard type="owner" />
       </ScrollView>
 
-      <Modal
-        animationType="slide"
-        transparent={false}
+      <TokenOwnerGenerator
         visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(false)}
-        presentationStyle="pageSheet"
-      >
-        <SafeAreaView
-          style={[styles.modalContainer, { backgroundColor: colors.background }]}
-        >
-          <TokenFleetGenerator
-            onClose={() => setIsModalVisible(false)}
-            region={region}
-          />
-        </SafeAreaView>
-      </Modal>
+        onClose={() => setIsModalVisible(false)}
+        region={region}
+      />
     </SafeAreaView>
   );
 }
@@ -113,8 +117,5 @@ const createStyles = (colors: any) =>
       color: '#fff',
       fontWeight: '600',
       fontSize: 16,
-    },
-    modalContainer: {
-      flex: 1,
     },
   });

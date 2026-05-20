@@ -1,5 +1,6 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { TeslaMateConnectModal } from '@/components/tokens/TeslaMateConnectModal';
 import { useLocalization } from '@/contexts/LocalizationContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
 import { useTokenStore } from '@/contexts/TokenStoreContext';
@@ -12,15 +13,6 @@ import * as Clipboard from 'expo-clipboard';
 import { WebView } from 'react-native-webview';
 
 const OWNER_REDIRECT_URI = 'tesla://auth/callback';
-const MTM_OWNER_TOKEN_URL = 'https://app.myteslamate.com/owner-token';
-
-function escapeHtml(value: string) {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
 
 const REGION_CONFIG = {
   intl: {
@@ -108,24 +100,6 @@ export function TokenOwnerGenerator({
       handledRef.current = false;
     }
   }, [visible]);
-
-  const buildPostHtml = () => {
-    const message = t('settings.tokens.ownerGenerator.redirecting');
-    return `<!DOCTYPE html>
-<html>
-  <head><meta name="viewport" content="width=device-width, initial-scale=1" /></head>
-  <body style="margin:0;display:flex;align-items:center;justify-content:center;height:100vh;font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#111;color:#fff">
-    <p>${escapeHtml(message)}</p>
-    <form id="mtmForm" method="POST" action="${MTM_OWNER_TOKEN_URL}">
-      <input type="hidden" name="access_token" value="${escapeHtml(tokens?.access_token ?? '')}" />
-      <input type="hidden" name="refresh_token" value="${escapeHtml(tokens?.refresh_token ?? '')}" />
-      <input type="hidden" name="region" value="${escapeHtml(region)}" />
-      <input type="hidden" name="token_type" value="owner" />
-    </form>
-    <script>document.getElementById('mtmForm').submit();</script>
-  </body>
-</html>`;
-  };
 
   const getOwnerAuthUrl = () => {
     if (!authParams) return '';
@@ -378,45 +352,15 @@ export function TokenOwnerGenerator({
           </>
         )}
 
-        <Modal
-          visible={useInTeslaMate}
-          animationType="slide"
-          transparent={false}
-          onRequestClose={() => setUseInTeslaMate(false)}
-          presentationStyle="pageSheet"
-        >
-          <ThemedView
-            style={[styles.container, { backgroundColor: colors.background }]}
-          >
-            <View style={styles.header}>
-              <Ionicons
-                name="car-sport"
-                size={24}
-                color={colors.primary}
-                style={styles.headerIcon}
-              />
-              <ThemedText type="title" style={styles.title}>
-                {t('settings.tokens.ownerGenerator.useModalTitle')}
-              </ThemedText>
-            </View>
-            {tokens && (
-              <WebView
-                source={{ html: buildPostHtml() }}
-                originWhitelist={['*']}
-                startInLoadingState
-                style={styles.webview}
-              />
-            )}
-            <Pressable
-              style={styles.closeButton}
-              onPress={() => setUseInTeslaMate(false)}
-            >
-              <ThemedText style={styles.closeButtonText}>
-                {t('settings.tokens.ownerGenerator.closeButton')}
-              </ThemedText>
-            </Pressable>
-          </ThemedView>
-        </Modal>
+        {tokens?.access_token && tokens?.refresh_token && (
+          <TeslaMateConnectModal
+            visible={useInTeslaMate}
+            onClose={() => setUseInTeslaMate(false)}
+            accessToken={tokens.access_token}
+            refreshToken={tokens.refresh_token}
+            region={region}
+          />
+        )}
       </ThemedView>
     </Modal>
   );

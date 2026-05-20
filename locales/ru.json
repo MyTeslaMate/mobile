@@ -18,10 +18,11 @@
     "featuresTitle": "Возможности",
     "featureFleet": "Генерация токенов Fleet API",
     "featureOwner": "Генерация токенов Owner API",
+    "featureHistory": "Токены сохраняются на устройстве для удобного повторного использования",
     "featureSecure": "Шифрованное хранилище и биометрическая блокировка",
     "featureTheme": "Светлая, тёмная и автоматическая темы",
     "linksTitle": "Ссылки",
-    "website": "Сайт MyTeslaMate"
+    "website": "Ваш экземпляр TeslaMate"
   },
   "tokenInfo": {
     "expired": "Срок действия токена истёк",
@@ -30,11 +31,15 @@
   },
   "tokenCard": {
     "title": "Последний токен",
+    "titleNumbered": "Токен №{{number}}",
     "generatedOn": "Создан {{date}}",
     "accessToken": "Access Token",
     "refreshToken": "Refresh Token",
     "test": "Проверить",
     "clear": "Очистить",
+    "share": "Поделиться",
+    "shareHeader": "MyTeslaMate — токены API {{type}}",
+    "shareError": "Не удалось поделиться.",
     "clearTitle": "Удалить токен",
     "clearMessage": "Сохранённый токен будет удалён с этого устройства. Это действие нельзя отменить.",
     "copied": "Скопировано",
@@ -53,7 +58,18 @@
     "prompt": "Пройдите аутентификацию для доступа к токенам",
     "lockedTitle": "Приложение заблокировано",
     "lockedSubtitle": "Пройдите аутентификацию для доступа к токенам.",
-    "unlock": "Разблокировать"
+    "unlock": "Разблокировать",
+    "enablePromptTitle": "Включить биометрическую блокировку?",
+    "enablePromptMessage": "Защитите токены с помощью Face ID или отпечатка пальца при каждом открытии приложения. Это можно изменить позже в настройках.",
+    "enablePromptEnable": "Включить",
+    "enablePromptLater": "Позже"
+  },
+  "update": {
+    "title": "Требуется обновление",
+    "message": "Доступна новая версия приложения. Обновите, чтобы продолжить.",
+    "currentVersion": "Установленная версия: {{version}}",
+    "latestVersion": "Последняя версия: {{version}}",
+    "button": "Обновить сейчас"
   },
   "home": {
     "title": "Генератор токенов Tesla",
@@ -70,7 +86,9 @@
     "regionIntl": "Международный",
     "regionCn": "Китай",
     "languageSectionTitle": "Язык",
-    "generateButton": "Сгенерировать токены"
+    "typeFleet": "Fleet",
+    "typeOwner": "Owner",
+    "generateButton": "Сгенерировать токены {{type}} — {{region}}"
   },
   "settings": {
     "tokens": {
@@ -146,7 +164,7 @@
         "closeButton": "Закрыть",
         "copyValue": "Значение для копирования",
         "useInTeslaMate": "Использовать эти токены в моём TeslaMate",
-        "useModalTitle": "Импорт в MyTeslaMate",
+        "useModalTitle": "Подключить мой TeslaMate",
         "redirecting": "Перенаправление на MyTeslaMate…",
         "alerts": {
           "error": "Ошибка",

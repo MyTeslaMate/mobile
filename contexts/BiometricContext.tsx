@@ -10,7 +10,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { AppState } from 'react-native';
+import { Alert, AppState } from 'react-native';
 
 const STORAGE_KEY = 'mtm_tokens_biometric_lock';
 
@@ -36,6 +36,36 @@ export function BiometricProvider({ children }: { children: ReactNode }) {
   const enabledRef = useRef(false);
   const authInProgress = useRef(false);
 
+  const promptEnableBiometric = useCallback(() => {
+    Alert.alert(
+      i18n.t('biometric.enablePromptTitle'),
+      i18n.t('biometric.enablePromptMessage'),
+      [
+        {
+          text: i18n.t('biometric.enablePromptLater'),
+          style: 'cancel',
+          onPress: async () => {
+            await AsyncStorage.setItem(STORAGE_KEY, 'false');
+          },
+        },
+        {
+          text: i18n.t('biometric.enablePromptEnable'),
+          onPress: async () => {
+            const result = await LocalAuthentication.authenticateAsync({
+              promptMessage: i18n.t('biometric.prompt'),
+            });
+            if (result.success) {
+              await AsyncStorage.setItem(STORAGE_KEY, 'true');
+              enabledRef.current = true;
+              setIsEnabled(true);
+              setIsLocked(false);
+            }
+          },
+        },
+      ]
+    );
+  }, []);
+
   useEffect(() => {
     (async () => {
       try {
@@ -50,13 +80,16 @@ export function BiometricProvider({ children }: { children: ReactNode }) {
         setIsEnabled(enabled);
         setIsLocked(enabled);
         enabledRef.current = enabled;
+        if (available && saved === null) {
+          promptEnableBiometric();
+        }
       } catch (error) {
         console.error('Error initializing biometric lock:', error);
       } finally {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [promptEnableBiometric]);
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', state => {

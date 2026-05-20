@@ -14,7 +14,6 @@ import { Ionicons } from '@expo/vector-icons';
 import {
   Image,
   Linking,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -22,14 +21,18 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as Application from 'expo-application';
 import Constants from 'expo-constants';
 
-const APP_VERSION = Constants.expoConfig?.version ?? '';
-const APP_BUILD =
-  Platform.OS === 'ios'
-    ? (Constants.expoConfig?.ios?.buildNumber ?? '')
-    : String(Constants.expoConfig?.android?.versionCode ?? '');
+// `Application` reads the values baked into the native binary at build time,
+// whereas `Constants.expoConfig` only knows about what's in app.json. EAS
+// injects the build number / version code into the native projects, so the
+// authoritative source is `Application.nativeBuildVersion`.
+const APP_VERSION =
+  Application.nativeApplicationVersion ?? Constants.expoConfig?.version ?? '';
+const APP_BUILD = Application.nativeBuildVersion ?? '';
 const WEBSITE_URL = 'https://app.myteslamate.com';
+const SOURCE_URL = 'https://github.com/MyTeslaMate/tesla-tokens-generator';
 
 export default function AboutScreen() {
   const colors = useThemeColors();
@@ -47,6 +50,7 @@ export default function AboutScreen() {
   const features: { icon: any; label: string }[] = [
     { icon: 'cloud', label: t('about.featureFleet') },
     { icon: 'person', label: t('about.featureOwner') },
+    { icon: 'bookmarks', label: t('about.featureHistory') },
     { icon: 'lock-closed', label: t('about.featureSecure') },
     { icon: 'color-palette', label: t('about.featureTheme') },
   ];
@@ -78,9 +82,7 @@ export default function AboutScreen() {
           </ThemedText>
           <ThemedText style={styles.version}>
             {t('about.version', { version: APP_VERSION, build: APP_BUILD })}
-          </ThemedText>
-          <ThemedText style={styles.copyright}>
-            © 2026 Tesflow
+            {' · © 2026 Tesflow'}
           </ThemedText>
         </ThemedView>
 
@@ -91,6 +93,19 @@ export default function AboutScreen() {
           <ThemedText style={styles.paragraph}>
             {t('about.description')}
           </ThemedText>
+
+          <Pressable
+            style={styles.linkRow}
+            onPress={() => Linking.openURL(SOURCE_URL)}
+          >
+            <Ionicons name="logo-github" size={20} color={colors.primary} />
+            <ThemedText style={styles.linkLabel}>Source code</ThemedText>
+            <Ionicons
+              name="open-outline"
+              size={18}
+              color={colors.textSecondary}
+            />
+          </Pressable>          
           <Pressable
             style={styles.linkRow}
             onPress={() => Linking.openURL(WEBSITE_URL)}
@@ -253,10 +268,6 @@ const createStyles = (colors: any) =>
     version: {
       opacity: 0.6,
       fontSize: 14,
-    },
-    copyright: {
-      opacity: 0.6,
-      fontSize: 13,
     },
     section: {
       backgroundColor: colors.cardBackground,

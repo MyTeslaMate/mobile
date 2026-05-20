@@ -2,20 +2,39 @@ import { RegionSelector } from '@/components/RegionSelector';
 import { StoredTokenCard } from '@/components/StoredTokenCard';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { TokenOwnerGenerator } from '@/components/tokens/TokenOwnerGenerator';
+import TokenFleetGenerator from '@/components/tokens/TokenFleetGenerator';
 import { useLocalization } from '@/contexts/LocalizationContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
 import { useRegion } from '@/hooks/useRegion';
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet } from 'react-native';
+import { router, useLocalSearchParams } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { Modal, Pressable, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function OwnerScreen() {
+export default function FleetScreen() {
   const colors = useThemeColors();
   const { t } = useLocalization();
   const { region } = useRegion();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [initialOriginUrl, setInitialOriginUrl] = useState<string | undefined>(
+    undefined
+  );
+  const { origin, generate } = useLocalSearchParams<{
+    origin?: string;
+    generate?: string;
+  }>();
+
+  // Deep link: `mtm://fleet?origin=<url>` (or `?generate=1`) opens the Fleet
+  // tab and auto-launches the token generator pre-filled with `origin`.
+  // We clear the params right after so revisiting the tab does not re-trigger.
+  useEffect(() => {
+    if (origin || generate === '1') {
+      if (origin) setInitialOriginUrl(origin);
+      setIsModalVisible(true);
+      router.setParams({ origin: undefined, generate: undefined });
+    }
+  }, [origin, generate]);
 
   const styles = createStyles(colors);
 
@@ -26,12 +45,12 @@ export default function OwnerScreen() {
     >
       <ScrollView contentContainerStyle={styles.container}>
         <ThemedView style={styles.header}>
-          <Ionicons name="person" size={48} color={colors.primary} />
+          <Ionicons name="cloud" size={48} color={colors.primary} />
           <ThemedText type="title" style={styles.title}>
-            {t('home.ownerButtonTitle')}
+            {t('home.fleetButtonTitle')}
           </ThemedText>
           <ThemedText style={styles.subtitle}>
-            {t('home.ownerButtonDescription')}
+            {t('home.fleetButtonDescription')}
           </ThemedText>
         </ThemedView>
 
@@ -43,19 +62,34 @@ export default function OwnerScreen() {
           >
             <Ionicons name="key" size={20} color="#fff" />
             <ThemedText style={styles.generateButtonText}>
-              {t('home.generateButton')}
+              {t('home.generateButton', {
+                type: t('home.typeFleet'),
+                region: t(region === 'cn' ? 'home.regionCn' : 'home.regionIntl'),
+              })}
             </ThemedText>
           </Pressable>
         </ThemedView>
 
-        <StoredTokenCard type="owner" />
+        <StoredTokenCard type="fleet" />
       </ScrollView>
 
-      <TokenOwnerGenerator
+      <Modal
+        animationType="slide"
+        transparent={false}
         visible={isModalVisible}
-        onClose={() => setIsModalVisible(false)}
-        region={region}
-      />
+        onRequestClose={() => setIsModalVisible(false)}
+        presentationStyle="pageSheet"
+      >
+        <SafeAreaView
+          style={[styles.modalContainer, { backgroundColor: colors.background }]}
+        >
+          <TokenFleetGenerator
+            onClose={() => setIsModalVisible(false)}
+            region={region}
+            initialOriginUrl={initialOriginUrl}
+          />
+        </SafeAreaView>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -102,5 +136,8 @@ const createStyles = (colors: any) =>
       color: '#fff',
       fontWeight: '600',
       fontSize: 16,
+    },
+    modalContainer: {
+      flex: 1,
     },
   });

@@ -18,10 +18,11 @@
     "featuresTitle": "Funktionen",
     "featureFleet": "Erzeugung von Fleet-API-Tokens",
     "featureOwner": "Erzeugung von Owner-API-Tokens",
+    "featureHistory": "Tokens werden auf dem Gerät gespeichert und können einfach wiederverwendet werden",
     "featureSecure": "Verschlüsselte Speicherung und biometrische Sperre",
     "featureTheme": "Helles, dunkles und automatisches Design",
     "linksTitle": "Links",
-    "website": "MyTeslaMate-Website"
+    "website": "Deine TeslaMate-Instanz"
   },
   "tokenInfo": {
     "expired": "Token abgelaufen",
@@ -30,11 +31,15 @@
   },
   "tokenCard": {
     "title": "Letztes Token",
+    "titleNumbered": "Token Nr. {{number}}",
     "generatedOn": "Erzeugt am {{date}}",
     "accessToken": "Access Token",
     "refreshToken": "Refresh Token",
     "test": "Testen",
     "clear": "Löschen",
+    "share": "Teilen",
+    "shareHeader": "MyTeslaMate — {{type}}-API-Tokens",
+    "shareError": "Teilen nicht möglich.",
     "clearTitle": "Token löschen",
     "clearMessage": "Das gespeicherte Token wird von diesem Gerät entfernt. Diese Aktion kann nicht rückgängig gemacht werden.",
     "copied": "Kopiert",
@@ -53,7 +58,18 @@
     "prompt": "Authentifizieren Sie sich, um auf Ihre Tokens zuzugreifen",
     "lockedTitle": "App gesperrt",
     "lockedSubtitle": "Authentifizieren Sie sich, um auf Ihre Tokens zuzugreifen.",
-    "unlock": "Entsperren"
+    "unlock": "Entsperren",
+    "enablePromptTitle": "Biometrische Sperre aktivieren?",
+    "enablePromptMessage": "Schütze deine Tokens bei jedem Öffnen der App mit Face ID oder Fingerabdruck. Du kannst dies später in den Einstellungen ändern.",
+    "enablePromptEnable": "Aktivieren",
+    "enablePromptLater": "Später"
+  },
+  "update": {
+    "title": "Update erforderlich",
+    "message": "Eine neue Version der App ist verfügbar. Bitte aktualisieren Sie, um fortzufahren.",
+    "currentVersion": "Installierte Version: {{version}}",
+    "latestVersion": "Neueste Version: {{version}}",
+    "button": "Jetzt aktualisieren"
   },
   "home": {
     "title": "Tesla-Token-Generator",
@@ -70,7 +86,9 @@
     "regionIntl": "Worldwide",
     "regionCn": "China",
     "languageSectionTitle": "Sprache",
-    "generateButton": "Tokens erzeugen"
+    "typeFleet": "Fleet",
+    "typeOwner": "Owner",
+    "generateButton": "{{type}}-Tokens erzeugen — {{region}}"
   },
   "settings": {
     "tokens": {
@@ -146,7 +164,7 @@
         "closeButton": "Schließen",
         "copyValue": "Zu kopierender Wert",
         "useInTeslaMate": "Diese Tokens in meinem TeslaMate verwenden",
-        "useModalTitle": "In MyTeslaMate importieren",
+        "useModalTitle": "Mein TeslaMate verbinden",
         "redirecting": "Weiterleitung zu MyTeslaMate…",
         "alerts": {
           "error": "Fehler",

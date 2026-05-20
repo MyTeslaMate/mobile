@@ -18,10 +18,11 @@
     "featuresTitle": "功能",
     "featureFleet": "生成 Fleet API 令牌",
     "featureOwner": "生成 Owner API 令牌",
+    "featureHistory": "令牌保存在设备上，方便重复使用",
     "featureSecure": "加密存储和生物识别锁",
     "featureTheme": "浅色、深色和自动主题",
     "linksTitle": "链接",
-    "website": "MyTeslaMate 网站"
+    "website": "你的 TeslaMate 实例"
   },
   "tokenInfo": {
     "expired": "令牌已过期",
@@ -30,11 +31,15 @@
   },
   "tokenCard": {
     "title": "最新令牌",
+    "titleNumbered": "令牌 #{{number}}",
     "generatedOn": "生成于 {{date}}",
     "accessToken": "Access Token",
     "refreshToken": "Refresh Token",
     "test": "测试",
     "clear": "清除",
+    "share": "分享",
+    "shareHeader": "MyTeslaMate — {{type}} API 令牌",
+    "shareError": "无法分享。",
     "clearTitle": "清除令牌",
     "clearMessage": "已保存的令牌将从此设备上移除。此操作无法撤销。",
     "copied": "已复制",
@@ -53,7 +58,18 @@
     "prompt": "请验证身份以访问您的令牌",
     "lockedTitle": "应用已锁定",
     "lockedSubtitle": "请验证身份以访问您的令牌。",
-    "unlock": "解锁"
+    "unlock": "解锁",
+    "enablePromptTitle": "启用生物识别锁定？",
+    "enablePromptMessage": "每次打开应用时使用 Face ID 或指纹保护您的令牌。您稍后可以在设置中更改此项。",
+    "enablePromptEnable": "启用",
+    "enablePromptLater": "以后再说"
+  },
+  "update": {
+    "title": "需要更新",
+    "message": "应用有新版本可用。请更新以继续使用。",
+    "currentVersion": "已安装版本：{{version}}",
+    "latestVersion": "最新版本：{{version}}",
+    "button": "立即更新"
   },
   "home": {
     "title": "Tesla 令牌生成器",
@@ -70,7 +86,9 @@
     "regionIntl": "Worldwide",
     "regionCn": "中国",
     "languageSectionTitle": "语言",
-    "generateButton": "生成令牌"
+    "typeFleet": "Fleet",
+    "typeOwner": "Owner",
+    "generateButton": "生成 {{type}} 令牌 — {{region}}"
   },
   "settings": {
     "tokens": {
@@ -146,7 +164,7 @@
         "closeButton": "关闭",
         "copyValue": "要复制的值",
         "useInTeslaMate": "在我的 TeslaMate 中使用这些令牌",
-        "useModalTitle": "导入 MyTeslaMate",
+        "useModalTitle": "连接我的 TeslaMate",
         "redirecting": "正在重定向到 MyTeslaMate…",
         "alerts": {
           "error": "错误",

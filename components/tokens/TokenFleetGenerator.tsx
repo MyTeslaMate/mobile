@@ -87,6 +87,7 @@ const REGION_CONFIG = {
 interface TokenFleetGeneratorProps {
   onClose?: () => void;
   region: Region;
+  initialOriginUrl?: string;
 }
 
 type Step = 1 | 2 | 3 | 4 | 5;
@@ -101,6 +102,7 @@ interface ProgressItem {
 export default function TokenFleetGenerator({
   onClose,
   region,
+  initialOriginUrl,
 }: TokenFleetGeneratorProps) {
   const colors = useThemeColors();
   const { t } = useLocalization();
@@ -131,13 +133,17 @@ export default function TokenFleetGenerator({
             SecureStore.getItemAsync(FORM_STORAGE_KEYS.clientId),
             SecureStore.getItemAsync(FORM_STORAGE_KEYS.clientSecret),
           ]);
-        if (savedOrigin) setOriginUrl(savedOrigin);
+        // Deep-link `?origin=...` wins over the persisted value so an
+        // onboarding link reliably pre-fills the field.
+        const origin = initialOriginUrl || savedOrigin;
+        if (origin) setOriginUrl(origin);
         if (savedClientId) setClientId(savedClientId);
         if (savedClientSecret) setClientSecret(savedClientSecret);
       } catch (error) {
         console.error('Failed to load saved Fleet form values:', error);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const persistFormValue = async (
@@ -458,7 +464,7 @@ export default function TokenFleetGenerator({
       </ThemedText>
       <Pressable
         style={styles.linkButton}
-        onPress={() => Linking.openURL('https://developer.tesla.com')}
+        onPress={() => Linking.openURL('https://app.myteslamate.com/tesla')}
       >
         <Ionicons name="open-outline" size={18} color={colors.primary} />
         <ThemedText style={styles.linkButtonText}>

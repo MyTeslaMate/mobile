@@ -1,11 +1,25 @@
 # Tesla Tokens Generator
 
+[![Version](https://img.shields.io/github/package-json/v/MyTeslaMate/mobile_tokens?label=version)](https://github.com/MyTeslaMate/tesla-tokens-generator/releases)
+[![EAS Build](https://github.com/MyTeslaMate/tesla-tokens-generator/actions/workflows/eas-build.yml/badge.svg)](https://github.com/MyTeslaMate/tesla-tokens-generator/actions/workflows/eas-build.yml)
+[![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
+[![Expo SDK](https://img.shields.io/badge/Expo%20SDK-55-000020.svg?logo=expo)](https://docs.expo.dev/versions/v55.0.0/)
+[![React Native](https://img.shields.io/badge/React%20Native-0.83-61dafb.svg?logo=react)](https://reactnative.dev/)
+
 A minimalist React Native (Expo) app to generate Tesla API tokens:
 
 - **Fleet API**: register your Tesla developer application in the NA/EU/CN regions and retrieve your tokens via OAuth2.
 - **Owner API**: retrieve Owner API tokens via PKCE and a dedicated WebView for Tesla authentication.
 
 Open-source under the **GNU GPL v3.0** — see [LICENSE](LICENSE).
+
+## Download
+
+[![Download on TestFlight](https://img.shields.io/badge/iOS-TestFlight-0D96F6.svg?logo=apple)](https://testflight.apple.com/join/hHaSHUr3)
+[![Get it on Google Play](https://img.shields.io/badge/Android-Play%20Store-3DDC84.svg?logo=googleplay&logoColor=white)](https://play.google.com/apps/testing/com.myteslamate.tokens)
+
+- **iOS (TestFlight)**: <https://testflight.apple.com/join/hHaSHUr3>
+- **Android (Play Store closed testing)**: <https://play.google.com/apps/testing/com.myteslamate.tokens>
 
 ## Features
 

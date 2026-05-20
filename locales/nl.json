@@ -18,10 +18,11 @@
     "featuresTitle": "Functies",
     "featureFleet": "Fleet API-tokens genereren",
     "featureOwner": "Owner API-tokens genereren",
+    "featureHistory": "Tokens opgeslagen op het apparaat voor eenvoudig hergebruik",
     "featureSecure": "Versleutelde opslag en biometrische vergrendeling",
     "featureTheme": "Licht, donker en automatisch thema",
     "linksTitle": "Links",
-    "website": "MyTeslaMate-website"
+    "website": "Jouw TeslaMate-instantie"
   },
   "tokenInfo": {
     "expired": "Token verlopen",
@@ -30,11 +31,15 @@
   },
   "tokenCard": {
     "title": "Laatste token",
+    "titleNumbered": "Token #{{number}}",
     "generatedOn": "Gegenereerd op {{date}}",
     "accessToken": "Access Token",
     "refreshToken": "Refresh Token",
     "test": "Testen",
     "clear": "Wissen",
+    "share": "Delen",
+    "shareHeader": "MyTeslaMate — {{type}} API-tokens",
+    "shareError": "Delen niet mogelijk.",
     "clearTitle": "Token wissen",
     "clearMessage": "Het opgeslagen token wordt van dit apparaat verwijderd. Deze actie kan niet ongedaan worden gemaakt.",
     "copied": "Gekopieerd",
@@ -53,7 +58,18 @@
     "prompt": "Authenticeer om toegang te krijgen tot je tokens",
     "lockedTitle": "App vergrendeld",
     "lockedSubtitle": "Authenticeer om toegang te krijgen tot je tokens.",
-    "unlock": "Ontgrendelen"
+    "unlock": "Ontgrendelen",
+    "enablePromptTitle": "Biometrische vergrendeling inschakelen?",
+    "enablePromptMessage": "Beveilig je tokens met Face ID of vingerafdruk telkens wanneer je de app opent. Je kunt dit later wijzigen in Instellingen.",
+    "enablePromptEnable": "Inschakelen",
+    "enablePromptLater": "Niet nu"
+  },
+  "update": {
+    "title": "Update vereist",
+    "message": "Er is een nieuwe versie van de app beschikbaar. Werk bij om door te gaan.",
+    "currentVersion": "Geïnstalleerde versie: {{version}}",
+    "latestVersion": "Nieuwste versie: {{version}}",
+    "button": "Nu bijwerken"
   },
   "home": {
     "title": "Tesla-tokengenerator",
@@ -70,7 +86,9 @@
     "regionIntl": "Worldwide",
     "regionCn": "China",
     "languageSectionTitle": "Taal",
-    "generateButton": "Tokens genereren"
+    "typeFleet": "Fleet",
+    "typeOwner": "Owner",
+    "generateButton": "{{type}}-tokens genereren — {{region}}"
   },
   "settings": {
     "tokens": {
@@ -146,7 +164,7 @@
         "closeButton": "Sluiten",
         "copyValue": "Te kopiëren waarde",
         "useInTeslaMate": "Deze tokens gebruiken in mijn TeslaMate",
-        "useModalTitle": "Importeren in MyTeslaMate",
+        "useModalTitle": "Mijn TeslaMate verbinden",
         "redirecting": "Doorverwijzen naar MyTeslaMate…",
         "alerts": {
           "error": "Fout",
