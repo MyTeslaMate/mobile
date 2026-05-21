@@ -1,6 +1,6 @@
 # Tesla Tokens Generator
 
-[![Version](https://img.shields.io/github/package-json/v/MyTeslaMate/mobile_tokens?label=version)](https://github.com/MyTeslaMate/tesla-tokens-generator/releases)
+[![Version](https://img.shields.io/github/package-json/v/MyTeslaMate/tesla-tokens-generator?label=version)](https://github.com/MyTeslaMate/tesla-tokens-generator/releases)
 [![EAS Build](https://github.com/MyTeslaMate/tesla-tokens-generator/actions/workflows/eas-build.yml/badge.svg)](https://github.com/MyTeslaMate/tesla-tokens-generator/actions/workflows/eas-build.yml)
 [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 [![Expo SDK](https://img.shields.io/badge/Expo%20SDK-55-000020.svg?logo=expo)](https://docs.expo.dev/versions/v55.0.0/)
@@ -28,7 +28,9 @@ Open-source under the **GNU GPL v3.0** — see [LICENSE](LICENSE).
 - Light / dark / auto themes (persisted).
 - Internationalization.
 
-## Getting started
+## Development
+
+### Getting started
 
 Requirements: Node.js 20+, npm, and (for native builds) Xcode / Android Studio.
 
@@ -46,7 +48,7 @@ npx expo run:android
 
 After the first native build, you can keep using `npx expo start` and reload on the dev client.
 
-## Fleet API configuration
+### Fleet API configuration
 
 The `redirect_uri` used to register your Tesla application is **hardcoded** at the top of [components/tokens/TokenFleetGenerator.tsx](components/tokens/TokenFleetGenerator.tsx):
 
@@ -56,7 +58,7 @@ const REDIRECT_URI = 'mtm://auth/callback/api';
 
 If you fork the project and change the scheme, update both this constant and `expo.scheme` / the iOS/Android intent filters in [app.json](app.json).
 
-## Project layout
+### Project layout
 
 ```
 app/           Expo Router screens (tabs: fleet, owner, about)
@@ -68,7 +70,7 @@ locales/       i18next translation files
 assets/        Icons, splash, fonts
 ```
 
-## Useful scripts
+### Useful scripts
 
 ```bash
 npm run lint        # expo lint
@@ -77,7 +79,7 @@ npm run ios         # expo run:ios
 npm run android     # expo run:android
 ```
 
-## Contributing
+### Contributing
 
 Issues and pull requests are welcome. Please run `npm run lint` before opening a PR and keep changes focused (one topic per PR).
 
