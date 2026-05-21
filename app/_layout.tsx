@@ -16,6 +16,7 @@ import {
   ThemeProvider as CustomThemeProvider,
   useTheme,
 } from '@/contexts/ThemeContext';
+import { TeslaMateApiProvider } from '@/contexts/TeslaMateApiContext';
 import { TokenStoreProvider } from '@/contexts/TokenStoreContext';
 import { RegionProvider } from '@/hooks/useRegion';
 import '@/i18n';
@@ -51,20 +52,30 @@ export default function RootLayout() {
       <LocalizationProvider>
         <RegionProvider>
           <TokenStoreProvider>
-            <BiometricProvider>
-              <NavigationWrapper>
-                <UpdateGate>
-                  <BiometricGate>
-                    <Stack>
-                      <Stack.Screen
-                        name="(tabs)"
-                        options={{ headerShown: false }}
-                      />
-                    </Stack>
-                  </BiometricGate>
-                </UpdateGate>
-              </NavigationWrapper>
-            </BiometricProvider>
+            <TeslaMateApiProvider>
+              <BiometricProvider>
+                <NavigationWrapper>
+                  <UpdateGate>
+                    <BiometricGate>
+                      <Stack>
+                        <Stack.Screen
+                          name="(tabs)"
+                          options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                          name="onboarding"
+                          options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                          name="settings/tokens"
+                          options={{ headerShown: true }}
+                        />
+                      </Stack>
+                    </BiometricGate>
+                  </UpdateGate>
+                </NavigationWrapper>
+              </BiometricProvider>
+            </TeslaMateApiProvider>
           </TokenStoreProvider>
         </RegionProvider>
       </LocalizationProvider>

@@ -13,7 +13,8 @@
       "Read(//Users/julien/Sites/MTM/test/teslamate/priv/repo/migrations/**)",
       "Read(//Users/julien/Sites/MTM/test/teslamate/lib/teslamate/auth/**)",
       "Bash(./php -l app/Http/Controllers/TokensController.php)",
-      "Bash(./php -l routes/api.php)"
+      "Bash(./php -l routes/api.php)",
+      "Bash(xargs ls -la)"
     ],
     "additionalDirectories": [
       "/Users/julien/Sites/MTM/app/routes",

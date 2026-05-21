@@ -31,6 +31,7 @@ interface TokenOwnerGeneratorProps {
   visible: boolean;
   onClose: () => void;
   region: Region;
+  onSuccess?: (tokens: { accessToken: string; refreshToken: string }) => void;
 }
 
 function base64UrlEncode(str: string) {
@@ -68,6 +69,7 @@ export function TokenOwnerGenerator({
   visible,
   onClose,
   region,
+  onSuccess,
 }: TokenOwnerGeneratorProps) {
   const colors = useThemeColors();
   const { t } = useLocalization();
@@ -165,6 +167,10 @@ export function TokenOwnerGenerator({
           refreshToken: tokenData.refresh_token,
           region,
           createdAt: Date.now(),
+        });
+        onSuccess?.({
+          accessToken: tokenData.access_token,
+          refreshToken: tokenData.refresh_token,
         });
       }
     } catch (err) {

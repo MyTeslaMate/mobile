@@ -1,11 +1,16 @@
 import { useLocalization } from '@/contexts/LocalizationContext';
+import { useTeslaMateApi } from '@/contexts/TeslaMateApiContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
-import { Tabs } from 'expo-router';
+import { Redirect, Tabs } from 'expo-router';
 
 export default function TabsLayout() {
   const colors = useThemeColors();
   const { t } = useLocalization();
+  const { session, isLoading } = useTeslaMateApi();
+
+  if (isLoading) return null;
+  if (!session) return <Redirect href="/onboarding" />;
 
   return (
     <Tabs
@@ -20,29 +25,38 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="now"
         options={{
-          title: t('tabs.owner'),
+          title: t('tabs.now'),
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person" size={size} color={color} />
+            <Ionicons name="car-sport" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="fleet"
+        name="drives"
         options={{
-          title: t('tabs.fleet'),
+          title: t('tabs.drives'),
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="cloud" size={size} color={color} />
+            <Ionicons name="map" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="about"
+        name="charges"
         options={{
-          title: t('tabs.about'),
+          title: t('tabs.charges'),
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="information-circle" size={size} color={color} />
+            <Ionicons name="flash" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: t('tabs.settings'),
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="settings" size={size} color={color} />
           ),
         }}
       />

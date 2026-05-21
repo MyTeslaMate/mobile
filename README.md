@@ -1,4 +1,4 @@
-# Tesla Tokens Generator
+# MyTeslaMate
 
 [![Version](https://img.shields.io/github/package-json/v/MyTeslaMate/mobile_tokens?label=version)](https://github.com/MyTeslaMate/tesla-tokens-generator/releases)
 [![EAS Build](https://github.com/MyTeslaMate/tesla-tokens-generator/actions/workflows/eas-build.yml/badge.svg)](https://github.com/MyTeslaMate/tesla-tokens-generator/actions/workflows/eas-build.yml)
@@ -6,10 +6,12 @@
 [![Expo SDK](https://img.shields.io/badge/Expo%20SDK-55-000020.svg?logo=expo)](https://docs.expo.dev/versions/v55.0.0/)
 [![React Native](https://img.shields.io/badge/React%20Native-0.83-61dafb.svg?logo=react)](https://reactnative.dev/)
 
-A minimalist React Native (Expo) app to generate Tesla API tokens:
+The official mobile companion for [MyTeslaMate](https://app.myteslamate.com). View your drives, charges and current vehicle state directly from your TeslaMate instance.
 
-- **Fleet API**: register your Tesla developer application in the NA/EU/CN regions and retrieve your tokens via OAuth2.
-- **Owner API**: retrieve Owner API tokens via PKCE and a dedicated WebView for Tesla authentication.
+- **Now**: current battery state, charging status and location.
+- **Drives**: browse your recent trips with distance, duration and consumption.
+- **Charges**: history of your charging sessions with energy added and cost.
+- **Settings**: re-connect, language, theme, biometric lock, and advanced tools (Tesla API token management).
 
 Open-source under the **GNU GPL v3.0** — see [LICENSE](LICENSE).
 
@@ -23,10 +25,14 @@ Open-source under the **GNU GPL v3.0** — see [LICENSE](LICENSE).
 
 ## Features
 
-- Tab navigation: **Fleet API**, **Owner API**, and **About**.
-- Region selection (International / China) on each API tab.
+- Tab navigation: **Now**, **Drives**, **Charges**, **Settings**.
+- Connects to your MyTeslaMate account via Tesla OAuth (one-shot Owner API token exchange).
+- Reads data from your private TeslaMate API endpoint (`https://<your-instance>.api.myteslamate.com`).
+- Advanced: manual Tesla **Fleet API** / **Owner API** token generation under Settings.
+- Region selection (International / China).
 - Light / dark / auto themes (persisted).
-- Internationalization.
+- Internationalization (8 languages).
+- Biometric lock with encrypted on-device storage.
 
 ## Getting started
 

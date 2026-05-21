@@ -1,8 +1,8 @@
 import { Redirect } from 'expo-router';
 
-// Deep-link shortcut: `mtm://generate` (or `mtm:///generate`) opens the Owner
-// tab and triggers the token generator modal via the `generate=1` query param
-// picked up by `app/(tabs)/index.tsx`.
+// Deep-link shortcut: `mtm://generate` now lands on the API tokens management
+// sub-screen under Settings, where users can manually generate Owner or
+// Fleet API tokens. Pre-v1.1 it landed on the legacy Owner tab.
 export default function GenerateRedirect() {
-  return <Redirect href="/?generate=1" />;
+  return <Redirect href="/settings/tokens" />;
 }

@@ -6,23 +6,66 @@
     "cancel": "Cancel"
   },
   "tabs": {
-    "fleet": "Fleet API",
-    "owner": "Owner API",
-    "about": "About"
+    "now": "Now",
+    "drives": "Drives",
+    "charges": "Charges",
+    "settings": "Settings"
   },
   "about": {
-    "title": "Tesla Tokens Generator",
+    "title": "MyTeslaMate",
     "version": "v. {{version}} (build {{build}})",
     "descriptionTitle": "About",
-    "description": "Tesla Tokens Generator is a minimalist app that helps you generate the Tesla API tokens needed to connect your third-party tools, such as TeslaMate, to your Tesla account.",
+    "description": "MyTeslaMate is the mobile companion for your MyTeslaMate account: view your drives, charges and current vehicle state from your TeslaMate instance.",
     "featuresTitle": "Features",
-    "featureFleet": "Fleet API token generation",
-    "featureOwner": "Owner API token generation",
-    "featureHistory": "Tokens saved on device for easy reuse",
+    "featureNow": "Current battery state, charging and location",
+    "featureDrives": "Browse your recent drives",
+    "featureCharges": "Browse your charging sessions",
     "featureSecure": "Encrypted storage and biometric lock",
     "featureTheme": "Light, dark and automatic themes",
     "linksTitle": "Links",
     "website": "Your TeslaMate instance"
+  },
+  "onboarding": {
+    "title": "Connect to MyTeslaMate",
+    "subtitle": "Sign in with your Tesla account to view your drives, charges and battery state from your TeslaMate instance.",
+    "connectButton": "Connect with Tesla",
+    "regionLabel": "Region",
+    "exchanging": "Linking your MyTeslaMate account…",
+    "errorNoAccount": "No MyTeslaMate account found for {{email}}.",
+    "errorNoAccountCta": "Create my account",
+    "errorTokenInvalid": "Tesla rejected the token. Please try again.",
+    "errorNoSubscription": "Your MyTeslaMate account has no active TeslaMate service. Activate one to continue.",
+    "errorGeneric": "Something went wrong. Please try again."
+  },
+  "now": {
+    "title": "Now",
+    "carPickerLabel": "Vehicle",
+    "battery": "Battery",
+    "chargingState": "Charging",
+    "onlineState": "Status",
+    "lastSeen": "Last seen",
+    "softwareVersion": "Software",
+    "location": "Location",
+    "noData": "No data yet — TeslaMate may still be syncing.",
+    "refresh": "Refresh",
+    "noVehicles": "No vehicles found in your TeslaMate."
+  },
+  "drives": {
+    "title": "Drives",
+    "empty": "No drives recorded yet.",
+    "distance": "Distance",
+    "duration": "Duration",
+    "consumption": "Consumption",
+    "loadMore": "Load more"
+  },
+  "charges": {
+    "title": "Charges",
+    "empty": "No charges recorded yet.",
+    "energy": "Energy added",
+    "duration": "Duration",
+    "location": "Location",
+    "cost": "Cost",
+    "loadMore": "Load more"
   },
   "tokenInfo": {
     "expired": "Token expired",
@@ -91,6 +134,25 @@
     "generateButton": "Generate {{type}} tokens — {{region}}"
   },
   "settings": {
+    "title": "Settings",
+    "account": {
+      "title": "Account",
+      "signedInAs": "Signed in as {{email}}",
+      "reconnect": "Re-connect to MyTeslaMate",
+      "signOut": "Sign out"
+    },
+    "advanced": {
+      "title": "Advanced",
+      "apiTokens": "Tesla API tokens",
+      "apiTokensDescription": "Manage Owner API and Fleet API tokens manually."
+    },
+    "apiTokens": {
+      "title": "Tesla API tokens",
+      "ownerSection": "Owner API",
+      "fleetSection": "Fleet API",
+      "generateOwner": "Generate Owner API token",
+      "generateFleet": "Generate Fleet API token"
+    },
     "tokens": {
       "fleetGenerator": {
         "title": "Fleet Token Generator",
