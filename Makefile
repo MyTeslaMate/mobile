@@ -1,9 +1,10 @@
-.PHONY: help metadata ios ipad android start clean-sim
+.PHONY: help metadata ios ipad android start clean-sim check check-routes
 
 # Simulators used for App Store / Play Store screenshots
 IOS_PHONE       := iPhone 11 Pro Max
 IOS_TABLET      := iPad Pro (12.9-inch) (6th generation)
 ANDROID_AVD     := Pixel_3a_API_34_extension_level_7_arm64-v8a
+TOKEN     		:= xxxx-xxxxx-xxxxxx-xxxxxx
 
 EXPO            := ./node_modules/.bin/expo
 
@@ -14,6 +15,7 @@ help:
 	@echo "  make ipad       Run app on $(IOS_TABLET) (slot APP_IPAD_PRO_3GEN_129)"
 	@echo "  make android    Run app on Android emulator $(ANDROID_AVD)"
 	@echo "  make start      Start Metro bundler only"
+	@echo "  make check      Run all static checks (currently: routes)"
 	@echo "  make clean-sim  Shut down all booted iOS simulators"
 
 metadata:
@@ -35,6 +37,14 @@ android:
 
 start:
 	$(EXPO) start
+
+connect:
+	@xcrun simctl openurl booted "mtm:///connect?token=$(TOKEN)"
+
+check: check-routes
+
+check-routes:
+	@node scripts/check-routes.js
 
 clean-sim:
 	xcrun simctl shutdown all
