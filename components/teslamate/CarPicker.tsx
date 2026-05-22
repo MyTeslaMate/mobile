@@ -1,5 +1,6 @@
 import { ThemedText } from '@/components/ThemedText';
 import { useThemeColors } from '@/contexts/ThemeContext';
+import { formatCarName } from '@/lib/format';
 import type { TmCar } from '@/lib/teslaMateApi';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
@@ -18,6 +19,7 @@ export function CarPicker({ cars, selectedCarId, onSelect }: CarPickerProps) {
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.row}
+      style={styles.scroll}
     >
       {cars.map((car) => {
         const isSelected = car.car_id === selectedCarId;
@@ -42,7 +44,7 @@ export function CarPicker({ cars, selectedCarId, onSelect }: CarPickerProps) {
               ]}
               numberOfLines={1}
             >
-              {car.name || car.model || `Car #${car.car_id}`}
+              {formatCarName(car)}
             </ThemedText>
           </Pressable>
         );
@@ -53,10 +55,15 @@ export function CarPicker({ cars, selectedCarId, onSelect }: CarPickerProps) {
 }
 
 const styles = StyleSheet.create({
+  scroll: {
+    flexGrow: 0,
+    flexShrink: 0,
+  },
   row: {
     paddingHorizontal: 16,
     paddingVertical: 8,
     gap: 8,
+    alignItems: 'center',
   },
   pill: {
     paddingHorizontal: 14,

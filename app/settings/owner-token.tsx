@@ -2,7 +2,6 @@ import { RegionSelector } from '@/components/RegionSelector';
 import { StoredTokenCard } from '@/components/StoredTokenCard';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import TokenFleetGenerator from '@/components/tokens/TokenFleetGenerator';
 import { TokenOwnerGenerator } from '@/components/tokens/TokenOwnerGenerator';
 import { useLocalization } from '@/contexts/LocalizationContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
@@ -10,17 +9,14 @@ import { useRegion } from '@/hooks/useRegion';
 import { Ionicons } from '@expo/vector-icons';
 import { Stack } from 'expo-router';
 import { useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet } from 'react-native';
+import { Pressable, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function ApiTokensScreen() {
+export default function OwnerTokenScreen() {
   const colors = useThemeColors();
   const { t } = useLocalization();
   const { region } = useRegion();
-
-  const [ownerModalVisible, setOwnerModalVisible] = useState(false);
-  const [fleetModalVisible, setFleetModalVisible] = useState(false);
-
+  const [modalVisible, setModalVisible] = useState(false);
   const styles = createStyles(colors);
 
   return (
@@ -28,7 +24,7 @@ export default function ApiTokensScreen() {
       style={[styles.safeArea, { backgroundColor: colors.background }]}
       edges={['bottom']}
     >
-      <Stack.Screen options={{ title: t('settings.apiTokens.title') }} />
+      <Stack.Screen options={{ title: t('settings.apiTokens.ownerSection') }} />
 
       <ScrollView contentContainerStyle={styles.container}>
         <ThemedView style={styles.actionCard}>
@@ -41,7 +37,7 @@ export default function ApiTokensScreen() {
           </ThemedText>
           <Pressable
             style={styles.generateButton}
-            onPress={() => setOwnerModalVisible(true)}
+            onPress={() => setModalVisible(true)}
           >
             <Ionicons name="person" size={20} color="#fff" />
             <ThemedText style={styles.generateButtonText}>
@@ -50,46 +46,13 @@ export default function ApiTokensScreen() {
           </Pressable>
           <StoredTokenCard type="owner" />
         </ThemedView>
-
-        <ThemedView style={styles.actionCard}>
-          <ThemedText type="defaultSemiBold" style={styles.cardTitle}>
-            {t('settings.apiTokens.fleetSection')}
-          </ThemedText>
-          <Pressable
-            style={styles.generateButton}
-            onPress={() => setFleetModalVisible(true)}
-          >
-            <Ionicons name="cloud" size={20} color="#fff" />
-            <ThemedText style={styles.generateButtonText}>
-              {t('settings.apiTokens.generateFleet')}
-            </ThemedText>
-          </Pressable>
-          <StoredTokenCard type="fleet" />
-        </ThemedView>
       </ScrollView>
 
       <TokenOwnerGenerator
-        visible={ownerModalVisible}
-        onClose={() => setOwnerModalVisible(false)}
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
         region={region}
       />
-
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={fleetModalVisible}
-        onRequestClose={() => setFleetModalVisible(false)}
-        presentationStyle="pageSheet"
-      >
-        <SafeAreaView
-          style={[styles.modalContainer, { backgroundColor: colors.background }]}
-        >
-          <TokenFleetGenerator
-            onClose={() => setFleetModalVisible(false)}
-            region={region}
-          />
-        </SafeAreaView>
-      </Modal>
     </SafeAreaView>
   );
 }
@@ -115,5 +78,4 @@ const createStyles = (colors: any) =>
       padding: 14,
     },
     generateButtonText: { color: '#fff', fontWeight: '600', fontSize: 15 },
-    modalContainer: { flex: 1 },
   });

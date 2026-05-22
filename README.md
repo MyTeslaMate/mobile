@@ -1,6 +1,6 @@
-# MyTeslaMate
+# MyTeslaMate Viewer
 
-[![Version](https://img.shields.io/github/package-json/v/MyTeslaMate/mobile_tokens?label=version)](https://github.com/MyTeslaMate/tesla-tokens-generator/releases)
+[![Version](https://img.shields.io/github/package-json/v/MyTeslaMate/mobile?label=version)](https://github.com/MyTeslaMate/tesla-tokens-generator/releases)
 [![EAS Build](https://github.com/MyTeslaMate/tesla-tokens-generator/actions/workflows/eas-build.yml/badge.svg)](https://github.com/MyTeslaMate/tesla-tokens-generator/actions/workflows/eas-build.yml)
 [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 [![Expo SDK](https://img.shields.io/badge/Expo%20SDK-55-000020.svg?logo=expo)](https://docs.expo.dev/versions/v55.0.0/)

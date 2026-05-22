@@ -1,60 +1,87 @@
+import { ScrollTimeline } from '@/components/ScrollTimeline';
+import { SignedOutState } from '@/components/SignedOutState';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { CarPicker } from '@/components/teslamate/CarPicker';
+import { DateRangePickerButton } from '@/components/teslamate/DateRangePicker';
+import { RecommendationsButton } from '@/components/teslamate/RecommendationsButton';
+import { useDateRange } from '@/contexts/DateRangeContext';
 import { useLocalization } from '@/contexts/LocalizationContext';
 import { useTeslaMateApi } from '@/contexts/TeslaMateApiContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
-import { useTeslaMateCars } from '@/hooks/useTeslaMateCars';
+import { useSelectedCar } from '@/contexts/SelectedCarContext';
 import { formatDate, formatDuration, formatKm } from '@/lib/format';
 import { listDrives, TeslaMateApiError, type TmDrive } from '@/lib/teslaMateApi';
 import { Ionicons } from '@expo/vector-icons';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { router } from 'expo-router';
 import {
   ActivityIndicator,
   FlatList,
   Pressable,
+  RefreshControl,
   StyleSheet,
   View,
 } from 'react-native';
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList<TmDrive>);
 
 export default function DrivesScreen() {
   const colors = useThemeColors();
   const { t, currentLanguage } = useLocalization();
   const { session } = useTeslaMateApi();
-  const { cars, selectedCarId, setSelectedCarId } = useTeslaMateCars();
+  const { cars, selectedCarId, setSelectedCarId } = useSelectedCar();
 
   const [drives, setDrives] = useState<TmDrive[]>([]);
-  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const { value: range } = useDateRange();
 
-  const load = useCallback(
-    async (nextPage: number, append: boolean) => {
-      if (!session || !selectedCarId) return;
-      setLoading(true);
-      try {
-        const list = await listDrives(session, selectedCarId, nextPage);
-        setDrives((prev) => (append ? [...prev, ...list] : list));
-        setHasMore(list.length > 0);
-        setPage(nextPage);
-      } catch (e) {
-        if (e instanceof TeslaMateApiError && e.code === 'unauthorized') {
-          setDrives([]);
-          setHasMore(false);
-        }
-      } finally {
-        setLoading(false);
-      }
+  const listRef = useRef<FlatList<TmDrive>>(null);
+  const scrollY = useSharedValue(0);
+  const contentHeight = useSharedValue(0);
+  const layoutHeight = useSharedValue(0);
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (e) => {
+      scrollY.value = e.contentOffset.y;
     },
-    [session, selectedCarId]
-  );
+  });
+
+  const load = useCallback(async (opts: { refresh?: boolean } = {}) => {
+    if (!session || !selectedCarId) return;
+    if (opts.refresh) setRefreshing(true);
+    else setLoading(true);
+    setError(null);
+    try {
+      setDrives(
+        await listDrives(session, selectedCarId, {
+          startDate: range.start?.toISOString(),
+          endDate: range.end?.toISOString(),
+        })
+      );
+    } catch (e) {
+      setDrives([]);
+      if (e instanceof TeslaMateApiError) {
+        setError(`${e.code}${e.status ? ` (${e.status})` : ''}`);
+      } else {
+        setError('network');
+      }
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }, [session, selectedCarId, range.start, range.end]);
 
   useEffect(() => {
     setDrives([]);
-    setPage(1);
-    setHasMore(true);
-    load(1, false);
+    load();
   }, [selectedCarId, load]);
 
   const styles = createStyles(colors);
@@ -66,80 +93,144 @@ export default function DrivesScreen() {
     >
       <View style={styles.header}>
         <ThemedText type="title">{t('drives.title')}</ThemedText>
+        {session && (
+          <View style={styles.headerActions}>
+            <RecommendationsButton
+              screen="drives"
+              carId={selectedCarId}
+              range={range}
+            />
+            <DateRangePickerButton />
+          </View>
+        )}
       </View>
 
-      <CarPicker
-        cars={cars}
-        selectedCarId={selectedCarId}
-        onSelect={setSelectedCarId}
-      />
+      {!session ? (
+        <SignedOutState />
+      ) : (
+        <>
+          <CarPicker
+            cars={cars}
+            selectedCarId={selectedCarId}
+            onSelect={setSelectedCarId}
+          />
 
-      <FlatList
-        data={drives}
-        keyExtractor={(item) => String(item.drive_id)}
-        contentContainerStyle={styles.container}
-        renderItem={({ item }) => (
-          <ThemedView style={styles.card}>
-            <View style={styles.cardHeader}>
-              <ThemedText style={styles.date}>
-                {formatDate(item.start_date, currentLanguage)}
-              </ThemedText>
-              <ThemedText style={styles.duration}>
-                {formatDuration(item.duration_min)}
-              </ThemedText>
-            </View>
-            <View style={styles.metrics}>
-              <Metric
-                icon="speedometer"
-                label={t('drives.distance')}
-                value={formatKm(item.distance)}
-              />
-              {item.consumption != null && (
-                <Metric
-                  icon="leaf"
-                  label={t('drives.consumption')}
-                  value={`${Math.round(item.consumption)} Wh/km`}
+          <View style={styles.listWrapper}>
+            <AnimatedFlatList
+              ref={listRef as any}
+              data={drives}
+              keyExtractor={(item) => String((item as TmDrive).drive_id)}
+              style={styles.list}
+              contentContainerStyle={styles.container}
+              onScroll={scrollHandler}
+              scrollEventThrottle={16}
+              onContentSizeChange={(_, h) => {
+                contentHeight.value = h;
+              }}
+              onLayout={(e) => {
+                layoutHeight.value = e.nativeEvent.layout.height;
+              }}
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={() => load({ refresh: true })}
+                  tintColor={colors.primary}
+                  colors={[colors.primary]}
                 />
-              )}
-            </View>
-            {(item.start_address || item.end_address) && (
-              <View style={styles.addresses}>
-                <ThemedText style={styles.address} numberOfLines={1}>
-                  <Ionicons name="ellipse-outline" size={12} color={colors.textSecondary} />{' '}
-                  {item.start_address ?? '—'}
-                </ThemedText>
-                <ThemedText style={styles.address} numberOfLines={1}>
-                  <Ionicons name="flag" size={12} color={colors.primary} />{' '}
-                  {item.end_address ?? '—'}
-                </ThemedText>
-              </View>
+              }
+              renderItem={({ item }) => {
+                const drive = item as TmDrive;
+                return (
+                  <Pressable
+                    onPress={() =>
+                      router.push({
+                        pathname: '/drives/[id]',
+                        params: {
+                          id: String(drive.drive_id),
+                          carId: String(selectedCarId ?? ''),
+                        },
+                      })
+                    }
+                  >
+                    <ThemedView style={styles.card}>
+                      <View style={styles.cardHeader}>
+                        <ThemedText style={styles.date}>
+                          {formatDate(drive.start_date, currentLanguage)}
+                        </ThemedText>
+                        <ThemedText style={styles.duration}>
+                          {formatDuration(drive.duration_min)}
+                        </ThemedText>
+                      </View>
+                      <View style={styles.addresses}>
+                        <ThemedText style={styles.address} numberOfLines={1}>
+                          <Ionicons
+                            name="ellipse-outline"
+                            size={12}
+                            color={colors.textSecondary}
+                          />{' '}
+                          {drive.start_address || '—'}
+                        </ThemedText>
+                        <ThemedText style={styles.address} numberOfLines={1}>
+                          <Ionicons name="flag" size={12} color={colors.primary} />{' '}
+                          {drive.end_address || '—'}
+                        </ThemedText>
+                      </View>
+                      <View style={styles.metrics}>
+                        <Metric
+                          icon="speedometer"
+                          label={t('drives.distance')}
+                          value={formatKm(drive.odometer_details?.odometer_distance)}
+                        />
+                        {drive.consumption_net != null && (
+                          <Metric
+                            icon="leaf"
+                            label={t('drives.consumption')}
+                            value={`${Math.round(drive.consumption_net)} Wh/km`}
+                          />
+                        )}
+                      </View>
+                    </ThemedView>
+                  </Pressable>
+                );
+              }}
+              ListEmptyComponent={
+                !loading ? (
+                  <ThemedView style={styles.emptyCard}>
+                    <ThemedText style={styles.emptyText}>
+                      {error
+                        ? `${t('drives.empty')} (${error})`
+                        : t('drives.empty')}
+                    </ThemedText>
+                    <ThemedText
+                      style={[styles.emptyText, { fontSize: 11, marginTop: 6 }]}
+                    >
+                      cars: {cars.length} · selected: {String(selectedCarId)}
+                    </ThemedText>
+                  </ThemedView>
+                ) : null
+              }
+              ListFooterComponent={
+                loading ? (
+                  <View style={styles.footer}>
+                    <ActivityIndicator color={colors.primary} />
+                  </View>
+                ) : null
+              }
+            />
+            {drives.length >= 10 && (
+              <ScrollTimeline
+                listRef={listRef}
+                itemCount={drives.length}
+                getDateAt={(i) => drives[i]?.start_date}
+                scrollY={scrollY}
+                contentHeight={contentHeight}
+                layoutHeight={layoutHeight}
+                locale={currentLanguage}
+              />
             )}
-          </ThemedView>
-        )}
-        ListEmptyComponent={
-          !loading ? (
-            <ThemedView style={styles.emptyCard}>
-              <ThemedText style={styles.emptyText}>{t('drives.empty')}</ThemedText>
-            </ThemedView>
-          ) : null
-        }
-        ListFooterComponent={
-          loading ? (
-            <View style={styles.footer}>
-              <ActivityIndicator color={colors.primary} />
-            </View>
-          ) : hasMore && drives.length > 0 ? (
-            <Pressable
-              style={[styles.loadMore, { borderColor: colors.borderColor }]}
-              onPress={() => load(page + 1, true)}
-            >
-              <ThemedText style={styles.loadMoreLabel}>
-                {t('drives.loadMore')}
-              </ThemedText>
-            </Pressable>
-          ) : null
-        }
-      />
+          </View>
+        </>
+      )}
     </SafeAreaView>
   );
 }
@@ -184,11 +275,21 @@ const metricStyles = StyleSheet.create({
 const createStyles = (colors: any) =>
   StyleSheet.create({
     safeArea: { flex: 1 },
+    headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
     header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 12,
       paddingHorizontal: 16,
       paddingTop: 8,
       paddingBottom: 4,
     },
+    listWrapper: {
+      flex: 1,
+      position: 'relative',
+    },
+    list: { flex: 1 },
     container: {
       padding: 16,
       gap: 10,

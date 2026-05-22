@@ -30,11 +30,9 @@ export interface MtmExchangeFailure {
 
 export type MtmExchangeResult = MtmExchangeSuccess | MtmExchangeFailure;
 
-export async function exchangeTeslaToken(params: {
-  accessToken: string;
-  type: TokenType;
-  region: Region;
-}): Promise<MtmExchangeResult> {
+async function postExchange(
+  payload: Record<string, unknown>
+): Promise<MtmExchangeResult> {
   let response: Response;
   try {
     response = await fetch(MTM_EXCHANGE_URL, {
@@ -43,11 +41,7 @@ export async function exchangeTeslaToken(params: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify({
-        access_token: params.accessToken,
-        type: params.type,
-        region: params.region,
-      }),
+      body: JSON.stringify(payload),
     });
   } catch {
     return { ok: false, reason: 'network' };
@@ -87,6 +81,10 @@ export async function exchangeTeslaToken(params: {
     };
   }
 
+  if (response.status === 401) {
+    return { ok: false, reason: 'token_invalid' };
+  }
+
   if (response.status === 400 && data.error === 'token_invalid') {
     return { ok: false, reason: 'token_invalid' };
   }
@@ -94,6 +92,22 @@ export async function exchangeTeslaToken(params: {
   return {
     ok: false,
     reason: 'unknown',
-    message: typeof data.message === 'string' ? data.message : undefined,
+    message: typeof data.error === 'string' ? data.error : undefined,
   };
+}
+
+export function exchangeTeslaToken(params: {
+  accessToken: string;
+  type: TokenType;
+  region: Region;
+}): Promise<MtmExchangeResult> {
+  return postExchange({
+    tesla_token: params.accessToken,
+    type: params.type,
+    region: params.region,
+  });
+}
+
+export function exchangeMtmToken(token: string): Promise<MtmExchangeResult> {
+  return postExchange({ mtm_token: token });
 }

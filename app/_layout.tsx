@@ -6,6 +6,7 @@ import {
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { ReactNode } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
 import { BiometricGate } from '@/components/BiometricGate';
@@ -16,6 +17,8 @@ import {
   ThemeProvider as CustomThemeProvider,
   useTheme,
 } from '@/contexts/ThemeContext';
+import { DateRangeProvider } from '@/contexts/DateRangeContext';
+import { SelectedCarProvider } from '@/contexts/SelectedCarContext';
 import { TeslaMateApiProvider } from '@/contexts/TeslaMateApiContext';
 import { TokenStoreProvider } from '@/contexts/TokenStoreContext';
 import { RegionProvider } from '@/hooks/useRegion';
@@ -48,16 +51,23 @@ function NavigationWrapper({ children }: { children: ReactNode }) {
 
 export default function RootLayout() {
   return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
     <CustomThemeProvider>
       <LocalizationProvider>
         <RegionProvider>
           <TokenStoreProvider>
             <TeslaMateApiProvider>
-              <BiometricProvider>
-                <NavigationWrapper>
+              <SelectedCarProvider>
+                <DateRangeProvider>
+                <BiometricProvider>
+                  <NavigationWrapper>
                   <UpdateGate>
                     <BiometricGate>
-                      <Stack>
+                      <Stack
+                        screenOptions={{
+                          headerBackButtonDisplayMode: 'minimal',
+                        }}
+                      >
                         <Stack.Screen
                           name="(tabs)"
                           options={{ headerShown: false }}
@@ -67,18 +77,52 @@ export default function RootLayout() {
                           options={{ headerShown: false }}
                         />
                         <Stack.Screen
-                          name="settings/tokens"
+                          name="connect"
+                          options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                          name="drives/[id]"
                           options={{ headerShown: true }}
+                        />
+                        <Stack.Screen
+                          name="charges/[id]"
+                          options={{ headerShown: true }}
+                        />
+                        <Stack.Screen
+                          name="settings/mtm-token"
+                          options={{ headerShown: true }}
+                        />
+                        <Stack.Screen
+                          name="settings/owner-token"
+                          options={{ headerShown: true }}
+                        />
+                        <Stack.Screen
+                          name="settings/fleet-token"
+                          options={{ headerShown: true }}
+                        />
+                        <Stack.Screen
+                          name="assistant"
+                          options={{
+                            presentation: 'modal',
+                            headerShown: false,
+                          }}
+                        />
+                        <Stack.Screen
+                          name="auth"
+                          options={{ headerShown: false }}
                         />
                       </Stack>
                     </BiometricGate>
                   </UpdateGate>
                 </NavigationWrapper>
-              </BiometricProvider>
+                </BiometricProvider>
+                </DateRangeProvider>
+              </SelectedCarProvider>
             </TeslaMateApiProvider>
           </TokenStoreProvider>
         </RegionProvider>
       </LocalizationProvider>
     </CustomThemeProvider>
+    </GestureHandlerRootView>
   );
 }

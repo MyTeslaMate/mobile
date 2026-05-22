@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "MyTeslaMate",
+    "name": "MyTeslaMate Viewer",
     "slug": "tesla-tokens-generator",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -70,7 +70,7 @@
       [
         "expo-local-authentication",
         {
-          "faceIDPermission": "Permet de déverrouiller MyTeslaMate avec Face ID."
+          "faceIDPermission": "Unlock MyTeslaMate Viewer with Face ID."
         }
       ],
       "expo-font",

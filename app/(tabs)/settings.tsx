@@ -62,7 +62,6 @@ export default function SettingsScreen() {
 
   const handleSignOut = async () => {
     await signOut();
-    router.replace('/onboarding');
   };
 
   const handleReconnect = () => {
@@ -89,11 +88,12 @@ export default function SettingsScreen() {
           </ThemedText>
         </ThemedView>
 
-        {session && (
-          <ThemedView style={styles.section}>
-            <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
-              {t('settings.account.title')}
-            </ThemedText>
+        <ThemedView style={styles.section}>
+          <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
+            {t('settings.account.title')}
+          </ThemedText>
+
+          {session && (
             <View style={styles.settingRow}>
               <Ionicons name="person-circle" size={24} color={colors.primary} />
               <View style={styles.settingTextGroup}>
@@ -105,69 +105,84 @@ export default function SettingsScreen() {
                 </ThemedText>
               </View>
             </View>
-            <Pressable style={styles.linkRow} onPress={handleReconnect}>
-              <Ionicons name="refresh" size={20} color={colors.primary} />
-              <ThemedText style={styles.linkLabel}>
-                {t('settings.account.reconnect')}
-              </ThemedText>
-            </Pressable>
+          )}
+
+          <Pressable style={styles.linkRow} onPress={handleReconnect}>
+            <Ionicons name="logo-electron" size={20} color={colors.primary} />
+            <ThemedText style={styles.linkLabel}>
+              {session
+                ? t('settings.account.reconnect')
+                : t('settings.account.signInWithTesla')}
+            </ThemedText>
+          </Pressable>
+
+          <Pressable
+            style={styles.linkRow}
+            onPress={() => router.push('/settings/mtm-token')}
+          >
+            <Ionicons name="key" size={20} color={colors.primary} />
+            <ThemedText style={styles.linkLabel}>
+              {t('settings.account.useMtmToken')}
+            </ThemedText>
+            <Ionicons
+              name="chevron-forward"
+              size={18}
+              color={colors.textSecondary}
+            />
+          </Pressable>
+
+          {session && (
             <Pressable style={styles.linkRow} onPress={handleSignOut}>
               <Ionicons name="log-out" size={20} color={colors.primary} />
               <ThemedText style={styles.linkLabel}>
                 {t('settings.account.signOut')}
               </ThemedText>
             </Pressable>
-          </ThemedView>
-        )}
+          )}
+        </ThemedView>
 
         <ThemedView style={styles.section}>
           <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
-            {t('about.descriptionTitle')}
+            {t('settings.advanced.title')}
           </ThemedText>
-          <ThemedText style={styles.paragraph}>
-            {t('about.description')}
-          </ThemedText>
-
           <Pressable
             style={styles.linkRow}
-            onPress={() => Linking.openURL(SOURCE_URL)}
+            onPress={() => router.push('/settings/owner-token')}
           >
-            <Ionicons name="logo-github" size={20} color={colors.primary} />
-            <ThemedText style={styles.linkLabel}>Source code</ThemedText>
-            <Ionicons
-              name="open-outline"
-              size={18}
-              color={colors.textSecondary}
-            />
-          </Pressable>
-          <Pressable
-            style={styles.linkRow}
-            onPress={() => Linking.openURL(WEBSITE_URL)}
-          >
-            <Ionicons name="globe" size={20} color={colors.primary} />
-            <ThemedText style={styles.linkLabel}>
-              {t('about.website')}
-            </ThemedText>
-            <Ionicons
-              name="open-outline"
-              size={18}
-              color={colors.textSecondary}
-            />
-          </Pressable>
-
-          <View style={styles.divider} />
-
-          <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
-            {t('about.featuresTitle')}
-          </ThemedText>
-          {features.map((feature) => (
-            <View key={feature.label} style={styles.featureRow}>
-              <Ionicons name={feature.icon} size={20} color={colors.primary} />
-              <ThemedText style={styles.featureLabel}>
-                {feature.label}
+            <Ionicons name="person" size={20} color={colors.primary} />
+            <View style={styles.settingTextGroup}>
+              <ThemedText style={styles.settingLabel}>
+                {t('settings.advanced.ownerToken')}
+              </ThemedText>
+              <ThemedText style={styles.settingDescription}>
+                {t('settings.advanced.ownerTokenDescription')}
               </ThemedText>
             </View>
-          ))}
+            <Ionicons
+              name="chevron-forward"
+              size={18}
+              color={colors.textSecondary}
+            />
+          </Pressable>
+          <Pressable
+            style={styles.linkRow}
+            onPress={() => router.push('/settings/fleet-token')}
+          >
+            <Ionicons name="cloud" size={20} color={colors.primary} />
+            <View style={styles.settingTextGroup}>
+              <ThemedText style={styles.settingLabel}>
+                {t('settings.advanced.fleetToken')}
+              </ThemedText>
+              <ThemedText style={styles.settingDescription}>
+                {t('settings.advanced.fleetTokenDescription')}
+              </ThemedText>
+            </View>
+            <Ionicons
+              name="chevron-forward"
+              size={18}
+              color={colors.textSecondary}
+            />
+          </Pressable>
         </ThemedView>
 
         <ThemedView style={styles.section}>
@@ -265,27 +280,52 @@ export default function SettingsScreen() {
 
         <ThemedView style={styles.section}>
           <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
-            {t('settings.advanced.title')}
+            {t('about.descriptionTitle')}
           </ThemedText>
+          <ThemedText style={styles.paragraph}>
+            {t('about.description')}
+          </ThemedText>
+
           <Pressable
             style={styles.linkRow}
-            onPress={() => router.push('/settings/tokens')}
+            onPress={() => Linking.openURL(SOURCE_URL)}
           >
-            <Ionicons name="key" size={20} color={colors.primary} />
-            <View style={styles.settingTextGroup}>
-              <ThemedText style={styles.settingLabel}>
-                {t('settings.advanced.apiTokens')}
-              </ThemedText>
-              <ThemedText style={styles.settingDescription}>
-                {t('settings.advanced.apiTokensDescription')}
-              </ThemedText>
-            </View>
+            <Ionicons name="logo-github" size={20} color={colors.primary} />
+            <ThemedText style={styles.linkLabel}>Source code</ThemedText>
             <Ionicons
-              name="chevron-forward"
+              name="open-outline"
               size={18}
               color={colors.textSecondary}
             />
           </Pressable>
+          <Pressable
+            style={styles.linkRow}
+            onPress={() => Linking.openURL(WEBSITE_URL)}
+          >
+            <Ionicons name="globe" size={20} color={colors.primary} />
+            <ThemedText style={styles.linkLabel}>
+              {t('about.website')}
+            </ThemedText>
+            <Ionicons
+              name="open-outline"
+              size={18}
+              color={colors.textSecondary}
+            />
+          </Pressable>
+
+          <View style={styles.divider} />
+
+          <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
+            {t('about.featuresTitle')}
+          </ThemedText>
+          {features.map((feature) => (
+            <View key={feature.label} style={styles.featureRow}>
+              <Ionicons name={feature.icon} size={20} color={colors.primary} />
+              <ThemedText style={styles.featureLabel}>
+                {feature.label}
+              </ThemedText>
+            </View>
+          ))}
         </ThemedView>
       </ScrollView>
     </SafeAreaView>

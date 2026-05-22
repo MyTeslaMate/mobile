@@ -3,19 +3,32 @@
     "loading": "加载中...",
     "error": "错误",
     "close": "关闭",
-    "cancel": "取消"
+    "cancel": "取消",
+    "apply": "应用"
+  },
+  "dateRange": {
+    "all": "全部",
+    "7d": "7天",
+    "30d": "30天",
+    "90d": "90天",
+    "year": "年",
+    "custom": "自定义",
+    "customTitle": "日期范围",
+    "from": "从",
+    "to": "到"
   },
   "tabs": {
-    "now": "Now",
+    "now": "驾驶舱",
     "drives": "Drives",
     "charges": "Charges",
+    "chat": "聊天",
     "settings": "Settings"
   },
   "about": {
-    "title": "MyTeslaMate",
+    "title": "MyTeslaMate Viewer",
     "version": "v. {{version}} (build {{build}})",
     "descriptionTitle": "关于",
-    "description": "MyTeslaMate is the mobile companion for your MyTeslaMate account: view your drives, charges and current vehicle state from your TeslaMate instance.",
+    "description": "MyTeslaMate Viewer is the mobile companion for your MyTeslaMate account: view your drives, charges and current vehicle state from your TeslaMate instance.",
     "featuresTitle": "功能",
     "featureSecure": "加密存储和生物识别锁",
     "featureTheme": "浅色、深色和自动主题",
@@ -181,12 +194,16 @@
       "title": "Account",
       "signedInAs": "Signed in as {{email}}",
       "reconnect": "Re-connect to MyTeslaMate",
-      "signOut": "Sign out"
+      "signOut": "Sign out",
+      "signInWithTesla": "使用 Tesla 登录",
+      "useMtmToken": "改用 MyTeslaMate 令牌"
     },
     "advanced": {
       "title": "Advanced",
-      "apiTokens": "Tesla API tokens",
-      "apiTokensDescription": "Manage Owner API and Fleet API tokens manually."
+      "ownerToken": "Owner API 令牌",
+      "ownerTokenDescription": "生成并管理 TeslaMate 使用的 Owner API 令牌。",
+      "fleetToken": "Fleet API 令牌",
+      "fleetTokenDescription": "生成并管理用于实时指令的 Fleet API 令牌。"
     },
     "apiTokens": {
       "title": "Tesla API tokens",
@@ -194,6 +211,25 @@
       "fleetSection": "Fleet API",
       "generateOwner": "Generate Owner API token",
       "generateFleet": "Generate Fleet API token"
+    },
+    "mtmToken": {
+      "title": "MyTeslaMate 令牌",
+      "description": "粘贴一个 MyTeslaMate API 令牌即可跳过 Tesla 登录。您可以在 MyTeslaMate 账户设置中找到它。",
+      "inputLabel": "MyTeslaMate 令牌",
+      "placeholder": "在此粘贴您的令牌",
+      "submit": "使用此令牌连接",
+      "errorInvalid": "此令牌无效。",
+      "errorNetwork": "无法连接到 MyTeslaMate，请检查您的网络。",
+      "errorGeneric": "出现了问题，请稍后再试。",
+      "errorNoSubscription": "您的 MyTeslaMate 账户没有有效的 TeslaMate 订阅。",
+      "currentTokenTitle": "已保存的令牌",
+      "currentTokenDescription": "此令牌已安全地存储在本设备上，用于与您的 MyTeslaMate 实例通信。",
+      "replaceTitle": "替换令牌",
+      "show": "显示",
+      "hide": "隐藏",
+      "copy": "复制",
+      "copiedTitle": "已复制",
+      "copiedMessage": "令牌已复制到剪贴板。"
     }
   },
   "onboarding": {
@@ -208,8 +244,18 @@
     "errorNoSubscription": "Your MyTeslaMate account has no active TeslaMate service. Activate one to continue.",
     "errorGeneric": "Something went wrong. Please try again."
   },
+  "connect": {
+    "signingIn": "正在登录…",
+    "continueWithoutSignIn": "不登录继续"
+  },
+  "signedOut": {
+    "title": "登录以查看您的数据",
+    "description": "连接您的 MyTeslaMate 账户，查看实时状态、行程和充电记录。",
+    "signInWithTesla": "使用 Tesla 登录",
+    "useMtmToken": "改用 MyTeslaMate 令牌"
+  },
   "now": {
-    "title": "Now",
+    "title": "驾驶舱",
     "carPickerLabel": "Vehicle",
     "battery": "Battery",
     "chargingState": "Charging",
@@ -219,7 +265,60 @@
     "location": "Location",
     "noData": "No data yet — TeslaMate may still be syncing.",
     "refresh": "Refresh",
-    "noVehicles": "No vehicles found in your TeslaMate."
+    "noVehicles": "No vehicles found in your TeslaMate.",
+    "status": "状态",
+    "range": "续航里程",
+    "soc": "电量",
+    "mileage": "总里程",
+    "version": "版本",
+    "insideTemp": "车内",
+    "outsideTemp": "车外",
+    "temperatures": "车内 / 车外",
+    "tirePressure": "胎压",
+    "tireFront": "前轮胎压",
+    "tireRear": "后轮胎压",
+    "endOfCharge": "充电结束",
+    "locationUnknown": "位置不可用",
+    "batteryHealthTitle": "电池健康",
+    "stateOfHealth": "健康状态",
+    "capacity": "容量",
+    "maxRange": "最大续航",
+    "ratedEfficiency": "标称能耗",
+    "capacityLost": "容量损失",
+    "rangeLost": "续航损失",
+    "outOf": "共 {{value}}",
+    "state": {
+      "online": "在线",
+      "offline": "离线",
+      "asleep": "休眠",
+      "charging": "充电中",
+      "driving": "行驶中"
+    },
+    "badge": {
+      "charging": "充电中",
+      "sentry": "哨兵模式",
+      "locked": "已锁定",
+      "unlocked": "已解锁"
+    }
+  },
+  "chat": {
+    "title": "与你的 Tesla 聊天",
+    "openButton": "打开聊天",
+    "placeholder": "随时询问关于行程、充电或当前状态的问题。",
+    "inputPlaceholder": "输入消息…",
+    "typing": "思考中…"
+  },
+  "recommendations": {
+    "button": "AI",
+    "buttonNow": "建议",
+    "buttonDrives": "行程建议",
+    "buttonCharges": "充电建议",
+    "title": "AI 建议",
+    "subtitleNow": "关于车辆状态",
+    "subtitleDrives": "关于你的行程",
+    "subtitleCharges": "关于你的充电",
+    "thinking": "分析中…",
+    "error": "无法生成建议。"
   },
   "drives": {
     "title": "Drives",
@@ -237,5 +336,31 @@
     "location": "Location",
     "cost": "Cost",
     "loadMore": "Load more"
+  },
+  "trip": {
+    "duration": "时长"
+  },
+  "details": {
+    "driveTitle": "行程",
+    "chargeTitle": "充电",
+    "summary": "概要",
+    "battery": "电池",
+    "range": "续航",
+    "start": "开始",
+    "end": "结束",
+    "avgSpeed": "平均速度",
+    "maxSpeed": "最高速度",
+    "outsideTemp": "车外",
+    "insideTemp": "车内",
+    "energy": "能量",
+    "energyAdded": "充入能量",
+    "energyUsed": "消耗能量",
+    "avgPower": "平均功率",
+    "consumption": "能耗",
+    "added": "已增加",
+    "cost": "费用",
+    "power": "功率",
+    "rangeUsed": "已用续航",
+    "efficiency": "效率"
   }
 }

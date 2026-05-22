@@ -31,6 +31,22 @@ export function formatKwh(kwh: number | null | undefined): string {
   return `${kwh.toFixed(1)} kWh`;
 }
 
+export function formatMonthYear(
+  iso: string | null | undefined,
+  locale = 'en'
+): string {
+  if (!iso) return '—';
+  try {
+    return new Date(iso).toLocaleDateString(locale, {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    });
+  } catch {
+    return iso;
+  }
+}
+
 export function formatCost(
   cost: number | null | undefined,
   currency: string | null | undefined
@@ -38,4 +54,24 @@ export function formatCost(
   if (cost == null) return null;
   const value = cost.toFixed(2);
   return currency ? `${value} ${currency}` : value;
+}
+
+// TeslaMate's `name` field is often blank — most users never rename the car in
+// Tesla's app. Fall back to the model badge ("Model Y") which is always set.
+export function formatCarName(
+  source: {
+    name?: string | null;
+    car_id?: number | null;
+    display_name?: string | null;
+    car_details?: { model?: string | null; trim_badging?: string | null } | null;
+  } | null | undefined
+): string {
+  if (!source) return '—';
+  const name = source.name?.trim();
+  if (name) return name;
+  const display = source.display_name?.trim();
+  if (display) return display;
+  const model = source.car_details?.model?.trim();
+  if (model) return `Tesla Model ${model}`;
+  return source.car_id != null ? `Car #${source.car_id}` : '—';
 }

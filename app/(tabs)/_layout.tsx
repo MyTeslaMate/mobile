@@ -1,16 +1,12 @@
 import { useLocalization } from '@/contexts/LocalizationContext';
-import { useTeslaMateApi } from '@/contexts/TeslaMateApiContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
+import { CHAT_ENABLED } from '@/lib/featureFlags';
 import { Ionicons } from '@expo/vector-icons';
-import { Redirect, Tabs } from 'expo-router';
+import { Tabs } from 'expo-router';
 
 export default function TabsLayout() {
   const colors = useThemeColors();
   const { t } = useLocalization();
-  const { session, isLoading } = useTeslaMateApi();
-
-  if (isLoading) return null;
-  if (!session) return <Redirect href="/onboarding" />;
 
   return (
     <Tabs
@@ -49,6 +45,19 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="flash" size={size} color={color} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="chat"
+        options={{
+          title: t('tabs.chat'),
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="chatbubbles" size={size} color={color} />
+          ),
+          // Hide the chat tab until CHAT_ENABLED flips to true. `href: null`
+          // unmounts the tab button but the screen file stays valid so we can
+          // re-enable without further wiring.
+          href: CHAT_ENABLED ? undefined : null,
         }}
       />
       <Tabs.Screen

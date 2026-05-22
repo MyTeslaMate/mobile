@@ -3,19 +3,32 @@
     "loading": "Laden...",
     "error": "Fout",
     "close": "Sluiten",
-    "cancel": "Annuleren"
+    "cancel": "Annuleren",
+    "apply": "Toepassen"
+  },
+  "dateRange": {
+    "all": "Alles",
+    "7d": "7d",
+    "30d": "30d",
+    "90d": "90d",
+    "year": "Jaar",
+    "custom": "Aangepast",
+    "customTitle": "Datumbereik",
+    "from": "Van",
+    "to": "Tot"
   },
   "tabs": {
-    "now": "Now",
+    "now": "Cockpit",
     "drives": "Drives",
     "charges": "Charges",
+    "chat": "Chat",
     "settings": "Settings"
   },
   "about": {
-    "title": "MyTeslaMate",
+    "title": "MyTeslaMate Viewer",
     "version": "v. {{version}} (build {{build}})",
     "descriptionTitle": "Over",
-    "description": "MyTeslaMate is the mobile companion for your MyTeslaMate account: view your drives, charges and current vehicle state from your TeslaMate instance.",
+    "description": "MyTeslaMate Viewer is the mobile companion for your MyTeslaMate account: view your drives, charges and current vehicle state from your TeslaMate instance.",
     "featuresTitle": "Functies",
     "featureSecure": "Versleutelde opslag en biometrische vergrendeling",
     "featureTheme": "Licht, donker en automatisch thema",
@@ -181,12 +194,16 @@
       "title": "Account",
       "signedInAs": "Signed in as {{email}}",
       "reconnect": "Re-connect to MyTeslaMate",
-      "signOut": "Sign out"
+      "signOut": "Sign out",
+      "signInWithTesla": "Inloggen met Tesla",
+      "useMtmToken": "Gebruik in plaats daarvan een MyTeslaMate-token"
     },
     "advanced": {
       "title": "Advanced",
-      "apiTokens": "Tesla API tokens",
-      "apiTokensDescription": "Manage Owner API and Fleet API tokens manually."
+      "ownerToken": "Owner API-token",
+      "ownerTokenDescription": "Genereer en beheer het Owner API-token dat door TeslaMate wordt gebruikt.",
+      "fleetToken": "Fleet API-token",
+      "fleetTokenDescription": "Genereer en beheer het Fleet API-token voor live-opdrachten."
     },
     "apiTokens": {
       "title": "Tesla API tokens",
@@ -194,6 +211,25 @@
       "fleetSection": "Fleet API",
       "generateOwner": "Generate Owner API token",
       "generateFleet": "Generate Fleet API token"
+    },
+    "mtmToken": {
+      "title": "MyTeslaMate-token",
+      "description": "Plak een MyTeslaMate API-token om de Tesla-aanmelding over te slaan. Je vindt het in de instellingen van je MyTeslaMate-account.",
+      "inputLabel": "MyTeslaMate-token",
+      "placeholder": "Plak je token hier",
+      "submit": "Verbinden met dit token",
+      "errorInvalid": "Dit token is niet geldig.",
+      "errorNetwork": "Kan MyTeslaMate niet bereiken. Controleer je verbinding.",
+      "errorGeneric": "Er is iets misgegaan. Probeer het later opnieuw.",
+      "errorNoSubscription": "Je MyTeslaMate-account heeft geen actief TeslaMate-abonnement.",
+      "currentTokenTitle": "Opgeslagen token",
+      "currentTokenDescription": "Dit token wordt veilig op dit apparaat opgeslagen en gebruikt om met je MyTeslaMate-instantie te communiceren.",
+      "replaceTitle": "Token vervangen",
+      "show": "Tonen",
+      "hide": "Verbergen",
+      "copy": "Kopiëren",
+      "copiedTitle": "Gekopieerd",
+      "copiedMessage": "Token naar klembord gekopieerd."
     }
   },
   "onboarding": {
@@ -208,8 +244,18 @@
     "errorNoSubscription": "Your MyTeslaMate account has no active TeslaMate service. Activate one to continue.",
     "errorGeneric": "Something went wrong. Please try again."
   },
+  "connect": {
+    "signingIn": "Bezig met aanmelden…",
+    "continueWithoutSignIn": "Doorgaan zonder aanmelden"
+  },
+  "signedOut": {
+    "title": "Log in om je gegevens te zien",
+    "description": "Verbind je MyTeslaMate-account om je live status, ritten en laadsessies te bekijken.",
+    "signInWithTesla": "Inloggen met Tesla",
+    "useMtmToken": "Gebruik in plaats daarvan een MyTeslaMate-token"
+  },
   "now": {
-    "title": "Now",
+    "title": "Cockpit",
     "carPickerLabel": "Vehicle",
     "battery": "Battery",
     "chargingState": "Charging",
@@ -219,7 +265,60 @@
     "location": "Location",
     "noData": "No data yet — TeslaMate may still be syncing.",
     "refresh": "Refresh",
-    "noVehicles": "No vehicles found in your TeslaMate."
+    "noVehicles": "No vehicles found in your TeslaMate.",
+    "status": "Status",
+    "range": "Bereik",
+    "soc": "Laadtoestand",
+    "mileage": "Kilometerstand",
+    "version": "Versie",
+    "insideTemp": "Binnen",
+    "outsideTemp": "Buiten",
+    "temperatures": "Binnen / Buiten",
+    "tirePressure": "Bandenspanning",
+    "tireFront": "Banden voor",
+    "tireRear": "Banden achter",
+    "endOfCharge": "Einde laadbeurt",
+    "locationUnknown": "Locatie niet beschikbaar",
+    "batteryHealthTitle": "Batterijconditie",
+    "stateOfHealth": "Gezondheidstoestand",
+    "capacity": "Capaciteit",
+    "maxRange": "Max. bereik",
+    "ratedEfficiency": "Nominaal verbruik",
+    "capacityLost": "Verloren capaciteit",
+    "rangeLost": "Verloren bereik",
+    "outOf": "van {{value}}",
+    "state": {
+      "online": "online",
+      "offline": "offline",
+      "asleep": "in slaapstand",
+      "charging": "aan het laden",
+      "driving": "aan het rijden"
+    },
+    "badge": {
+      "charging": "Laden",
+      "sentry": "Bewaker",
+      "locked": "Vergrendeld",
+      "unlocked": "Ontgrendeld"
+    }
+  },
+  "chat": {
+    "title": "Chat met je Tesla",
+    "openButton": "Chat openen",
+    "placeholder": "Stel een vraag over je ritten, laadsessies of de huidige status.",
+    "inputPlaceholder": "Typ een bericht…",
+    "typing": "Aan het nadenken…"
+  },
+  "recommendations": {
+    "button": "AI",
+    "buttonNow": "Tips",
+    "buttonDrives": "Rit-tips",
+    "buttonCharges": "Laad-tips",
+    "title": "AI-aanbevelingen",
+    "subtitleNow": "Over de voertuigstatus",
+    "subtitleDrives": "Over je ritten",
+    "subtitleCharges": "Over je laadbeurten",
+    "thinking": "Analyseren…",
+    "error": "Kon geen aanbevelingen genereren."
   },
   "drives": {
     "title": "Drives",
@@ -237,5 +336,31 @@
     "location": "Location",
     "cost": "Cost",
     "loadMore": "Load more"
+  },
+  "trip": {
+    "duration": "Duur"
+  },
+  "details": {
+    "driveTitle": "Rit",
+    "chargeTitle": "Lading",
+    "summary": "Overzicht",
+    "battery": "Accu",
+    "range": "Bereik",
+    "start": "Begin",
+    "end": "Einde",
+    "avgSpeed": "Gem. snelheid",
+    "maxSpeed": "Max. snelheid",
+    "outsideTemp": "Buiten",
+    "insideTemp": "Binnen",
+    "energy": "Energie",
+    "energyAdded": "Energie geladen",
+    "energyUsed": "Energie verbruikt",
+    "avgPower": "Gem. vermogen",
+    "consumption": "Verbruik",
+    "added": "Toegevoegd",
+    "cost": "Kosten",
+    "power": "Vermogen",
+    "rangeUsed": "Verbruikt bereik",
+    "efficiency": "Efficiëntie"
   }
 }

@@ -94,6 +94,11 @@ export default function OnboardingScreen() {
       style={[styles.safeArea, { backgroundColor: colors.background }]}
       edges={['top', 'bottom']}
     >
+      {router.canGoBack() && (
+        <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Ionicons name="chevron-back" size={26} color={colors.primary} />
+        </Pressable>
+      )}
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.heroBlock}>
           <Image
@@ -201,6 +206,13 @@ function ErrorBlock({
 const createStyles = (colors: any) =>
   StyleSheet.create({
     safeArea: { flex: 1 },
+    backButton: {
+      position: 'absolute',
+      top: 8,
+      left: 8,
+      zIndex: 10,
+      padding: 8,
+    },
     container: { padding: 16, gap: 16 },
     heroBlock: { alignItems: 'center', paddingVertical: 32, gap: 12 },
     appIcon: {

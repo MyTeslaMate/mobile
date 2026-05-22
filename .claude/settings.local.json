@@ -14,14 +14,30 @@
       "Read(//Users/julien/Sites/MTM/test/teslamate/lib/teslamate/auth/**)",
       "Bash(./php -l app/Http/Controllers/TokensController.php)",
       "Bash(./php -l routes/api.php)",
-      "Bash(xargs ls -la)"
+      "Bash(xargs ls -la)",
+      "Bash(python3 -c 'import json; json.load\\(open\\('\\\\''/Users/julien/Sites/MTM/myteslamate-tokens/locales/__TRACKED_VAR__.json'\\\\''\\)\\)')",
+      "Bash(python3 -c 'import json; d=json.load\\(open\\('\\\\''__TRACKED_VAR__.json'\\\\''\\)\\); assert '\\\\''mtmToken'\\\\'' in d['\\\\''settings'\\\\'']; assert '\\\\''signInWithTesla'\\\\'' in d['\\\\''settings'\\\\'']['\\\\''account'\\\\'']; assert '\\\\''useMtmToken'\\\\'' in d['\\\\''settings'\\\\'']['\\\\''account'\\\\'']; assert len\\(d['\\\\''settings'\\\\'']['\\\\''mtmToken'\\\\'']\\) == 9; print\\('\\\\''__TRACKED_VAR__.json OK'\\\\''\\)')",
+      "Read(//Users/julien/Sites/MTM/myteslamate/services/**)",
+      "Read(//Users/julien/Sites/MTM/myteslamate/mocks/**)",
+      "Read(//Users/julien/Sites/MTM/myteslamate/**)",
+      "Bash(python3 -c 'import json; d=json.load\\(open\\('\\\\''/Users/julien/Sites/MTM/myteslamate-tokens/locales/__TRACKED_VAR__.json'\\\\''\\)\\); assert '\\\\''signedOut'\\\\'' in d and set\\(d['\\\\''signedOut'\\\\''].keys\\(\\)\\)=={'\\\\''title'\\\\'','\\\\''description'\\\\'','\\\\''signInWithTesla'\\\\'','\\\\''useMtmToken'\\\\''}; print\\('\\\\''__TRACKED_VAR__ OK'\\\\''\\)')",
+      "Bash(npm install *)",
+      "Read(//Users/julien/Sites/MTM/mcp-tesla/tesla_mcp/servers/**)",
+      "Read(//Users/julien/Sites/MTM/mcp-tesla/tesla_mcp/**)",
+      "Bash(/usr/bin/grep -n \"noVehicles\" /Users/julien/Sites/MTM/myteslamate-tokens/locales/de.json /Users/julien/Sites/MTM/myteslamate-tokens/locales/es.json /Users/julien/Sites/MTM/myteslamate-tokens/locales/it.json /Users/julien/Sites/MTM/myteslamate-tokens/locales/nl.json /Users/julien/Sites/MTM/myteslamate-tokens/locales/ru.json /Users/julien/Sites/MTM/myteslamate-tokens/locales/zh.json)",
+      "Bash(xcrun simctl *)"
     ],
     "additionalDirectories": [
       "/Users/julien/Sites/MTM/app/routes",
       "/Users/julien/Sites/MTM/app/lang",
       "/Users/julien/Sites/MTM/app/.helm",
       "/Users/julien/Sites/MTM/app/resources/views/mobile",
-      "/Users/julien/Sites/MTM/app/resources/views/components"
+      "/Users/julien/Sites/MTM/app/resources/views/components",
+      "/Users/julien/Sites/MTM/mcp-tesla/tesla_mcp/servers",
+      "/Users/julien/Sites/MTM/mcp-tesla/tesla_mcp/skills/drive-efficiency-coach",
+      "/Users/julien/Sites/MTM/mcp-tesla/tesla_mcp/skills/charge-recommendations",
+      "/Users/julien/Sites/MTM/mcp-tesla/tesla_mcp/skills/drive-recommendations",
+      "/Users/julien/Sites/MTM/app/app/Jobs"
     ]
   }
 }
