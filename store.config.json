@@ -78,7 +78,8 @@
       "lastName": "Lestel",
       "email": "myteslamatecom@gmail.com",
       "phone": "+33689674012",
-      "demoRequired": false
+      "demoRequired": false,
+      "notes": "Two ways to sign in:\n\n1. \"Sign in with Tesla\" — use a real Tesla account to view live vehicle data.\n2. \"Sign in with a MyTeslaMate token\" — paste the demo token provided as both the username and the password above (the same token works in either field) to view demo data."
     }
   }
 }

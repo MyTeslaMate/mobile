@@ -58,7 +58,7 @@
     "title": "Sign in to see your data",
     "description": "Connect your MyTeslaMate account to view your live status, drives and charges.",
     "signInWithTesla": "Sign in with Tesla",
-    "useMtmToken": "Use a MyTeslaMate token instead"
+    "useMtmToken": "Sign in with a MyTeslaMate token"
   },
   "now": {
     "title": "Cockpit",
@@ -243,7 +243,7 @@
       "reconnect": "Re-connect to MyTeslaMate",
       "signOut": "Sign out",
       "signInWithTesla": "Sign in with Tesla",
-      "useMtmToken": "Use a MyTeslaMate token instead"
+      "useMtmToken": "Sign in with a MyTeslaMate token"
     },
     "advanced": {
       "title": "Advanced",
