@@ -79,7 +79,7 @@
       "email": "myteslamatecom@gmail.com",
       "phone": "+33689674012",
       "demoRequired": false,
-      "notes": "Sign in with a MyTeslaMate token\" — paste the demo token provided as both the username and the password above (the same token works in either field) to view demo data."
+      "notes": "To sign in:\n1. On the sign-in screen, tap \"Sign in with a MyTeslaMate token\".\n2. Paste the demo token provided above (it has been entered as both the username and the password — copy from either field) into the token field.\n3. Tap continue to load the demo vehicle data."
     }
   }
 }
