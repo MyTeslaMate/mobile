@@ -34,7 +34,9 @@ function isOutdated(current: string, latest: string): boolean {
 }
 
 export function useAppUpdateCheck(): AppUpdateCheckResult {
-  const currentVersion = Constants.expoConfig?.version ?? '0.0.0';
+  const currentVersion = __DEV__
+    ? '1.0.3'
+    : (Constants.expoConfig?.version ?? '0.0.0');
   const [latestVersion, setLatestVersion] = useState<string | null>(null);
   const [status, setStatus] = useState<UpdateStatus>('idle');
 

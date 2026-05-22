@@ -3,26 +3,40 @@
     "loading": "Caricamento...",
     "error": "Errore",
     "close": "Chiudi",
-    "cancel": "Annulla"
+    "cancel": "Annulla",
+    "apply": "Applica"
+  },
+  "dateRange": {
+    "all": "Tutto",
+    "7d": "7g",
+    "30d": "30g",
+    "90d": "90g",
+    "year": "Anno",
+    "custom": "Personalizzato",
+    "customTitle": "Intervallo date",
+    "from": "Dal",
+    "to": "Al"
   },
   "tabs": {
-    "fleet": "Fleet API",
-    "owner": "Owner API",
-    "about": "Informazioni"
+    "now": "Cockpit",
+    "drives": "Drives",
+    "charges": "Charges",
+    "chat": "Chat",
+    "settings": "Settings"
   },
   "about": {
-    "title": "Tesla Tokens Generator",
+    "title": "MyTeslaMate Viewer",
     "version": "v. {{version}} (build {{build}})",
     "descriptionTitle": "Informazioni",
-    "description": "Tesla Tokens Generator è un'app minimalista che ti aiuta a generare i token dell'API Tesla necessari per collegare strumenti di terze parti, come TeslaMate, al tuo account Tesla.",
+    "description": "MyTeslaMate Viewer is the mobile companion for your MyTeslaMate account: view your drives, charges and current vehicle state from your TeslaMate instance.",
     "featuresTitle": "Funzionalità",
-    "featureFleet": "Generazione di token Fleet API",
-    "featureOwner": "Generazione di token Owner API",
-    "featureHistory": "Token salvati sul dispositivo per riutilizzarli facilmente",
     "featureSecure": "Archiviazione cifrata e blocco biometrico",
     "featureTheme": "Temi chiaro, scuro e automatico",
     "linksTitle": "Link",
-    "website": "La tua istanza TeslaMate"
+    "website": "La tua istanza TeslaMate",
+    "featureNow": "Current battery state, charging and location",
+    "featureDrives": "Browse your recent drives",
+    "featureCharges": "Browse your charging sessions"
   },
   "tokenInfo": {
     "expired": "Token scaduto",
@@ -174,6 +188,179 @@
           "unknownError": "Errore sconosciuto"
         }
       }
+    },
+    "title": "Settings",
+    "account": {
+      "title": "Account",
+      "signedInAs": "Signed in as {{email}}",
+      "reconnect": "Re-connect to MyTeslaMate",
+      "signOut": "Sign out",
+      "signInWithTesla": "Accedi con Tesla",
+      "useMtmToken": "Usa invece un token MyTeslaMate"
+    },
+    "advanced": {
+      "title": "Advanced",
+      "ownerToken": "Token Owner API",
+      "ownerTokenDescription": "Genera e gestisci il token Owner API utilizzato da TeslaMate.",
+      "fleetToken": "Token Fleet API",
+      "fleetTokenDescription": "Genera e gestisci il token Fleet API per i comandi in tempo reale."
+    },
+    "apiTokens": {
+      "title": "Tesla API tokens",
+      "ownerSection": "Owner API",
+      "fleetSection": "Fleet API",
+      "generateOwner": "Generate Owner API token",
+      "generateFleet": "Generate Fleet API token"
+    },
+    "mtmToken": {
+      "title": "Token MyTeslaMate",
+      "description": "Incolla un token API MyTeslaMate per saltare l'accesso Tesla. Lo trovi nelle impostazioni del tuo account MyTeslaMate.",
+      "inputLabel": "Token MyTeslaMate",
+      "placeholder": "Incolla qui il tuo token",
+      "submit": "Connetti con questo token",
+      "errorInvalid": "Questo token non è valido.",
+      "errorNetwork": "Impossibile raggiungere MyTeslaMate. Controlla la tua connessione.",
+      "errorGeneric": "Qualcosa è andato storto. Riprova più tardi.",
+      "errorNoSubscription": "Il tuo account MyTeslaMate non ha un abbonamento TeslaMate attivo.",
+      "currentTokenTitle": "Token salvato",
+      "currentTokenDescription": "Questo token è memorizzato in modo sicuro su questo dispositivo e viene utilizzato per comunicare con la tua istanza MyTeslaMate.",
+      "replaceTitle": "Sostituisci token",
+      "show": "Mostra",
+      "hide": "Nascondi",
+      "copy": "Copia",
+      "copiedTitle": "Copiato",
+      "copiedMessage": "Token copiato negli appunti."
     }
+  },
+  "onboarding": {
+    "title": "Connect to MyTeslaMate",
+    "subtitle": "Sign in with your Tesla account to view your drives, charges and battery state from your TeslaMate instance.",
+    "connectButton": "Connect with Tesla",
+    "regionLabel": "Region",
+    "exchanging": "Linking your MyTeslaMate account…",
+    "errorNoAccount": "No MyTeslaMate account found for {{email}}.",
+    "errorNoAccountCta": "Create my account",
+    "errorTokenInvalid": "Tesla rejected the token. Please try again.",
+    "errorNoSubscription": "Your MyTeslaMate account has no active TeslaMate service. Activate one to continue.",
+    "errorGeneric": "Something went wrong. Please try again."
+  },
+  "connect": {
+    "signingIn": "Accesso in corso…",
+    "continueWithoutSignIn": "Continua senza accedere"
+  },
+  "signedOut": {
+    "title": "Accedi per vedere i tuoi dati",
+    "description": "Collega il tuo account MyTeslaMate per visualizzare lo stato in tempo reale, i viaggi e le ricariche.",
+    "signInWithTesla": "Accedi con Tesla",
+    "useMtmToken": "Usa invece un token MyTeslaMate"
+  },
+  "now": {
+    "title": "Cockpit",
+    "carPickerLabel": "Vehicle",
+    "battery": "Battery",
+    "chargingState": "Charging",
+    "onlineState": "Status",
+    "lastSeen": "Last seen",
+    "softwareVersion": "Software",
+    "location": "Location",
+    "noData": "No data yet — TeslaMate may still be syncing.",
+    "refresh": "Refresh",
+    "noVehicles": "No vehicles found in your TeslaMate.",
+    "status": "Stato",
+    "range": "Autonomia",
+    "soc": "Stato di carica",
+    "mileage": "Chilometraggio",
+    "version": "Versione",
+    "insideTemp": "Interno",
+    "outsideTemp": "Esterno",
+    "temperatures": "Interno / Esterno",
+    "tirePressure": "Pressione pneumatici",
+    "tireFront": "Pneumatici anteriori",
+    "tireRear": "Pneumatici posteriori",
+    "endOfCharge": "Fine della carica",
+    "locationUnknown": "Posizione non disponibile",
+    "batteryHealthTitle": "Salute della batteria",
+    "stateOfHealth": "Stato di salute",
+    "capacity": "Capacità",
+    "maxRange": "Autonomia max",
+    "ratedEfficiency": "Consumo nominale",
+    "capacityLost": "Capacità persa",
+    "rangeLost": "Autonomia persa",
+    "outOf": "su {{value}}",
+    "state": {
+      "online": "in linea",
+      "offline": "non in linea",
+      "asleep": "in standby",
+      "charging": "in carica",
+      "driving": "in marcia"
+    },
+    "badge": {
+      "charging": "In carica",
+      "sentry": "Sentinella",
+      "locked": "Bloccata",
+      "unlocked": "Sbloccata"
+    }
+  },
+  "chat": {
+    "title": "Chatta con la tua Tesla",
+    "openButton": "Apri la chat",
+    "placeholder": "Chiedi qualsiasi cosa sui tuoi viaggi, ricariche o stato attuale.",
+    "inputPlaceholder": "Scrivi un messaggio…",
+    "typing": "Sto pensando…"
+  },
+  "recommendations": {
+    "button": "IA",
+    "buttonNow": "Consigli",
+    "buttonDrives": "Consigli viaggi",
+    "buttonCharges": "Consigli ricariche",
+    "title": "Raccomandazioni IA",
+    "subtitleNow": "Sullo stato del veicolo",
+    "subtitleDrives": "Sui tuoi viaggi",
+    "subtitleCharges": "Sulle tue ricariche",
+    "thinking": "Analisi in corso…",
+    "error": "Impossibile generare raccomandazioni."
+  },
+  "drives": {
+    "title": "Drives",
+    "empty": "No drives recorded yet.",
+    "distance": "Distance",
+    "duration": "Duration",
+    "consumption": "Consumption",
+    "loadMore": "Load more"
+  },
+  "charges": {
+    "title": "Charges",
+    "empty": "No charges recorded yet.",
+    "energy": "Energy added",
+    "duration": "Duration",
+    "location": "Location",
+    "cost": "Cost",
+    "loadMore": "Load more"
+  },
+  "trip": {
+    "duration": "Durata"
+  },
+  "details": {
+    "driveTitle": "Viaggio",
+    "chargeTitle": "Ricarica",
+    "summary": "Riepilogo",
+    "battery": "Batteria",
+    "range": "Autonomia",
+    "start": "Inizio",
+    "end": "Fine",
+    "avgSpeed": "Vel. media",
+    "maxSpeed": "Vel. max",
+    "outsideTemp": "Esterno",
+    "insideTemp": "Interno",
+    "energy": "Energia",
+    "energyAdded": "Energia aggiunta",
+    "energyUsed": "Energia usata",
+    "avgPower": "Pot. media",
+    "consumption": "Consumo",
+    "added": "Aggiunto",
+    "cost": "Costo",
+    "power": "Potenza",
+    "rangeUsed": "Autonomia consumata",
+    "efficiency": "Efficienza"
   }
 }

@@ -1,5 +1,6 @@
 import { useLocalization } from '@/contexts/LocalizationContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
+import { CHAT_ENABLED } from '@/lib/featureFlags';
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 
@@ -20,29 +21,51 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="now"
         options={{
-          title: t('tabs.owner'),
+          title: t('tabs.now'),
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person" size={size} color={color} />
+            <Ionicons name="car-sport" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="fleet"
+        name="drives"
         options={{
-          title: t('tabs.fleet'),
+          title: t('tabs.drives'),
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="cloud" size={size} color={color} />
+            <Ionicons name="map" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="about"
+        name="charges"
         options={{
-          title: t('tabs.about'),
+          title: t('tabs.charges'),
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="information-circle" size={size} color={color} />
+            <Ionicons name="flash" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="chat"
+        options={{
+          title: t('tabs.chat'),
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="chatbubbles" size={size} color={color} />
+          ),
+          // Hide the chat tab until CHAT_ENABLED flips to true. `href: null`
+          // unmounts the tab button but the screen file stays valid so we can
+          // re-enable without further wiring.
+          href: CHAT_ENABLED ? undefined : null,
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: t('tabs.settings'),
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="settings" size={size} color={color} />
           ),
         }}
       />

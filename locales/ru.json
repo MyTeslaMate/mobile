@@ -3,26 +3,40 @@
     "loading": "Загрузка...",
     "error": "Ошибка",
     "close": "Закрыть",
-    "cancel": "Отмена"
+    "cancel": "Отмена",
+    "apply": "Применить"
+  },
+  "dateRange": {
+    "all": "Все",
+    "7d": "7д",
+    "30d": "30д",
+    "90d": "90д",
+    "year": "Год",
+    "custom": "Свой",
+    "customTitle": "Диапазон дат",
+    "from": "С",
+    "to": "По"
   },
   "tabs": {
-    "fleet": "Fleet API",
-    "owner": "Owner API",
-    "about": "О приложении"
+    "now": "Кокпит",
+    "drives": "Drives",
+    "charges": "Charges",
+    "chat": "Чат",
+    "settings": "Settings"
   },
   "about": {
-    "title": "Tesla Tokens Generator",
+    "title": "MyTeslaMate Viewer",
     "version": "v. {{version}} (сборка {{build}})",
     "descriptionTitle": "О приложении",
-    "description": "Tesla Tokens Generator — минималистичное приложение для генерации токенов API Tesla, необходимых для подключения сторонних инструментов, таких как TeslaMate, к вашей учётной записи Tesla.",
+    "description": "MyTeslaMate Viewer is the mobile companion for your MyTeslaMate account: view your drives, charges and current vehicle state from your TeslaMate instance.",
     "featuresTitle": "Возможности",
-    "featureFleet": "Генерация токенов Fleet API",
-    "featureOwner": "Генерация токенов Owner API",
-    "featureHistory": "Токены сохраняются на устройстве для удобного повторного использования",
     "featureSecure": "Шифрованное хранилище и биометрическая блокировка",
     "featureTheme": "Светлая, тёмная и автоматическая темы",
     "linksTitle": "Ссылки",
-    "website": "Ваш экземпляр TeslaMate"
+    "website": "Ваш экземпляр TeslaMate",
+    "featureNow": "Current battery state, charging and location",
+    "featureDrives": "Browse your recent drives",
+    "featureCharges": "Browse your charging sessions"
   },
   "tokenInfo": {
     "expired": "Срок действия токена истёк",
@@ -174,6 +188,179 @@
           "unknownError": "Неизвестная ошибка"
         }
       }
+    },
+    "title": "Settings",
+    "account": {
+      "title": "Account",
+      "signedInAs": "Signed in as {{email}}",
+      "reconnect": "Re-connect to MyTeslaMate",
+      "signOut": "Sign out",
+      "signInWithTesla": "Войти через Tesla",
+      "useMtmToken": "Использовать токен MyTeslaMate"
+    },
+    "advanced": {
+      "title": "Advanced",
+      "ownerToken": "Токен Owner API",
+      "ownerTokenDescription": "Создавайте и управляйте токеном Owner API, используемым TeslaMate.",
+      "fleetToken": "Токен Fleet API",
+      "fleetTokenDescription": "Создавайте и управляйте токеном Fleet API для команд в реальном времени."
+    },
+    "apiTokens": {
+      "title": "Tesla API tokens",
+      "ownerSection": "Owner API",
+      "fleetSection": "Fleet API",
+      "generateOwner": "Generate Owner API token",
+      "generateFleet": "Generate Fleet API token"
+    },
+    "mtmToken": {
+      "title": "Токен MyTeslaMate",
+      "description": "Вставьте API-токен MyTeslaMate, чтобы пропустить вход через Tesla. Его можно найти в настройках вашей учётной записи MyTeslaMate.",
+      "inputLabel": "Токен MyTeslaMate",
+      "placeholder": "Вставьте сюда ваш токен",
+      "submit": "Подключиться с этим токеном",
+      "errorInvalid": "Этот токен недействителен.",
+      "errorNetwork": "Не удалось связаться с MyTeslaMate. Проверьте подключение.",
+      "errorGeneric": "Что-то пошло не так. Повторите попытку позже.",
+      "errorNoSubscription": "У вашей учётной записи MyTeslaMate нет активной подписки TeslaMate.",
+      "currentTokenTitle": "Сохранённый токен",
+      "currentTokenDescription": "Этот токен надёжно хранится на этом устройстве и используется для связи с вашим экземпляром MyTeslaMate.",
+      "replaceTitle": "Заменить токен",
+      "show": "Показать",
+      "hide": "Скрыть",
+      "copy": "Копировать",
+      "copiedTitle": "Скопировано",
+      "copiedMessage": "Токен скопирован в буфер обмена."
     }
+  },
+  "onboarding": {
+    "title": "Connect to MyTeslaMate",
+    "subtitle": "Sign in with your Tesla account to view your drives, charges and battery state from your TeslaMate instance.",
+    "connectButton": "Connect with Tesla",
+    "regionLabel": "Region",
+    "exchanging": "Linking your MyTeslaMate account…",
+    "errorNoAccount": "No MyTeslaMate account found for {{email}}.",
+    "errorNoAccountCta": "Create my account",
+    "errorTokenInvalid": "Tesla rejected the token. Please try again.",
+    "errorNoSubscription": "Your MyTeslaMate account has no active TeslaMate service. Activate one to continue.",
+    "errorGeneric": "Something went wrong. Please try again."
+  },
+  "connect": {
+    "signingIn": "Выполняется вход…",
+    "continueWithoutSignIn": "Продолжить без входа"
+  },
+  "signedOut": {
+    "title": "Войдите, чтобы увидеть свои данные",
+    "description": "Подключите свою учётную запись MyTeslaMate, чтобы видеть текущее состояние, поездки и зарядки.",
+    "signInWithTesla": "Войти через Tesla",
+    "useMtmToken": "Использовать токен MyTeslaMate"
+  },
+  "now": {
+    "title": "Кокпит",
+    "carPickerLabel": "Vehicle",
+    "battery": "Battery",
+    "chargingState": "Charging",
+    "onlineState": "Status",
+    "lastSeen": "Last seen",
+    "softwareVersion": "Software",
+    "location": "Location",
+    "noData": "No data yet — TeslaMate may still be syncing.",
+    "refresh": "Refresh",
+    "noVehicles": "No vehicles found in your TeslaMate.",
+    "status": "Статус",
+    "range": "Запас хода",
+    "soc": "Уровень заряда",
+    "mileage": "Пробег",
+    "version": "Версия",
+    "insideTemp": "Внутри",
+    "outsideTemp": "Снаружи",
+    "temperatures": "Внутри / Снаружи",
+    "tirePressure": "Давление в шинах",
+    "tireFront": "Передние шины",
+    "tireRear": "Задние шины",
+    "endOfCharge": "Окончание зарядки",
+    "locationUnknown": "Местоположение недоступно",
+    "batteryHealthTitle": "Состояние батареи",
+    "stateOfHealth": "Уровень здоровья",
+    "capacity": "Ёмкость",
+    "maxRange": "Макс. запас хода",
+    "ratedEfficiency": "Номинальный расход",
+    "capacityLost": "Потеря ёмкости",
+    "rangeLost": "Потеря запаса хода",
+    "outOf": "из {{value}}",
+    "state": {
+      "online": "онлайн",
+      "offline": "офлайн",
+      "asleep": "спит",
+      "charging": "заряжается",
+      "driving": "в движении"
+    },
+    "badge": {
+      "charging": "Зарядка",
+      "sentry": "Охрана",
+      "locked": "Закрыта",
+      "unlocked": "Открыта"
+    }
+  },
+  "chat": {
+    "title": "Чат с вашей Tesla",
+    "openButton": "Открыть чат",
+    "placeholder": "Спросите что угодно о поездках, зарядках или текущем состоянии.",
+    "inputPlaceholder": "Введите сообщение…",
+    "typing": "Думаю…"
+  },
+  "recommendations": {
+    "button": "ИИ",
+    "buttonNow": "Советы",
+    "buttonDrives": "Поездки",
+    "buttonCharges": "Зарядки",
+    "title": "Рекомендации ИИ",
+    "subtitleNow": "О состоянии автомобиля",
+    "subtitleDrives": "О ваших поездках",
+    "subtitleCharges": "О ваших зарядках",
+    "thinking": "Анализ…",
+    "error": "Не удалось сгенерировать рекомендации."
+  },
+  "drives": {
+    "title": "Drives",
+    "empty": "No drives recorded yet.",
+    "distance": "Distance",
+    "duration": "Duration",
+    "consumption": "Consumption",
+    "loadMore": "Load more"
+  },
+  "charges": {
+    "title": "Charges",
+    "empty": "No charges recorded yet.",
+    "energy": "Energy added",
+    "duration": "Duration",
+    "location": "Location",
+    "cost": "Cost",
+    "loadMore": "Load more"
+  },
+  "trip": {
+    "duration": "Длительность"
+  },
+  "details": {
+    "driveTitle": "Поездка",
+    "chargeTitle": "Зарядка",
+    "summary": "Сводка",
+    "battery": "Батарея",
+    "range": "Запас хода",
+    "start": "Начало",
+    "end": "Конец",
+    "avgSpeed": "Ср. скорость",
+    "maxSpeed": "Макс. скорость",
+    "outsideTemp": "Снаружи",
+    "insideTemp": "В салоне",
+    "energy": "Энергия",
+    "energyAdded": "Энергия добавлена",
+    "energyUsed": "Энергия израсходована",
+    "avgPower": "Ср. мощность",
+    "consumption": "Расход",
+    "added": "Добавлено",
+    "cost": "Стоимость",
+    "power": "Мощность",
+    "rangeUsed": "Использовано запаса",
+    "efficiency": "Эффективность"
   }
 }

@@ -3,26 +3,40 @@
     "loading": "Wird geladen...",
     "error": "Fehler",
     "close": "Schließen",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "apply": "Anwenden"
+  },
+  "dateRange": {
+    "all": "Alle",
+    "7d": "7T",
+    "30d": "30T",
+    "90d": "90T",
+    "year": "Jahr",
+    "custom": "Benutzerdefiniert",
+    "customTitle": "Zeitraum",
+    "from": "Von",
+    "to": "Bis"
   },
   "tabs": {
-    "fleet": "Fleet API",
-    "owner": "Owner API",
-    "about": "Über"
+    "now": "Cockpit",
+    "drives": "Drives",
+    "charges": "Charges",
+    "chat": "Chat",
+    "settings": "Settings"
   },
   "about": {
-    "title": "Tesla Tokens Generator",
+    "title": "MyTeslaMate Viewer",
     "version": "v. {{version}} (Build {{build}})",
     "descriptionTitle": "Über",
-    "description": "Tesla Tokens Generator ist eine minimalistische App, mit der Sie die Tesla-API-Tokens erzeugen, die nötig sind, um Drittanwendungen wie TeslaMate mit Ihrem Tesla-Konto zu verbinden.",
+    "description": "MyTeslaMate Viewer is the mobile companion for your MyTeslaMate account: view your drives, charges and current vehicle state from your TeslaMate instance.",
     "featuresTitle": "Funktionen",
-    "featureFleet": "Erzeugung von Fleet-API-Tokens",
-    "featureOwner": "Erzeugung von Owner-API-Tokens",
-    "featureHistory": "Tokens werden auf dem Gerät gespeichert und können einfach wiederverwendet werden",
     "featureSecure": "Verschlüsselte Speicherung und biometrische Sperre",
     "featureTheme": "Helles, dunkles und automatisches Design",
     "linksTitle": "Links",
-    "website": "Deine TeslaMate-Instanz"
+    "website": "Deine TeslaMate-Instanz",
+    "featureNow": "Current battery state, charging and location",
+    "featureDrives": "Browse your recent drives",
+    "featureCharges": "Browse your charging sessions"
   },
   "tokenInfo": {
     "expired": "Token abgelaufen",
@@ -174,6 +188,179 @@
           "unknownError": "Unbekannter Fehler"
         }
       }
+    },
+    "title": "Settings",
+    "account": {
+      "title": "Account",
+      "signedInAs": "Signed in as {{email}}",
+      "reconnect": "Re-connect to MyTeslaMate",
+      "signOut": "Sign out",
+      "signInWithTesla": "Mit Tesla anmelden",
+      "useMtmToken": "Stattdessen einen MyTeslaMate-Token verwenden"
+    },
+    "advanced": {
+      "title": "Advanced",
+      "ownerToken": "Owner-API-Token",
+      "ownerTokenDescription": "Generieren und verwalten Sie den von TeslaMate verwendeten Owner-API-Token.",
+      "fleetToken": "Fleet-API-Token",
+      "fleetTokenDescription": "Generieren und verwalten Sie den Fleet-API-Token für Live-Befehle."
+    },
+    "apiTokens": {
+      "title": "Tesla API tokens",
+      "ownerSection": "Owner API",
+      "fleetSection": "Fleet API",
+      "generateOwner": "Generate Owner API token",
+      "generateFleet": "Generate Fleet API token"
+    },
+    "mtmToken": {
+      "title": "MyTeslaMate-Token",
+      "description": "Fügen Sie einen MyTeslaMate-API-Token ein, um die Tesla-Anmeldung zu überspringen. Sie finden ihn in den Einstellungen Ihres MyTeslaMate-Kontos.",
+      "inputLabel": "MyTeslaMate-Token",
+      "placeholder": "Token hier einfügen",
+      "submit": "Mit diesem Token verbinden",
+      "errorInvalid": "Dieser Token ist ungültig.",
+      "errorNetwork": "MyTeslaMate ist nicht erreichbar. Überprüfen Sie Ihre Verbindung.",
+      "errorGeneric": "Etwas ist schiefgelaufen. Versuchen Sie es später erneut.",
+      "errorNoSubscription": "Ihr MyTeslaMate-Konto hat kein aktives TeslaMate-Abonnement.",
+      "currentTokenTitle": "Gespeicherter Token",
+      "currentTokenDescription": "Dieser Token wird sicher auf diesem Gerät gespeichert und für die Kommunikation mit Ihrer MyTeslaMate-Instanz verwendet.",
+      "replaceTitle": "Token ersetzen",
+      "show": "Anzeigen",
+      "hide": "Ausblenden",
+      "copy": "Kopieren",
+      "copiedTitle": "Kopiert",
+      "copiedMessage": "Token in die Zwischenablage kopiert."
     }
+  },
+  "onboarding": {
+    "title": "Connect to MyTeslaMate",
+    "subtitle": "Sign in with your Tesla account to view your drives, charges and battery state from your TeslaMate instance.",
+    "connectButton": "Connect with Tesla",
+    "regionLabel": "Region",
+    "exchanging": "Linking your MyTeslaMate account…",
+    "errorNoAccount": "No MyTeslaMate account found for {{email}}.",
+    "errorNoAccountCta": "Create my account",
+    "errorTokenInvalid": "Tesla rejected the token. Please try again.",
+    "errorNoSubscription": "Your MyTeslaMate account has no active TeslaMate service. Activate one to continue.",
+    "errorGeneric": "Something went wrong. Please try again."
+  },
+  "connect": {
+    "signingIn": "Anmeldung läuft…",
+    "continueWithoutSignIn": "Ohne Anmeldung fortfahren"
+  },
+  "signedOut": {
+    "title": "Anmelden, um Ihre Daten zu sehen",
+    "description": "Verbinden Sie Ihr MyTeslaMate-Konto, um Live-Status, Fahrten und Ladevorgänge anzuzeigen.",
+    "signInWithTesla": "Mit Tesla anmelden",
+    "useMtmToken": "Stattdessen einen MyTeslaMate-Token verwenden"
+  },
+  "now": {
+    "title": "Cockpit",
+    "carPickerLabel": "Vehicle",
+    "battery": "Battery",
+    "chargingState": "Charging",
+    "onlineState": "Status",
+    "lastSeen": "Last seen",
+    "softwareVersion": "Software",
+    "location": "Location",
+    "noData": "No data yet — TeslaMate may still be syncing.",
+    "refresh": "Refresh",
+    "noVehicles": "No vehicles found in your TeslaMate.",
+    "status": "Status",
+    "range": "Reichweite",
+    "soc": "Ladezustand",
+    "mileage": "Kilometerstand",
+    "version": "Version",
+    "insideTemp": "Innen",
+    "outsideTemp": "Außen",
+    "temperatures": "Innen / Außen",
+    "tirePressure": "Reifendruck",
+    "tireFront": "Reifen vorne",
+    "tireRear": "Reifen hinten",
+    "endOfCharge": "Ladeende",
+    "locationUnknown": "Standort nicht verfügbar",
+    "batteryHealthTitle": "Batteriegesundheit",
+    "stateOfHealth": "Gesundheitszustand",
+    "capacity": "Kapazität",
+    "maxRange": "Max. Reichweite",
+    "ratedEfficiency": "Nennverbrauch",
+    "capacityLost": "Verlorene Kapazität",
+    "rangeLost": "Verlorene Reichweite",
+    "outOf": "von {{value}}",
+    "state": {
+      "online": "online",
+      "offline": "offline",
+      "asleep": "im Ruhezustand",
+      "charging": "lädt",
+      "driving": "fährt"
+    },
+    "badge": {
+      "charging": "Lädt",
+      "sentry": "Wächter",
+      "locked": "Verriegelt",
+      "unlocked": "Entriegelt"
+    }
+  },
+  "chat": {
+    "title": "Chatte mit deinem Tesla",
+    "openButton": "Chat öffnen",
+    "placeholder": "Frag alles zu deinen Fahrten, Ladevorgängen oder dem aktuellen Status.",
+    "inputPlaceholder": "Nachricht eingeben…",
+    "typing": "Denke nach…"
+  },
+  "recommendations": {
+    "button": "KI",
+    "buttonNow": "Tipps",
+    "buttonDrives": "Fahrt-Tipps",
+    "buttonCharges": "Lade-Tipps",
+    "title": "KI-Empfehlungen",
+    "subtitleNow": "Zum Fahrzeugstatus",
+    "subtitleDrives": "Zu deinen Fahrten",
+    "subtitleCharges": "Zu deinen Ladevorgängen",
+    "thinking": "Analysiere…",
+    "error": "Empfehlungen konnten nicht generiert werden."
+  },
+  "drives": {
+    "title": "Drives",
+    "empty": "No drives recorded yet.",
+    "distance": "Distance",
+    "duration": "Duration",
+    "consumption": "Consumption",
+    "loadMore": "Load more"
+  },
+  "charges": {
+    "title": "Charges",
+    "empty": "No charges recorded yet.",
+    "energy": "Energy added",
+    "duration": "Duration",
+    "location": "Location",
+    "cost": "Cost",
+    "loadMore": "Load more"
+  },
+  "trip": {
+    "duration": "Dauer"
+  },
+  "details": {
+    "driveTitle": "Fahrt",
+    "chargeTitle": "Ladung",
+    "summary": "Übersicht",
+    "battery": "Batterie",
+    "range": "Reichweite",
+    "start": "Start",
+    "end": "Ende",
+    "avgSpeed": "Ø Tempo",
+    "maxSpeed": "Max. Tempo",
+    "outsideTemp": "Außen",
+    "insideTemp": "Innen",
+    "energy": "Energie",
+    "energyAdded": "Energie geladen",
+    "energyUsed": "Energie verbraucht",
+    "avgPower": "Ø Leistung",
+    "consumption": "Verbrauch",
+    "added": "Zugefügt",
+    "cost": "Kosten",
+    "power": "Leistung",
+    "rangeUsed": "Verbrauchte Reichweite",
+    "efficiency": "Effizienz"
   }
 }
