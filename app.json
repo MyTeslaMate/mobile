@@ -28,6 +28,11 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.myteslamate.tokens",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAkA_Nf8erAZtNlgLcMxPADnU1-ctQnSsE"
+        }
+      },
       "intentFilters": [
         {
           "action": "VIEW",

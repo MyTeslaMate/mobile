@@ -1,10 +1,13 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useThemeColors } from '@/contexts/ThemeContext';
+import { strideDownsample } from '@/lib/downsample';
 import { Ionicons } from '@expo/vector-icons';
 import { useMemo } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
+
+const MAX_PLOT_POINTS = 150;
 
 interface ChartCardProps {
   title: string;
@@ -71,6 +74,15 @@ export function ChartCard({
       .map((value) => ({ value }));
   }, [secondaryData]);
 
+  const plotPoints = useMemo(
+    () => strideDownsample(points, MAX_PLOT_POINTS),
+    [points]
+  );
+  const plotSecondaryPoints = useMemo(
+    () => (secondaryPoints ? strideDownsample(secondaryPoints, MAX_PLOT_POINTS) : null),
+    [secondaryPoints]
+  );
+
   if (points.length < 2) {
     return (
       <ThemedView style={styles.card}>
@@ -85,14 +97,24 @@ export function ChartCard({
     );
   }
 
-  const values = points.map((p) => p.value);
-  const max = yMax ?? Math.max(...values);
-  const min = yMin ?? Math.min(...values);
+  let max = yMax ?? -Infinity;
+  let min = yMin ?? Infinity;
+  if (yMax == null || yMin == null) {
+    for (const p of points) {
+      if (yMax == null && p.value > max) max = p.value;
+      if (yMin == null && p.value < min) min = p.value;
+    }
+  }
 
   const hasSecondary = secondaryPoints && secondaryPoints.length >= 2;
-  const sec2Values = hasSecondary ? secondaryPoints!.map((p) => p.value) : [];
-  const sec2Max = hasSecondary ? Math.max(...sec2Values) : 0;
-  const sec2Min = hasSecondary ? Math.min(...sec2Values) : 0;
+  let sec2Max = -Infinity;
+  let sec2Min = Infinity;
+  if (hasSecondary) {
+    for (const p of secondaryPoints!) {
+      if (p.value > sec2Max) sec2Max = p.value;
+      if (p.value < sec2Min) sec2Min = p.value;
+    }
+  }
 
   const axisMax = hasSecondary ? Math.max(max, sec2Max) : max;
   const axisMin = hasSecondary ? Math.min(min, sec2Min) : min;
@@ -119,8 +141,8 @@ export function ChartCard({
         </View>
       </View>
       <LineChart
-        data={points}
-        secondaryData={hasSecondary ? secondaryPoints! : undefined}
+        data={plotPoints}
+        secondaryData={plotSecondaryPoints ?? undefined}
         width={chartWidth}
         height={height}
         thickness={2}

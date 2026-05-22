@@ -71,10 +71,7 @@ export function TopMapPanel({ markers, onMarkerPress, height = 220 }: Props) {
             coordinate={{ latitude: m.latitude, longitude: m.longitude }}
             onPress={() => onMarkerPress?.(m)}
             anchor={{ x: 0.5, y: 0.5 }}
-            // `tracksViewChanges` is left as default (true) when there's a
-            // label, because the label content changes between renders and
-            // the iOS map cache otherwise freezes the old text.
-            tracksViewChanges={m.label == null}
+            tracksViewChanges={true}
           >
             <Pin type={m.type ?? 'charge'} label={m.label} />
           </Marker>
