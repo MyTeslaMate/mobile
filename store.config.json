@@ -1,7 +1,7 @@
 {
   "configVersion": 0,
   "apple": {
-    "version": "1.0",
+    "version": "1.0.3",
     "copyright": "2026 Tesflow",
     "release": {
       "automaticRelease": true
@@ -76,8 +76,8 @@
     "review": {
       "firstName": "Julien",
       "lastName": "Lestel",
-      "email": "jlestel@gmail.com",
-      "phone": "",
+      "email": "myteslamatecom@gmail.com",
+      "phone": "+33689674012",
       "demoRequired": false
     }
   }
