@@ -8,12 +8,12 @@ import { useTeslaMateApi } from '@/contexts/TeslaMateApiContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
 import { useSelectedCar } from '@/contexts/SelectedCarContext';
 import { formatCarName } from '@/lib/format';
-import { type TmCar } from '@/lib/teslaMateApi';
 import {
   getCarBatteryHealth,
   getCarStatus,
   TeslaMateApiError,
   type TmBatteryHealth,
+  type TmCar,
   type TmCarStatus,
 } from '@/lib/teslaMateApi';
 import { Ionicons } from '@expo/vector-icons';
@@ -622,7 +622,6 @@ function InfoRow({
   value: string;
   valueColor?: string;
 }) {
-  const colors = useThemeColors();
   return (
     <View style={rowStyles.row}>
       <ThemedText style={rowStyles.label}>{label}</ThemedText>

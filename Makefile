@@ -1,4 +1,4 @@
-.PHONY: help metadata ios ipad android start clean-sim check check-routes
+.PHONY: help metadata ios ipad android start clean-sim check check-routes test lint
 
 # Simulators used for App Store / Play Store screenshots
 IOS_PHONE       := iPhone 11 Pro Max
@@ -15,7 +15,9 @@ help:
 	@echo "  make ipad       Run app on $(IOS_TABLET) (slot APP_IPAD_PRO_3GEN_129)"
 	@echo "  make android    Run app on Android emulator $(ANDROID_AVD)"
 	@echo "  make start      Start Metro bundler only"
-	@echo "  make check      Run all static checks (currently: routes)"
+	@echo "  make check      Run lint + route validator + unit tests"
+	@echo "  make lint       Run expo lint"
+	@echo "  make test       Run unit tests"
 	@echo "  make clean-sim  Shut down all booted iOS simulators"
 
 metadata:
@@ -41,10 +43,16 @@ start:
 connect:
 	@xcrun simctl openurl booted "mtm:///connect?token=$(TOKEN)"
 
-check: check-routes
+check: lint check-routes test
+
+lint:
+	@npm run lint --silent
 
 check-routes:
 	@node scripts/check-routes.js
+
+test:
+	@./node_modules/.bin/jest
 
 clean-sim:
 	xcrun simctl shutdown all

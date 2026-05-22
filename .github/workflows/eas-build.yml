@@ -38,8 +38,14 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
+      - name: Lint
+        run: npm run lint -- --max-warnings 0
+
       - name: Static checks (routes)
         run: npm run check:routes
+
+      - name: Unit tests
+        run: npm test -- --ci
 
       - name: Sync version from git tag
         if: startsWith(github.ref, 'refs/tags/v')

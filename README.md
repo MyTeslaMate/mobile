@@ -77,15 +77,44 @@ assets/        Icons, splash, fonts
 ## Useful scripts
 
 ```bash
-npm run lint        # expo lint
-npm run start       # expo start
-npm run ios         # expo run:ios
-npm run android     # expo run:android
+npm run lint           # expo lint
+npm run start          # expo start
+npm run ios            # expo run:ios
+npm run android        # expo run:android
+npm run check:routes   # validate every <Redirect href> / router.push/replace
+                       # target against the real Expo Router file tree, and
+                       # re-assert documented deep links (mtm://...)
+npm test               # run the lib/ unit tests (jest + ts-jest)
+npm run test:watch     # same, in watch mode
 ```
+
+The `Makefile` also exposes orchestration targets used during release work:
+
+```bash
+make help              # list all targets
+make check             # run check:routes + npm test (used by CI)
+make metadata          # eas metadata:push --non-interactive (App Store copy + screenshots)
+make ios               # boot iPhone 11 Pro Max sim + expo run:ios
+make ipad              # boot iPad Pro 13" sim + expo run:ios
+make android           # boot the configured AVD + expo run:android
+make connect           # open mtm:///connect?token=$(TOKEN) on a booted iOS sim
+make clean-sim         # shutdown all booted iOS simulators
+```
+
+## Tests & static checks
+
+Three layers run in CI ([.github/workflows/eas-build.yml](.github/workflows/eas-build.yml)) before any build, in this order:
+
+- **Lint** (`npm run lint`) — `expo lint` (ESLint + the Expo config). CI runs it with `--max-warnings 0`, so a single warning fails the build. Fix or explicitly `// eslint-disable-next-line` with a one-line rationale.
+- **Route validator** ([scripts/check-routes.js](scripts/check-routes.js)) — parses `app/**` to derive the Expo Router route table, then greps `<Redirect href="…" />`, `router.push('…')` and `router.push({ pathname: '…' })` across `app/`, `components/`, `contexts/`, `hooks/`, `lib/`. Any literal target that does not match a real route fails the build. The documented deep links (`mtm:///`, `mtm:///generate`, `mtm:///auth`, `mtm:///assistant`, `mtm:///connect`) are re-asserted on each run.
+  - To add a new deep link to the contract: edit the `DEEP_LINKS` array in the script.
+- **Unit tests** (`__tests__/lib/*.test.ts`) — pure logic only, no React Native: `downsample`, `format`, `jwt`, `recommendationsPrompt`, `mtmExchange`. Components and the WebSocket chat stream are not covered yet.
+
+All three run in under a few seconds. Run `make check` locally — **it must pass green before pushing a PR**, otherwise the CI workflow will reject the branch and block the EAS build.
 
 ## Contributing
 
-Issues and pull requests are welcome. Please run `npm run lint` before opening a PR and keep changes focused (one topic per PR).
+Issues and pull requests are welcome. Before opening a PR, run `make check` (lint, route validator and unit tests). Keep changes focused — one topic per PR.
 
 ## Stack
 

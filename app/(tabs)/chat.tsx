@@ -65,6 +65,10 @@ export default function ChatScreen() {
       streamRef.current?.close();
       streamRef.current = null;
     };
+    // Intentional: re-fetch history only when the session changes. Re-running on
+    // `conversationId` would refetch on every selection and on `refreshHistory`
+    // would loop since the callback's identity tracks `conversationId`.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.token]);
 
   useEffect(() => {
