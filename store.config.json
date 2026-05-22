@@ -79,7 +79,7 @@
       "email": "myteslamatecom@gmail.com",
       "phone": "+33689674012",
       "demoRequired": false,
-      "notes": "To sign in:\n1. On the sign-in screen, tap \"Sign in with a MyTeslaMate token\".\n2. Paste the demo token provided above (it has been entered as both the username and the password — copy from either field) into the token field.\n3. Tap continue to load the demo vehicle data."
+      "notes": "To sign in:\n1. On the sign-in screen, tap \"Sign in with a MyTeslaMate token\".\n2. Paste the demo token provided above (it has been entered as both the username and the password — copy from either field) into the token field.\n3. Tap continue to load the demo vehicle data.\n\nWhat makes this app distinct:\n- It is the only mobile viewer for MyTeslaMate.com, the well-established Tesla data logger. Subscribers previously had to open a web browser to view their data; this app brings their full history natively to iPhone and iPad.\n- A built-in AI assistant is connected to the user's own driving and charging history. It provides personalised insights and actionable recommendations on driving efficiency, charging habits, cost optimisation and battery health — directly from the user's data, in plain language.\n- Every screen (Cockpit, Drives, Charges) has a one-tap \"Recommendations\" button that hands the current view to the assistant for instant context-aware advice.\n- The app also surfaces battery health metrics (capacity kept, range kept, real-world efficiency over time) that are not available in the official Tesla app.\n- All data stays between the user's own MyTeslaMate instance and their device over HTTPS — no third-party analytics, no ad SDK, no tracking."
     }
   }
 }
