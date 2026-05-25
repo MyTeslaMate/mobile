@@ -7,8 +7,8 @@ import { useLocalization } from '@/contexts/LocalizationContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
 import { useRegion } from '@/hooks/useRegion';
 import { Ionicons } from '@expo/vector-icons';
-import { Stack } from 'expo-router';
-import { useState } from 'react';
+import { Stack, useLocalSearchParams } from 'expo-router';
+import { useEffect, useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -16,8 +16,18 @@ export default function FleetTokenScreen() {
   const colors = useThemeColors();
   const { t } = useLocalization();
   const { region } = useRegion();
+  const params = useLocalSearchParams<{ origin?: string }>();
+  const initialOriginUrl =
+    typeof params.origin === 'string' ? params.origin : undefined;
   const [modalVisible, setModalVisible] = useState(false);
   const styles = createStyles(colors);
+
+  // Auto-open the generator when the screen is reached via a deep link that
+  // already carries the origin — the user came here to start the flow, not to
+  // browse the settings page.
+  useEffect(() => {
+    if (initialOriginUrl) setModalVisible(true);
+  }, [initialOriginUrl]);
 
   return (
     <SafeAreaView
@@ -61,6 +71,7 @@ export default function FleetTokenScreen() {
           <TokenFleetGenerator
             onClose={() => setModalVisible(false)}
             region={region}
+            initialOriginUrl={initialOriginUrl}
           />
         </SafeAreaView>
       </Modal>
