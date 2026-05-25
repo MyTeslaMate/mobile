@@ -124,7 +124,13 @@ export default function TokenFleetGenerator({
   const config = useMemo(() => REGION_CONFIG[region], [region]);
   const styles = createStyles(colors);
 
+  // Modal mounts children eagerly while `useLocalSearchParams` resolves
+  // async, so `initialOriginUrl` can be undefined on the very first render
+  // and become populated later. Re-run when it changes — deep-link value
+  // wins over the persisted one and is then written back to SecureStore so
+  // a subsequent visit without the param still surfaces the new origin.
   useEffect(() => {
+    let cancelled = false;
     (async () => {
       try {
         const [savedOrigin, savedClientId, savedClientSecret] =
@@ -133,18 +139,29 @@ export default function TokenFleetGenerator({
             SecureStore.getItemAsync(FORM_STORAGE_KEYS.clientId),
             SecureStore.getItemAsync(FORM_STORAGE_KEYS.clientSecret),
           ]);
-        // Deep-link `?origin=...` wins over the persisted value so an
-        // onboarding link reliably pre-fills the field.
-        const origin = initialOriginUrl || savedOrigin;
-        if (origin) setOriginUrl(origin);
+        if (cancelled) return;
+
+        if (initialOriginUrl) {
+          setOriginUrl(initialOriginUrl);
+          if (initialOriginUrl !== savedOrigin) {
+            SecureStore.setItemAsync(
+              FORM_STORAGE_KEYS.originUrl,
+              initialOriginUrl
+            ).catch(() => {});
+          }
+        } else if (savedOrigin) {
+          setOriginUrl(savedOrigin);
+        }
         if (savedClientId) setClientId(savedClientId);
         if (savedClientSecret) setClientSecret(savedClientSecret);
       } catch (error) {
         console.error('Failed to load saved Fleet form values:', error);
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return () => {
+      cancelled = true;
+    };
+  }, [initialOriginUrl]);
 
   const persistFormValue = async (
     key: (typeof FORM_STORAGE_KEYS)[keyof typeof FORM_STORAGE_KEYS],

@@ -9,6 +9,7 @@ import { ReactNode } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
+import { BackOrCloseHeaderLeft } from '@/components/BackOrCloseHeaderLeft';
 import { BiometricGate } from '@/components/BiometricGate';
 import { UpdateGate } from '@/components/UpdateGate';
 import { BiometricProvider } from '@/contexts/BiometricContext';
@@ -90,15 +91,24 @@ export default function RootLayout() {
                         />
                         <Stack.Screen
                           name="settings/mtm-token"
-                          options={{ headerShown: true }}
+                          options={{
+                            headerShown: true,
+                            headerLeft: () => <BackOrCloseHeaderLeft />,
+                          }}
                         />
                         <Stack.Screen
                           name="settings/owner-token"
-                          options={{ headerShown: true }}
+                          options={{
+                            headerShown: true,
+                            headerLeft: () => <BackOrCloseHeaderLeft />,
+                          }}
                         />
                         <Stack.Screen
                           name="settings/fleet-token"
-                          options={{ headerShown: true }}
+                          options={{
+                            headerShown: true,
+                            headerLeft: () => <BackOrCloseHeaderLeft />,
+                          }}
                         />
                         <Stack.Screen
                           name="assistant"
